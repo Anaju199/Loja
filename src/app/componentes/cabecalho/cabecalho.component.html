@@ -1,0 +1,90 @@
+<header class="ff-inter">
+  <div class="row mx-auto">
+    <div class="col-md-3">
+      <div class="logo">
+        <a href="/paginaInicial" class="add"><img src="../../../assets/imagens/Logo_loja.png" alt="Logo loja"></a>
+      </div>
+    </div>
+    <div class="col-md-7">
+      <div class="d-flex centralizar" role="search">
+        <input
+          type="search"
+          class="form-control me-2"
+          placeholder="Pesquisa"
+          autofocus
+          [(ngModel)]="filtroProduto"
+          (keyup)="pesquisarProduto()"
+        >
+        <i class="fa-solid fa-magnifying-glass" (click)="pesquisar()" style="padding: 0.6rem; cursor: pointer;"></i>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="d-flex flex-column align-items-left centralizar">
+        <div class="d-flex flex-wrap gap-3">
+          <li class="nav-item dropdown">
+            <a class="icon" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-user"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <ng-container *ngIf="user$ | async as Usuario, else login;">
+                <li><a class="dropdown-item" href="/perfil">Meu perfil</a></li>
+                <li><a class="dropdown-item" href="/pedidos">Meus pedidos</a></li>
+                <li><button class="dropdown-item ult" (click)="logout()">Sair</button></li>
+              </ng-container>
+              <ng-template #login class="d-flex">
+                <li><a class="dropdown-item" href="/login">Cadastre-se/Login</a></li>
+              </ng-template>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="icon" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-cart-shopping"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <ng-container *ngIf="user$ | async as Usuario, else loginCarrinho;">
+                <li><a class="dropdown-item" href="#">Meu perfil</a></li>
+                <li><a class="dropdown-item" href="/pedidos">Meus pedidos</a></li>
+                <li><button class="dropdown-item ult" (click)="logout()">Sair</button></li>
+              </ng-container>
+              <ng-template #loginCarrinho class="d-flex">
+                <li>
+                  <div style="width: 300px;">
+                    <p class="dropdown-item carrinho" href="/login">O carrinho de compras está vazio.
+                    <br>
+                    <br>
+                    Se você tinha itens em seu carrinho de compras, nós os salvamos para você.
+                   <a class="link" href="login">LOGUE-SE</a>
+                  na sua conta para poder vê-los.</p>
+                  </div>
+                </li>
+              </ng-template>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="icon" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-heart"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <ng-container *ngIf="user$ | async as Usuario, else loginFavoritos;">
+                <li><a class="dropdown-item" href="#">Meu perfil</a></li>
+                <li><a class="dropdown-item" href="/pedidos">Meus pedidos</a></li>
+                <li><button class="dropdown-item ult" (click)="logout()">Sair</button></li>
+              </ng-container>
+              <ng-template #loginFavoritos class="d-flex">
+                <li>
+                  <div style="width: 200px; height: 50px;">
+                    <p class="dropdown-item carrinho" href="/login">
+                   <a class="link" href="login">LOGUE-SE</a>
+                    para ver seus itens favoritos</p>
+                  </div>
+                </li>
+              </ng-template>
+            </ul>
+          </li>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- <app-menu></app-menu> -->
+

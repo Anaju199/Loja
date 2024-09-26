@@ -1,0 +1,10 @@
+.nome_produto{
+  text-decoration: none;
+  color: black;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 18px;
+}
+
+.card_img{
+  background-color: rgb(248, 248, 248);
+}

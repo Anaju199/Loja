@@ -1,0 +1,30 @@
+.dropdown:hover .dropdown-menu {
+  display: block;
+  position: absolute;
+  transform: translate3d(-160px, 28px, 0px); /* distancia entre menu e btn */
+  top: 0px;
+  left: 0px;
+  will-change: transform;
+}
+
+.dropdown {
+  display: inline-block; /* deixa o LO do "tamanho do próprio texto" e não da largura inteira da tela*/
+  list-style: none; /* rita a "bolinha" do LI*/
+}
+
+.ult {
+  border-top: 1px solid rgb(194, 193, 193);
+}
+
+p {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: gray;
+  white-space: normal;
+  font-size: 15px;
+  text-align: center;
+}
+
+.carrinho:active {
+  background-color: rgb(255, 255, 255);
+  color: gray;
+}

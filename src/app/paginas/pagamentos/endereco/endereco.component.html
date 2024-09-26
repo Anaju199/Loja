@@ -1,0 +1,142 @@
+<section class="container_cadastros fomulario ff-inter">
+  <header class="header">
+    <h2>Digite os dados do endereço:</h2>
+  </header>
+  <form [formGroup]="formulario">
+
+    <label for="postal_code">CEP</label>
+    <input
+      type="postal_code"
+      class="input"
+      id="postal_code"
+      formControlName="postal_code"
+      placeholder="Digite o cep"
+      maxlength="9"
+      (blur)="consultaCEP($event, formulario)"
+    >
+    <div class="mensagem__erro"
+     *ngIf="formulario.get('postal_code')?.errors && formulario.get('postal_code')?.touched">
+      CEP é Obrigatório!
+    </div>
+
+
+    <label for="street">Rua</label>
+    <input
+      type="textarea"
+      class="input"
+      id="street"
+      formControlName="street"
+      placeholder="Digite a Rua"
+      readonly
+    >
+
+    <div class="formulario__dupla">
+      <div class="formulario__campo">
+        <label class="campo__etiqueta" for="number">Número</label>
+        <input
+          type="number"
+          class="input"
+          maxlength="9"
+          style="width: 150px; margin-right: 1rem;"
+          id="number"
+          formControlName="number"
+          placeholder="Número"
+        >
+        <div class="mensagem__erro"
+        *ngIf="(formulario.get('number')?.errors && formulario.get('number')?.touched)">
+          Número é Obrigatório!
+        </div>
+      </div>
+
+      <div class="formulario__campo">
+        <label class="campo__etiqueta" for="complement">Complemento</label>
+        <input
+          type="text"
+          class="input"
+          style="width: 305px; margin-left: 0.2rem;"
+          id="complement"
+          formControlName="complement"
+          placeholder="Digite o complemento"
+        >
+      </div>
+    </div>
+
+    <label for="locality">Bairro</label>
+    <input
+      type="textarea"
+      class="input"
+      id="locality"
+      formControlName="locality"
+      placeholder="Digite o Bairro"
+      readonly
+    >
+    <div class="mensagem__erro"
+     *ngIf="formulario.get('locality')?.errors && formulario.get('locality')?.touched">
+      Bairro é Obrigatório!
+    </div>
+
+    <label for="city">Cidade</label>
+    <input
+      type="textarea"
+      class="input"
+      id="city"
+      formControlName="city"
+      placeholder="Digite a Cidade"
+      readonly
+    >
+    <div class="mensagem__erro"
+     *ngIf="formulario.get('city')?.errors && formulario.get('city')?.touched">
+      Cidade é Obrigatório!
+    </div>
+
+    <label for="region_code">UF</label>
+    <select id="region_code" name="region_code" class="select" formControlName="region_code">
+      <option disabled selected value="">Escolha um estado</option>
+      <option value="AC">Acre</option>
+      <option value="AL">Alagoas</option>
+      <option value="AP">Amapá</option>
+      <option value="AM">Amazonas</option>
+      <option value="BA">Bahia</option>
+      <option value="CE">Ceará</option>
+      <option value="DF">Distrito Federal</option>
+      <option value="ES">Espírito Santo</option>
+      <option value="GO">Goiás</option>
+      <option value="MA">Maranhão</option>
+      <option value="MT">Mato Grosso</option>
+      <option value="MS">Mato Grosso do Sul</option>
+      <option value="MG">Minas Gerais</option>
+      <option value="PA">Pará</option>
+      <option value="PB">Paraíba</option>
+      <option value="PR">Paraná</option>
+      <option value="PE">Pernambuco</option>
+      <option value="PI">Piauí</option>
+      <option value="RJ">Rio de Janeiro</option>
+      <option value="RN">Rio Grande do Norte</option>
+      <option value="RS">Rio Grande do Sul</option>
+      <option value="RO">Rondônia</option>
+      <option value="RR">Roraima</option>
+      <option value="SC">Santa Catarina</option>
+      <option value="SP">São Paulo</option>
+      <option value="SE">Sergipe</option>
+      <option value="TO">Tocantins</option>
+      <option value="EX">Estrangeiro</option>
+    </select>
+    <div class="mensagem__erro"
+     *ngIf="formulario.get('region_code')?.errors && formulario.get('region_code')?.touched">
+      Estado é Obrigatório!
+    </div>
+
+    <div>
+      <input id="principal" type="checkbox" formControlName="principal" [checked]="false" selected />
+      <label class="campo__check" for="principal">Endereço principal</label>
+    </div>
+
+    <div class="d-flex flex-column align-items-center">
+      <div class="d-flex flex-wrap gap-3">
+        <button (click)="cadastrar()" [disabled]="!formulario.valid" [ngClass]="habilitarBotao()" id="btnSalvar">Cadastrar</button>
+        <button (click)="cancelar()" class="botao_forms">Voltar</button>
+      </div>
+    </div>
+</form>
+
+</section>

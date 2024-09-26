@@ -1,0 +1,64 @@
+.duas-colunas{
+  display:flex ;
+  justify-content: space-between;
+  gap: 2em;
+  height: 10px;
+
+}
+
+.img{
+  width: 80%;
+  align-self: center;
+}
+
+.coluna1{
+  margin-left: 2%;
+  margin-top: 5%;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.coluna2{
+  margin-top: 1%;
+  margin-left: 10%;
+  margin-right: 5%;
+  width: 70%;
+  flex-wrap: wrap;
+}
+
+.texto {
+	line-height  : 1;
+	margin-top   : 0;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  margin-right: 5%;
+  font-size: 3rem;
+  color: #070707;
+}
+
+
+.botoes {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.botoes button {
+  margin-left: 10px;
+  margin-right: 2px;
+}
+
+
+.mural {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin: 1rem 0 2rem;
+}
+
+
+.d-flex{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}

@@ -1,0 +1,56 @@
+<div class="container row mx-auto ">
+  <div class="mural" *ngIf="listaProdutos.length > 0, else semProduto">
+    <div *ngFor="let Produto of listaProdutos; let i = index">
+
+      <div class="" style="width: 15rem; height: 15rem;">
+
+        <div class="rounded mx-auto d-block" style="width: 15rem; height: 15rem;">
+          <div *ngIf="imagensIniciais[i],  else semFotosProduto">
+            <img [src]="link + imagensIniciais[i].imagem" alt="Imagem Inicial" class="card-img-top" style="height: 15rem;">
+          </div>
+
+          <!-- <div *ngIf="Produto.imagens.length > 0, else semFotosProduto">
+
+            <div class="carousel-inner">
+              <div class="carousel-item" *ngFor="let fotoProduto of Produto.imagens; let i = index" [class.active]="i === 0">
+                <div class="rounded mx-auto d-block" style="width: 15rem; height: 15rem;">
+                  <img src="{{ fotoProduto.cor.imagem }}" class="card-img-top" alt="...">
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="Produto.imagens.length > 1">
+              <button class="carousel-control-prev" type="button" [attr.data-bs-target]="'#carousel' + Produto.id" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" [attr.data-bs-target]="'#carousel' + Produto.id" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+
+          </div> -->
+        </div>
+      </div>
+        <div class="card-body">
+          <div style="height: 3rem;">
+            <a class="nome_produto" href="/produto/{{ Produto.id }}">{{ Produto.descricao }}</a>
+            <p class="preco">R${{ Produto.valor }}</p>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <ng-template #semProduto>
+    <div class="ff-inter meio">
+      <p>Não há produtos cadastrados.</p>
+    </div>
+  </ng-template>
+</div>
+
+<ng-template #semFotosProduto>
+  <div class="ff-inter centralizar">
+    <p>Não há fotos desse produto.</p>
+  </div>
+</ng-template>

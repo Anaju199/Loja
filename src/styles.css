@@ -1,0 +1,267 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;500;600;700;800;900&family=Roboto+Mono:wght@100;200;300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.ff-inter { font-family: 'Inter', sans-serif; }
+.ff-roboto-mono { font-family: 'Roboto Mono', monospace; }
+
+h1 {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+
+h2 {
+  color: #000205;
+  font-weight: bold;
+  font-size: 2rem;
+  text-align: center;
+}
+
+h6 {
+  color: #000205;
+  text-align: center;
+}
+
+.preco {
+  color: #fa0e0e;
+}
+
+.header {
+  margin: 1rem auto 2rem;
+}
+
+.container {
+  padding-right: 1rem;
+  padding-left: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-right: auto;
+  margin-left: auto;
+  position:relative;
+}
+
+.mural {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: left;
+  margin: 1rem 0 2rem;
+}
+
+.botao {
+  background: #000000;
+  color: #ffffff;
+  max-width: 270px;
+  width: 250px;
+  padding: 1rem;
+  margin: 0 auto;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  transition: 0.5s ease;
+}
+
+.botao_forms {
+  color: #ffffff;
+  background-color: #000000;
+  margin: 0 auto;
+  max-width: 220px;
+  width: 180px;
+  padding: 0.5rem;
+  border-color: #000000;
+  border-radius: 10px;
+  transition: 0.5s ease;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+
+.botao__desabilitado {
+  color: #ffffff;
+  background-color: #6b6a6a;
+  margin: 0 auto;
+  max-width: 220px;
+  width: 180px;
+  padding: 0.5rem;
+  border-color: #000000;
+  border-radius: 10px;
+  transition: 0.5s ease;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.botao:hover {
+  border: 2px solid #525856;
+  color: #818382;
+}
+
+@media (min-width: 576px) {
+  .container {
+      width: 540px;
+  }
+}
+@media (min-width: 768px) {
+  .container {
+      width: 720px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+      width: 960px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+      width: 1140px;
+  }
+}
+
+
+.titulo {
+	line-height  : 1;
+	margin-top   : 0;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  margin-right: 5%;
+  font-size: 3rem;
+  color: #000000;
+}
+
+
+.centralizar{
+  text-align: center;
+  padding: 2rem;
+}
+
+.centro{
+  text-align: center;
+}
+
+.meio{
+  padding: 2rem 0 5rem;
+}
+
+
+.container_cadastros {
+  padding-right: 1rem;
+  padding-left: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-right: auto;
+  margin-left: auto;
+  position:relative;
+  width: 540px;
+
+}
+
+
+.fomulario {
+  padding: 2rem 0;
+}
+
+.fomulario form {
+  background: #c9c8c8;
+
+  border: none;
+  border-radius: 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 2rem;
+}
+
+.fomulario form label {
+  color: #000000;
+  font-weight: bold;
+}
+
+.fomulario form .input {
+  background-color: #ffffff;
+  border: none;
+  height: 40px;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  margin: 0.5rem 0 2rem;
+}
+
+.fomulario form .select {
+  border: none;
+  height: 53px;
+  padding: 1rem 2rem;
+  width: 470px;
+  border-radius: 10px;
+  margin: 0.5rem 0 2rem;
+}
+
+.fomulario form .inputFile {
+  border: none;
+  height: 50px;
+  padding: 0.8rem 1rem;
+  width: 450px;
+  border-radius: 10px;
+  margin: 0.5rem 0 2rem;
+}
+
+
+.mensagem__erro {
+  font-size: 12px;
+  margin-left: 5px;
+  color: red;
+  margin-top: -25px;
+  margin-bottom: 20px;
+}
+
+.link{
+  color:#000000;
+  font-size: 1rem;
+  text-align: center;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.select {
+  border-style: solid;
+  border: black;
+  height: 53px;
+  padding: 1rem 2rem;
+  width: 400px;
+  border-radius: 10px;
+  margin: 0.5rem 0 2rem;
+}
+
+.listaAdm{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: large;
+  text-decoration: none;
+  color: black;
+  margin-top: 4px;
+}
+
+tr.odd {
+  background-color: #f2f2f2;
+}
+
+tr.even {
+  background-color: #ffffff;
+}
+
+a.icon{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: large;
+  text-decoration: none;
+  color: black;
+  padding-top: 0.4rem;
+  list-style: none;
+}
+
+.borda_rodape{
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  border-bottom: 1px solid rgb(131, 131, 131);
+}

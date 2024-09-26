@@ -1,0 +1,53 @@
+<section class="container_cadastros fomulario ff-inter">
+  <header class="header">
+    <h2>Digite os dados para login:</h2>
+  </header>
+  <form [formGroup]="formulario">
+
+    <label for="login">Login</label>
+    <input
+      type="textarea"
+      class="input"
+      id="login"
+      formControlName="login"
+      placeholder="CPF"
+    >
+    <div class="mensagem__erro"
+     *ngIf="formulario.get('login')?.errors && formulario.get('login')?.touched">
+      Login é Obrigatório!
+    </div>
+
+    <label for="senha">Senha</label>
+    <input
+      type="password"
+      class="input"
+      id="senha"
+      formControlName="senha"
+      placeholder="Digite a senha"
+    >
+    <div class="mensagem__erro"
+     *ngIf="formulario.get('senha')?.errors && formulario.get('senha')?.touched">
+      Senha é Obrigatória!
+    </div>
+
+
+    <div class="d-flex flex-column align-items-center">
+      <div class="d-flex flex-wrap gap-3">
+        <button
+        [disabled]="!formulario.valid"
+        (click)="login()"
+          [ngClass]="habilitarBotao()"
+          id="btnSalvar"
+          >Logar
+        </button>
+        <button (click)="cancelar()" class="botao_forms">Voltar para página Inicial</button>
+      </div>
+      <p>Ainda não possui conta?
+        <a class="link" routerLink="/cadastro"><u>Clique aqui para se cadastrar!</u></a>
+      </p>
+    </div>
+  </form>
+  <div>
+    <h6 class="mensagem__erro">Login necessário apenas para clientes.</h6>
+  </div>
+</section>

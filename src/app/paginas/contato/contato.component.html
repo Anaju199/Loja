@@ -1,0 +1,89 @@
+<main>
+  <h2 class="principal__titulo">Dados para contato</h2>
+
+  <form [formGroup]="formulario">
+    <div class="container row mx-auto gap-3">
+      <!-- NOME COMPLETO -->
+      <div class="col-md-6 offset-md-3 ">
+        <label class="campo__etiqueta" for="nome">Nome</label>
+        <input type="textarea" id="nome" class="form-control campo__escrita" formControlName="nome" placeholder="Digite o nome" />
+
+        <div
+          *ngIf="(formulario.get('nome')?.invalid && formulario.get('nome')?.touched) || formulario.get('nome')?.dirty">
+          <!-- <app-mensagem *ngIf="formulario.get('nome')?.errors?.['required']"
+            mensagem="O campo de nome deve ser preenchido."></app-mensagem> -->
+          <!-- <app-mensagem *ngIf="formulario.get('nome')?.errors?.['minlength']"
+            mensagem="O nome deve ter no minimo 2 caracteres.">
+          </app-mensagem>-->
+        </div>
+      </div>
+
+      <!-- DATA DE NASCIMENTO -->
+      <div class="col-md-6 offset-md-3 ">
+        <label class="campo__etiqueta" for="nascimento">Nascimento</label>
+        <input id="data_nascimento" type="date" class="form-control campo__escrita" formControlName="data_nascimento" />
+      </div>
+
+      <!-- CONTATO -->
+      <div class="col-md-6 offset-md-3 ">
+        <label class="campo__etiqueta" for="telefone">Telefone</label>
+        <input id="telefone" type="tel" placeholder="(XX) XXXXX-XXXX" class="form-control campo__escrita" formControlName="telefone" />
+
+        <div
+          *ngIf="(formulario.get('telefone')?.invalid && formulario.get('telefone')?.touched) || formulario.get('telefone')?.dirty">
+          <!-- <app-mensagem *ngIf="formulario.get('telefone')?.errors?.['required']"
+            mensagem="O campo de telefone deve ser preenchido.">
+          </app-mensagem> -->
+          <!-- <app-mensagem *ngIf="formulario.get('telefone')?.errors?.['pattern']" mensagem="O campo de telefone está
+              faltando algo."></app-mensagem> -->
+        </div>
+      </div>
+      <!-- Check contato -->
+      <div class="col-md-6 offset-md-3 ">
+        <input id="telefone_retorno" type="checkbox" formControlName="telefone_retorno" [checked]="false" />
+        <label class="campo__check" for="telefone_retorno">Retorno por telefone</label>
+      </div>
+
+      <!-- EMAIL -->
+      <div class="col-md-6 offset-md-3 ">
+        <label class="campo__etiqueta" for="email">E-mail</label>
+        <input id="email" type="email" class="form-control campo__escrita" formControlName="email" />
+
+        <div
+          *ngIf="(formulario.get('email')?.invalid && formulario.get('email')?.touched) || formulario.get('email')?.dirty">
+          <!-- <app-mensagem *ngIf="formulario.get('email')?.errors?.['required']"
+            mensagem="O campo de email deve ser preenchido."></app-mensagem> -->
+          <!-- <app-mensagem *ngIf="formulario.get('email')?.errors?.['pattern']"
+            mensagem="O campo de email deve ser seguir este padrão: 'exemplo@dominio.com'"></app-mensagem> -->
+        </div>
+      </div>
+
+      <!-- Check email -->
+      <div class="col-md-6 offset-md-3 ">
+        <input id="email_retorno" type="checkbox" formControlName="email_retorno" [checked]="false" selected />
+        <label class="campo__check" for="email_retorno">Retorno por email</label>
+      </div>
+
+      <!-- MENSAGEM -->
+      <div class="col-md-6 offset-md-3 ">
+        <label class="campo__etiqueta" for="mensagem">Mensagem</label>
+        <input id="mensagem" type="mensagem" class="form-control campo__escrita" formControlName="mensagem" />
+
+        <div
+          *ngIf="(formulario.get('mensagem')?.invalid && formulario.get('mensagem')?.touched) || formulario.get('mensagem')?.dirty">
+          <!-- <app-mensagem *ngIf="formulario.get('mensagem')?.errors?.['required']"
+            mensagem="O campo de mensagem deve ser preenchido."></app-mensagem> -->
+        </div>
+      </div>
+    </div>
+  </form>
+
+
+  <div class="d-flex flex-column align-items-center">
+    <div class="d-flex flex-wrap gap-3">
+      <button [disabled]="!formulario.valid" (click)="cadastrar()" [ngClass]="habilitarBotao()">Enviar mensagem</button>
+      <!-- <button type="submit" class="botao" (click)="cadastrar()">Enviar mensagem</button> -->
+      <button routerLink="/paginaInicial" class="botao">Cancelar</button>
+    </div>
+  </div>
+</main>

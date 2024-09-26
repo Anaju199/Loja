@@ -1,0 +1,49 @@
+<div class="container row mx-auto">
+  <div class="container row mx-auto">
+    <div class="align-self-center">
+      <h2>
+        Pagamentos
+      </h2>
+    </div>
+  </div>
+
+  <div *ngIf="listaPedido.length > 0, else semPedido">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Valor</th>
+          <th>Pagamento</th>
+          <th>Pago</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let pedido of listaPedido; let i = index">
+          <tr [class.odd]="i % 2 === 0" [class.even]="i % 2 !== 0">
+            <td><a class="listaAdm" [href]="pedido.link_pgt ? pedido.link_pgt : '#'" (click)="temPagamento($event, pedido.link_pgt)" target="_blank">{{ pedido.item }}</a></td>
+            <td><a class="listaAdm">{{ pedido.valor_pgt }}</a></td>
+            <ng-container *ngIf="pedido.numero_pgt === '0'; else pagamentos">
+              <td><a class="listaAdm" style="margin-left: 7%;">Único</a></td>
+            </ng-container>
+            <ng-template #pagamentos>
+              <td><a class="listaAdm" style="margin-left: 12%;">{{ pedido.numero_pgt }}</a></td>
+            </ng-template>
+            <ng-container *ngIf="pedido.data_pgt === '1900-01-01'; else pago">
+              <td><a class="listaAdm">Não</a></td>
+            </ng-container>
+            <ng-template #pago>
+              <td><a class="listaAdm">Sim</a></td>
+            </ng-template>
+            <!-- <td><button class="botaoExcluir" (click)="excluir(pedido.id)"><i class="fa-regular fa-trash-can"></i></button></td> -->
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #semPedido>
+  <div class="ff-inter centralizar">
+    <p>Não há nenhum pagamento cadastrado</p>
+  </div>
+</ng-template>

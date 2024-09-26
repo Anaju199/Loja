@@ -1,0 +1,133 @@
+<section class="container_cadastros fomulario ff-inter">
+  <header class="header">
+    <h2>Digite os dados para cadastro:</h2>
+  </header>
+  <form [formGroup]="formulario">
+
+    <label for="name">Nome</label>
+    <input
+      type="textarea"
+      class="input"
+      id="name"
+      formControlName="name"
+      placeholder="Digite o nome"
+    >
+    <div class="mensagem__erro"
+     *ngIf="formulario.get('name')?.errors && formulario.get('name')?.touched">
+      Nome é Obrigatório!
+    </div>
+
+    <label for="email">E-mail</label>
+    <input
+      type="email"
+      class="input"
+      id="email"
+      formControlName="email"
+      placeholder="Digite o email"
+    >
+    <div class="mensagem__erro"
+     *ngIf="formulario.get('email')?.errors && formulario.get('email')?.touched">
+      E-mail é Obrigatório!
+    </div>
+
+    <label for="tax_id">CPF</label>
+    <input
+      type="textarea"
+      class="input"
+      id="tax_id"
+      maxlength="11"
+      formControlName="tax_id"
+      placeholder="Digite o CPF"
+    >
+    <div class="mensagem__erro"
+     *ngIf="formulario.get('tax_id')?.errors && formulario.get('tax_id')?.touched">
+      CPF é Obrigatório!
+    </div>
+
+    <label for="country">Celular</label>
+    <div>
+      <input
+        type="number"
+        class="input"
+        maxlength="9"
+        style="width: 90px; margin-left: 0.2rem;"
+        id="country"
+        formControlName="country"
+        placeholder="55"
+      >
+
+      <label for="area"></label>
+      <input
+        type="number"
+        class="input"
+        style="width: 100px; margin-left: 0.2rem;"
+        id="area"
+        formControlName="area"
+        placeholder="DDD"
+      >
+
+      <label for="number"></label>
+      <input
+        type="text"
+        class="input"
+        style="width: 273px; margin-left: 0.2rem;"
+        id="number"
+        maxlength="10"
+        formControlName="number"
+        placeholder="Digite o número"
+      >
+      <div class="mensagem__erro"
+      *ngIf="(formulario.get('number')?.errors && formulario.get('number')?.touched) ||
+              (formulario.get('country')?.errors && formulario.get('country')?.touched) ||
+              (formulario.get('area')?.errors && formulario.get('area')?.touched)">
+        Telefone é Obrigatório!
+      </div>
+    </div>
+
+
+    <label for="senha">Senha</label>
+    <input
+      type="password"
+      class="input"
+      id="senha"
+      formControlName="senha"
+      placeholder="Digite a senha"
+    >
+    <div class="mensagem__erro"
+     *ngIf="formulario.get('senha')?.errors && formulario.get('senha')?.touched">
+      Senha é Obrigatória!
+    </div>
+
+
+    <label for="senha_2">Confirme a senha</label>
+    <input
+      type="password"
+      class="input"
+      id="senha_2"
+      formControlName="senha_2"
+      placeholder="Digite a senha novamente"
+    >
+    <div class="mensagem__erro"
+     *ngIf="formulario.get('senha_2')?.errors && formulario.get('senha_2')?.touched">
+     Senhas não coincidem
+    </div>
+
+
+    <div class="d-flex flex-column align-items-center">
+      <div class="d-flex flex-wrap gap-3">
+        <button
+        [disabled]="!formulario.valid"
+        (click)="cadastrar()"
+        [ngClass]="habilitarBotao()"
+        id="btnSalvar"
+        >Cadastrar
+      </button>
+      <button (click)="cancelar()" class="botao_forms">Voltar para página Inicial</button>
+    </div>
+    <p>Já tem cadastro?
+      <a class="link" routerLink="/login"><u>Faça login!</u></a>
+    </p>
+  </div>
+</form>
+
+</section>

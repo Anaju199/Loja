@@ -1,0 +1,48 @@
+
+<div class="container row mx-auto">
+  <h3 class="titulo">Nossos Clientes</h3>
+
+  <div class="container row mx-auto">
+    <div *ngIf="listaClientes.length > 0, else semClientes">
+      <div id="carousel{{ cliente.id }}" class="carousel  carousel-dark slide" data-bs-ride="carousel">
+
+        <div class="carousel-indicators">
+          <div *ngIf="listaClientes.length > 1">
+            <button *ngFor="let cliente of listaClientes; let i = index" type="button" [attr.data-bs-target]="'#carousel' + cliente.id"
+                    [attr.data-bs-slide-to]="i" [class.active]="i === 0" [attr.aria-current]="i === 0 ? 'true' : null" [attr.aria-label]="'Slide ' + (i + 1)">
+            </button>
+          </div>
+        </div>
+
+        <div class="carousel-inner">
+          <div class="carousel-item" *ngFor="let cliente of listaClientes; let i = index" [class.active]="i === 0">
+            <h2>{{ cliente.nome }}</h2>
+            <div class="rounded mx-auto d-block">
+              <img class="img-fluid d-md-none" style="width: 30rem; "src="{{ cliente.foto }}" alt="">
+              <img class="img-fluid d-none d-md-block d-xl-none" style="width: 50rem; " src="{{ cliente.foto }}" alt="">
+              <img class="img-fluid d-none d-xl-block" style="width: 70rem; " src="{{ cliente.foto }}" alt="">
+            </div>
+            <h6><a href="{{ cliente.link }}"  class="link" target="_blank" rel="noopener noreferrer"> {{ cliente.link }} </a></h6>
+          </div>
+        </div>
+
+        <div *ngIf="listaClientes.length > 1">
+          <button class="carousel-control-prev" type="button" [attr.data-bs-target]="'#carousel' + cliente.id" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" [attr.data-bs-target]="'#carousel' + cliente.id" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #semClientes>
+  <div class="ff-inter centralizar">
+    <p>Não há clientes cadastrados</p>
+  </div>
+</ng-template>

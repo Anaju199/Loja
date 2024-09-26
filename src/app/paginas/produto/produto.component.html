@@ -1,0 +1,68 @@
+<div style="max-width: 1200px;">
+  <div class="row g-0">
+    <div class="col-md-6 imagens">
+      <div class="row mx-auto">
+        <div class="col-md-2">
+          <div *ngIf="corSelecionada.imagens.length > 1">
+            <div *ngFor="let imagem of corSelecionada.imagens;">
+              <div style="max-width: 5rem; max-height: 5rem;">
+                <img src="{{ link + imagem.imagem }}" class="img-fluid imagem-mini " alt="..." (click)="selecionarImagem(imagem)" style="cursor: pointer;">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-10">
+          <div class="card" style="width: 15rem; height: 22rem; border: none;">
+            <img src="{{link + imagemSelecionada.imagem }}" class="img-fluid rounded-start" alt="...">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card-body">
+        <h5 class="card-title">{{ Produto.descricao }}</h5>
+        <p class="card-text">{{ Produto.valor }}</p>
+        <div id="divTag" class="d-flex flex-column align-items-left">
+          <div class="d-flex flex-wrap gap-3 ">
+            <div *ngFor="let corProduto of Produto.cores">
+              <p [id]="corProduto.id" class="tag " [ngClass]="{ 'active': corSelecionada && corSelecionada.id === corProduto.id }" (click)="selecionarCor(corProduto)" style="cursor: pointer;">{{ corProduto.cor }}</p>
+            </div>
+          </div>
+        </div>
+        <div id="divBtn" class="d-flex flex-column align-items-left">
+          <div class="d-flex flex-wrap gap-3 ">
+            <div *ngFor="let tamanho of Produto.tamanhos">
+              <button [id]="tamanho.id" class="btn" [ngClass]="{ 'active': tamanhoSelecionado && tamanhoSelecionado.id === tamanho.id }" (click)="selecionarTamanho(tamanho)">
+                {{ tamanho.tamanho }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  // Add active class to the current button (highlight it)
+  var header = document.getElementById("divBtn");
+  var btns = header.getElementsByClassName("btn");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function() {
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+    });
+  }
+
+  var header = document.getElementById("divTag");
+  var btns = header.getElementsByClassName("tag");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function() {
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+    });
+  }
+  </script>
