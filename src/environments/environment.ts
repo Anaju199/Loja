@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://127.0.0.1:8000',
+  apiUrl: 'https://anajulia.pythonanywhere.com',
+  // apiUrl: 'http://127.0.0.1:8000',
   apiUrlPagSeguro: 'https://sandbox.api.pagseguro.com',
   apiUrlMercadoPago: 'https://api.mercadopago.com',
   linkSite: 'http://localhost:4200'

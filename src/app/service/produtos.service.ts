@@ -22,7 +22,8 @@ export class ProdutosService {
 
   listar(): Observable<Produto[]> {
 
-    return this.http.get<Produto[]>(this.API, {})
+    const url = `${this.API}/`
+    return this.http.get<Produto[]>(url, {})
   }
 
   // listarTodos(pagina: number, itensPorPagina: number): Observable<any> {
