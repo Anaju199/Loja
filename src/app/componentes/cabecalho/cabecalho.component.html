@@ -9,7 +9,7 @@
       <div class="d-flex centralizar" role="search">
         <input
           type="search"
-          class="form-control me-2 d-none d-md-block" 
+          class="form-control me-2 d-none d-md-block"
           placeholder="Pesquisa"
           autofocus
           [(ngModel)]="filtroProduto"
@@ -82,7 +82,7 @@
             </ul>
           </li>
           <div class="admin">
-            <ng-container >
+            <ng-container *ngIf="isAdmin">
               <button class="btn btn-outline-dark" routerLink="/administrador">Admin</button>
             </ng-container>
           </div>

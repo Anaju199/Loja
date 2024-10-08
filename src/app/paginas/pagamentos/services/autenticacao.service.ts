@@ -27,7 +27,7 @@ export class AutenticacaoService {
 
   autenticar(cpf: string, senha: string): Observable<HttpResponse<AuthResponse>> {
     return this.http.post<AuthResponse>(
-      `${this.apiUrl}/aj_login/`,
+      `${this.apiUrl}/login_loja/`,
       { cpf, senha },
       { observe: 'response'}
     ).pipe(

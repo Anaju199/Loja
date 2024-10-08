@@ -8,8 +8,8 @@ import { Cor } from './tipos';
   providedIn: 'root'
 })
 export class CoresProdutosService {
-  private readonly API = environment.apiUrl + '/produto'
-  private readonly API_LISTA = environment.apiUrl + '/lista_produtos'
+  private readonly API = environment.apiUrl + '/cor'
+  private readonly API_LISTA = environment.apiUrl + '/lista_cores'
   private produtosFiltradosSubject = new BehaviorSubject<Cor[]>([]);
 
   constructor(private http: HttpClient) { }
@@ -58,7 +58,7 @@ export class CoresProdutosService {
     const url = `${this.API}/${produto.id}/`
     return this.http.put<Cor>(url, produto)
   }
-  
+
   excluir(id: number): Observable<Cor> {
     const url = `${this.API}/${id}/`
     return this.http.delete<Cor>(url)

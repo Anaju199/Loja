@@ -8,8 +8,8 @@ import { Usuario } from '../tipos';
   providedIn: 'root'
 })
 export class CadastroService {
-  private readonly API = environment.apiUrl + '/aj_usuarios'
-  private readonly API_LISTA = environment.apiUrl + '/aj_lista_usuarios'
+  private readonly API = environment.apiUrl + '/loja_usuarios'
+  private readonly API_LISTA = environment.apiUrl + '/loja_lista_usuarios'
 
   constructor(private http: HttpClient) { }
 

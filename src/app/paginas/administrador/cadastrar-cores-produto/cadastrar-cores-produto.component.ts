@@ -31,10 +31,10 @@ export class CadastrarCoresProdutoComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.descricao = params['descricao'];
     });
-    
+
     this.formulario = this.formBuilder.group({
       id: [],
-      produto: ['', Validators.required],
+      produto: [this.produtoId, Validators.required],
       cor: ['', Validators.required],
       inicial: [false]
     });
@@ -63,7 +63,7 @@ export class CadastrarCoresProdutoComponent implements OnInit {
   editarProduto(destino: string) {
     if(this.formulario.valid){
       this.service.editar(this.formulario.value).subscribe(() => {
-        alert('Produto editado com sucesso.')
+        alert('Cor editada com sucesso.')
         switch(destino) {
           case 'listarProduto':
             this.router.navigate(['/listarProduto']);
@@ -84,7 +84,7 @@ export class CadastrarCoresProdutoComponent implements OnInit {
   criarProduto(destino: string) {
     if(this.formulario.valid){
       this.service.criar(this.formulario.value).subscribe(() => {
-        alert('Produto cadastrado com sucesso.')
+        alert('Cor cadastrada com sucesso.')
         switch(destino) {
           case 'listarProduto':
             this.router.navigate(['/listarProduto']);

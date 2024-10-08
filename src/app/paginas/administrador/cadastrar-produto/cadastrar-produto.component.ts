@@ -57,9 +57,12 @@ export class CadastrarProdutoComponent implements OnInit {
   editarProduto(destino: string) {
     if(this.formulario.valid){
       this.service.editar(this.formulario.value).subscribe((response: any) => {
-        const produtoId = 5// response.id;  
-        const descricaoProduto = 'Teste'//this.formulario.value.descricao;  
+        const produtoId = response.id;
+        const descricaoProduto = this.formulario.value.descricao;
 
+        console.log('id', produtoId)
+        console.log('desc', descricaoProduto)
+        console.log('desti',destino)
         alert('Produto editado com sucesso.')
         switch(destino) {
           case 'listarProduto':
@@ -81,17 +84,20 @@ export class CadastrarProdutoComponent implements OnInit {
 
   criarProduto(destino: string) {
     if(this.formulario.valid){
-      this.service.criar(this.formulario.value).subscribe(() => {
+      this.service.criar(this.formulario.value).subscribe((response: any) => {
+        const produtoId = response.id;
+        const descricaoProduto = this.formulario.value.descricao;
+
         alert('Produto cadastrado com sucesso.')
         switch(destino) {
           case 'listarProduto':
             this.router.navigate(['/listarProduto']);
             break;
-          case 'adicionarImagens':
-            this.router.navigate(['/adicionarImagens']);
+          case 'cadastrarEditarImagens':
+            this.router.navigate(['/cadastrarEditarImagens']);
             break;
-          case 'adicionarCores':
-            this.router.navigate(['/adicionarCores']);
+          case 'cadastrarEditarCores':
+            this.router.navigate(['/cadastrarEditarCores', produtoId], { queryParams: { descricao: descricaoProduto } });
             break;
           default:
             this.router.navigate(['/listarProduto']); // rota padrão

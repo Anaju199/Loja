@@ -4,7 +4,7 @@
     </header>
     <form [formGroup]="formulario">
       <p>{{ descricao }}</p>
-  
+
       <label for="cor">Cor</label>
       <input
         type="textarea"
@@ -32,23 +32,22 @@
                 id="btnSalvar">
                 Salvar
             </button>
-            <button 
+            <button
                 [disabled]="!formulario.valid"
-                (click)="id ? editarProduto('cadastrarEditarImagens') : criarProduto('cadastrarEditarImagens')" 
+                (click)="id ? editarProduto('cadastrarEditarImagens') : criarProduto('cadastrarEditarImagens')"
                 [ngClass]="habilitarBotao()">
                 Adicionar Imagens do produto
             </button>
         </div>
-        <div class="d-flex flex-wrap gap-2">    
-            <button 
+        <div class="d-flex flex-wrap gap-2">
+            <button
                 [disabled]="!formulario.valid"
-                (click)="id ? editarProduto('cadastrarEditarCores') : criarProduto('cadastrarEditarCores')" 
+                (click)="id ? editarProduto('cadastrarEditarCores') : criarProduto('cadastrarEditarCores')"
                 [ngClass]="habilitarBotao()">
-                Adicionar opções de cores
+                Adicionar outra cor
             </button>
             <button (click)="cancelar()" class="botao_forms">Cancelar</button>
         </div>
       </div>
     </form>
   </section>
-  
