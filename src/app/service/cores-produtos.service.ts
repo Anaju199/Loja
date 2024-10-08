@@ -2,28 +2,28 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Produto } from './tipos';
+import { Cor } from './tipos';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProdutosService {
+export class CoresProdutosService {
   private readonly API = environment.apiUrl + '/produto'
   private readonly API_LISTA = environment.apiUrl + '/lista_produtos'
-  private produtosFiltradosSubject = new BehaviorSubject<Produto[]>([]);
+  private produtosFiltradosSubject = new BehaviorSubject<Cor[]>([]);
 
   constructor(private http: HttpClient) { }
 
   produtosFiltrados$ = this.produtosFiltradosSubject.asObservable();
 
-  setProdutosFiltrados(listaProdutos: Produto[]): void {
+  setProdutosFiltrados(listaProdutos: Cor[]): void {
     this.produtosFiltradosSubject.next(listaProdutos);
   }
 
-  listar(): Observable<Produto[]> {
+  listar(): Observable<Cor[]> {
 
     const url = `${this.API}/`
-    return this.http.get<Produto[]>(url, {})
+    return this.http.get<Cor[]>(url, {})
   }
 
   // listarTodos(pagina: number, itensPorPagina: number): Observable<any> {
@@ -35,7 +35,7 @@ export class ProdutosService {
   //   return this.http.get<any>(url, {params})
   // }
 
-  listarPesquisa(filtroProduto: string, pagina: number, itensPorPagina: number): Observable<Produto[]> {
+  listarPesquisa(filtroProduto: string, pagina: number, itensPorPagina: number): Observable<Cor[]> {
 
     let params = new HttpParams()
       .set("_page", pagina)
@@ -46,26 +46,26 @@ export class ProdutosService {
     }
 
     const url = `${this.API_LISTA}/`
-    return this.http.get<Produto[]>(url, {params})
+    return this.http.get<Cor[]>(url, {params})
   }
 
-  criar(Produto: FormData): Observable<Produto> {
+  criar(Cor: FormData): Observable<Cor> {
     const url = `${this.API}/`
-    return this.http.post<Produto>(url, Produto)
+    return this.http.post<Cor>(url, Cor)
   }
 
-  editar(produto: Produto): Observable<Produto> {
+  editar(produto: Cor): Observable<Cor> {
     const url = `${this.API}/${produto.id}/`
-    return this.http.put<Produto>(url, produto)
+    return this.http.put<Cor>(url, produto)
+  }
+  
+  excluir(id: number): Observable<Cor> {
+    const url = `${this.API}/${id}/`
+    return this.http.delete<Cor>(url)
   }
 
-  excluir(id: number): Observable<Produto> {
+  buscarPorId(id: number): Observable<Cor> {
     const url = `${this.API}/${id}/`
-    return this.http.delete<Produto>(url)
-  }
-
-  buscarPorId(id: number): Observable<Produto> {
-    const url = `${this.API}/${id}/`
-    return this.http.get<Produto>(url)
+    return this.http.get<Cor>(url)
   }
 }

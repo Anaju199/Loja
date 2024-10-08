@@ -1,0 +1,18 @@
+
+a.add{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: large;
+    text-decoration: none;
+    color: black;
+  }
+  
+
+.titulo {
+    /* text-decoration: underline; */
+    line-height  : 1;
+    margin-top   : 0;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    margin-right: 5%;
+    font-size: 2rem;
+    color: #000000;
+}

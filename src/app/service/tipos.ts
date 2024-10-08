@@ -1,5 +1,6 @@
 export interface Cor{
   id: number,
+  produto: Produto,
   cor: string,
   inicial : boolean,
   imagens: Imagem[]
@@ -22,11 +23,11 @@ export interface Tamanho {
 }
 
 export interface Produto {
-  id: string,
+  id: number,
   descricao: string,
   valor: number,
   cores: Cor[],
   categorias: Categoria[],
   tamanhos: Tamanho[],
-  palavras_chase: string
+  palavras_chave: string
 }

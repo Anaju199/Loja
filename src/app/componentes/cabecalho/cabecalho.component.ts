@@ -11,6 +11,7 @@ import { Produto } from 'src/app/service/tipos';
 })
 export class CabecalhoComponent implements OnInit {
 
+  isAdmin: boolean = false;
   filtroProduto: string = ''
   listaFiltroProdutos: Produto[] = [];
   paginaAtual: number = 1;
@@ -27,10 +28,12 @@ export class CabecalhoComponent implements OnInit {
 
   logout() {
     this.userService.logout();
-    this.router.navigate(['/login'])
+    window.location.href = '/login'
   }
 
   ngOnInit(): void {
+    const role = this.userService.retornarUserRole();
+    this.isAdmin = role === 'admin';
   }
 
   pesquisarProduto(){

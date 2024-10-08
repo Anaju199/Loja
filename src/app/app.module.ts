@@ -28,9 +28,11 @@ import { AutenticacaoInterceptor } from './paginas/pagamentos/core/interceptors/
 import { ListarProdutosComponent } from './componentes/listar-produtos/listar-produtos.component';
 import { ProdutoComponent } from './paginas/produto/produto.component';
 import { CadastrarProdutoComponent } from './paginas/administrador/cadastrar-produto/cadastrar-produto.component';
-import { CadastrarCoresProdutoComponent } from './paginas/administrador/cadastrar-cores-produto/cadastrar-cores-produto.component';
 import { CadastrarFotosProdutoComponent } from './paginas/administrador/cadastrar-fotos-produto/cadastrar-fotos-produto.component';
 import { CadastrarDetalhesProdutoComponent } from './paginas/administrador/cadastrar-detalhes-produto/cadastrar-detalhes-produto.component';
+import { PaginaInicialAdmComponent } from './paginas/administrador/pagina-inicial-adm/pagina-inicial-adm.component';
+import { CadastrarCoresProdutoComponent } from './paginas/administrador/cadastrar-cores-produto/cadastrar-cores-produto.component';
+import { ProdutosComponent } from './paginas/administrador/produtos/produtos.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,9 @@ import { CadastrarDetalhesProdutoComponent } from './paginas/administrador/cadas
     CadastrarProdutoComponent,
     CadastrarCoresProdutoComponent,
     CadastrarFotosProdutoComponent,
-    CadastrarDetalhesProdutoComponent
+    CadastrarDetalhesProdutoComponent,
+    PaginaInicialAdmComponent,
+    ProdutosComponent
   ],
   imports: [
     BrowserModule,

@@ -18,6 +18,9 @@ import { PedidosLinkComponent } from './paginas/pagamentos/pedidos-link/pedidos-
 import { NotificacoesComponent } from './paginas/pagamentos/notificacoes/notificacoes.component';
 import { ListarProdutosComponent } from './componentes/listar-produtos/listar-produtos.component';
 import { ProdutoComponent } from './paginas/produto/produto.component';
+import { PaginaInicialAdmComponent } from './paginas/administrador/pagina-inicial-adm/pagina-inicial-adm.component';
+import { CadastrarProdutoComponent } from './paginas/administrador/cadastrar-produto/cadastrar-produto.component';
+import { CadastrarCoresProdutoComponent } from './paginas/administrador/cadastrar-cores-produto/cadastrar-cores-produto.component';
 
 const routes: Routes = [
   {
@@ -98,6 +101,36 @@ const routes: Routes = [
     path: 'notificacoes',
     component: NotificacoesComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'administrador',
+    component: PaginaInicialAdmComponent,
+    canActivate: [AuthGuard],
+    data: { expectedRole: 'admin' } // Apenas administradores têm acesso
+  },
+  {
+    path: 'cadastrarEditarProduto',
+    component: CadastrarProdutoComponent,
+    canActivate: [AuthGuard]
+    // data: { expectedRole: 'admin' }
+  },
+  {
+    path: 'cadastrarEditarProduto/:id',
+    component: CadastrarProdutoComponent,
+    canActivate: [AuthGuard]
+    // data: { expectedRole: 'admin' }
+  },
+  {
+    path: 'cadastrarEditarCores',
+    component: CadastrarCoresProdutoComponent,
+    canActivate: [AuthGuard]
+    // data: { expectedRole: 'admin' }
+  },
+  {
+    path: 'cadastrarEditarCores/:id',
+    component: CadastrarCoresProdutoComponent,
+    canActivate: [AuthGuard]
+    // data: { expectedRole: 'admin' }
   }
 
 

@@ -31,6 +31,15 @@ export class UserService {
     return this.userSubject.asObservable();
   }
 
+  setUserRole(role: string) {
+    localStorage.setItem('role', role);
+  }
+
+  retornarUserRole(): string {
+    // Lógica para retornar a função do usuário
+    return localStorage.getItem('role') || ''; // Exemplo: 'admin', 'user'
+  }
+
   setId(id: number) {
     localStorage.setItem('id', id.toString());
   }
@@ -57,6 +66,7 @@ export class UserService {
     this.userSubject.next(null);
     localStorage.removeItem('nome')
     localStorage.removeItem('id')
+    localStorage.removeItem('role')
   }
 
   estaLogado() {

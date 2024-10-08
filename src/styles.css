@@ -69,30 +69,27 @@ h6 {
   color: #ffffff;
   background-color: #000000;
   margin: 0 auto;
-  max-width: 220px;
-  width: 180px;
-  padding: 0.5rem;
+  height: 30px;
+  width: 210px;
   border-color: #000000;
   border-radius: 10px;
   transition: 0.5s ease;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-
 }
 
 .botao__desabilitado {
-  color: #ffffff;
-  background-color: #6b6a6a;
+  color: #000a02;
+  background-color: #989da5;
   margin: 0 auto;
-  max-width: 220px;
-  width: 180px;
-  padding: 0.5rem;
-  border-color: #000000;
+  height: 30px;
+  width: 210px;
+  border-color: #989da5;
   border-radius: 10px;
   transition: 0.5s ease;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-.botao:hover {
+.botao, .botao_forms:hover {
   border: 2px solid #525856;
   color: #818382;
 }

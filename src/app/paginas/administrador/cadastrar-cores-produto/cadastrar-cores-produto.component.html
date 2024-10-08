@@ -1,1 +1,54 @@
-<p>cadastrar-cores-produto works!</p>
+<section class="container_cadastros fomulario ff-inter">
+    <header class="header">
+      <h2>{{ titulo }}</h2>
+    </header>
+    <form [formGroup]="formulario">
+      <p>{{ descricao }}</p>
+  
+      <label for="cor">Cor</label>
+      <input
+        type="textarea"
+        class="input"
+        id="cor"
+        formControlName="cor"
+        placeholder="Digite a cor possivel para o produto"
+      >
+      <div class="mensagem__erro"
+       *ngIf="formulario.get('cor')?.errors && formulario.get('cor')?.touched">
+        Cor é Obrigatória!
+      </div>
+
+      <div class="col-md-6">
+        <input id="inicial" type="checkbox" formControlName="inicial" [checked]="false" selected />
+        <label class="campo__check" for="inicial">Cor inicial de exibição</label>
+      </div>
+
+      <div class="d-flex flex-column align-items-center gap-2">
+        <div class="d-flex flex-wrap gap-2">
+            <button
+                [disabled]="!formulario.valid"
+                (click)="id ? editarProduto('listarProduto') : criarProduto('listarProduto')"
+                [ngClass]="habilitarBotao()"
+                id="btnSalvar">
+                Salvar
+            </button>
+            <button 
+                [disabled]="!formulario.valid"
+                (click)="id ? editarProduto('cadastrarEditarImagens') : criarProduto('cadastrarEditarImagens')" 
+                [ngClass]="habilitarBotao()">
+                Adicionar Imagens do produto
+            </button>
+        </div>
+        <div class="d-flex flex-wrap gap-2">    
+            <button 
+                [disabled]="!formulario.valid"
+                (click)="id ? editarProduto('cadastrarEditarCores') : criarProduto('cadastrarEditarCores')" 
+                [ngClass]="habilitarBotao()">
+                Adicionar opções de cores
+            </button>
+            <button (click)="cancelar()" class="botao_forms">Cancelar</button>
+        </div>
+      </div>
+    </form>
+  </section>
+  

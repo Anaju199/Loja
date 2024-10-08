@@ -1,1 +1,69 @@
-<p>cadastrar-produto works!</p>
+<section class="container_cadastros fomulario ff-inter">
+    <header class="header">
+      <h2>{{ titulo }}</h2>
+    </header>
+    <form [formGroup]="formulario">
+      <label for="descricao">Descrição</label>
+      <input
+        type="textarea"
+        class="input"
+        id="descricao"
+        formControlName="descricao"
+        placeholder="Digite a descricao"
+      >
+      <div class="mensagem__erro"
+       *ngIf="formulario.get('descricao')?.errors && formulario.get('descricao')?.touched">
+        Descrição é Obrigatória!
+      </div>
+  
+      <label for="valor">Valor</label>
+      <input
+        type="number"
+        class="input"
+        id="valor"
+        formControlName="valor"
+        placeholder="Digite o valor"
+      >
+      <div class="mensagem__erro"
+       *ngIf="formulario.get('valor')?.errors && formulario.get('valor')?.touched">
+        Valor é Obrigatório!
+      </div>
+  
+      <label for="palavras_chave">Palavras Chave</label>
+      <input
+        type="textarea"
+        class="input"
+        id="palavras_chave"
+        formControlName="palavras_chave"
+        placeholder="Digite palavras chave para busca do produto"
+      >
+  
+      <div class="d-flex flex-column align-items-center gap-2">
+        <div class="d-flex flex-wrap gap-2">
+            <button
+                [disabled]="!formulario.valid"
+                (click)="id ? editarProduto('listarProduto') : criarProduto('listarProduto')"
+                [ngClass]="habilitarBotao()"
+                id="btnSalvar">
+                Salvar
+            </button>
+            <button 
+                [disabled]="!formulario.valid"
+                (click)="id ? editarProduto('cadastrarEditarImagens') : criarProduto('cadastrarEditarImagens')" 
+                [ngClass]="habilitarBotao()">
+                Adicionar Imagens do produto
+            </button>
+        </div>
+        <div class="d-flex flex-wrap gap-2">    
+            <button 
+                [disabled]="!formulario.valid"
+                (click)="id ? editarProduto('cadastrarEditarCores') : criarProduto('cadastrarEditarCores')" 
+                [ngClass]="habilitarBotao()">
+                Adicionar opções de cores
+            </button>
+            <button (click)="cancelar()" class="botao_forms">Cancelar</button>
+        </div>
+      </div>
+    </form>
+  </section>
+  
