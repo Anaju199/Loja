@@ -42,16 +42,12 @@ i {
 .admin {
   padding-left: 1rem;
 }
-
+/* 
 @media (max-width: 768px) {
-  .cabecalho{
-    padding-right: 5rem;
-    float: right;
+  input{
+    width: 10px;
   }
-  .input {
-    display: none;
-  }
-}
+} */
 
 @media (min-width: 1200px) {
   .cabecalho{

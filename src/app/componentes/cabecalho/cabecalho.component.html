@@ -9,7 +9,7 @@
       <div class="d-flex centralizar" role="search">
         <input
           type="search"
-          class="form-control me-2 d-none d-md-block"
+          class="form-control me-2"
           placeholder="Pesquisa"
           autofocus
           [(ngModel)]="filtroProduto"
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="col-md-2">
-      <div class="d-flex flex-column align-items-left cabecalho">
+      <div class="d-flex flex-column align-items-center cabecalho">
         <div class="d-flex flex-wrap gap-3">
           <li class="nav-item dropdown">
             <a class="icon" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -86,11 +86,6 @@
               <button class="btn btn-outline-dark" routerLink="/administrador">Admin</button>
             </ng-container>
           </div>
-          <!-- <ng-container *ngIf="isAdmin"> -->
-            <!-- <li class="nav-item ff-inter">
-              <a class="nav-link" href="/listarPerguntas">Admin</a>
-            </li> -->
-          <!--  -->
         </div>
       </div>
     </div>

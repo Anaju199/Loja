@@ -7,6 +7,7 @@ export interface Cor{
 }
 
 export interface Imagem {
+  id: number,
   imagem: string,
   Cor: Cor[],
   inicial : boolean

@@ -42,25 +42,25 @@
         <div class="d-flex flex-wrap gap-2">
             <button
                 [disabled]="!formulario.valid"
-                (click)="id ? editarProduto('listarProduto') : criarProduto('listarProduto')"
+                (click)="id ? editarProduto('produtos') : criarProduto('produtos')"
                 [ngClass]="habilitarBotao()"
                 id="btnSalvar">
                 Salvar
             </button>
             <button 
                 [disabled]="!formulario.valid"
-                (click)="id ? editarProduto('cadastrarEditarImagens') : criarProduto('cadastrarEditarImagens')" 
-                [ngClass]="habilitarBotao()">
-                Adicionar Imagens do produto
-            </button>
-        </div>
-        <div class="d-flex flex-wrap gap-2">    
-            <button 
-                [disabled]="!formulario.valid"
                 (click)="id ? editarProduto('cadastrarEditarCores') : criarProduto('cadastrarEditarCores')" 
                 [ngClass]="habilitarBotao()">
                 Adicionar opções de cores
             </button>
+            <!-- <button 
+                [disabled]="!formulario.valid"
+                (click)="id ? editarProduto('cadastrarEditarFotos') : criarProduto('cadastrarEditarFotos')" 
+                [ngClass]="habilitarBotao()">
+                Adicionar Fotos do produto
+            </button> -->
+        </div>
+        <div class="d-flex flex-wrap gap-2">    
             <button (click)="cancelar()" class="botao_forms">Cancelar</button>
         </div>
       </div>

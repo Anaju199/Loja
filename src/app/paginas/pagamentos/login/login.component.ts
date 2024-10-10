@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
       this.authService.autenticar(login, senha).subscribe({
         next: (value) => {
           alert('Login realizado com sucesso')
-          this.router.navigateByUrl('/paginaInicial')
+          window.location.href = '/paginaInicial'
           this.formulario.reset();
         },
         error: (err) => {

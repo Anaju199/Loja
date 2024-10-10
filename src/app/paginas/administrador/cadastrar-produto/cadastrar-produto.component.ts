@@ -65,18 +65,18 @@ export class CadastrarProdutoComponent implements OnInit {
         console.log('desti',destino)
         alert('Produto editado com sucesso.')
         switch(destino) {
-          case 'listarProduto':
-            this.router.navigate(['/listarProduto']);
+          case 'produtos':
+            this.router.navigate(['/produtos']);
             break;
-          case 'cadastrarEditarImagens':
-            this.router.navigate(['/cadastrarEditarImagens']);
+          case 'cadastrarEditarFotos':
+            this.router.navigate(['/cadastrarEditarFotos']);
             break;
           case 'cadastrarEditarCores':
             console.log('cor')
             this.router.navigate(['/cadastrarEditarCores', produtoId], { queryParams: { descricao: descricaoProduto } });
             break;
           default:
-            this.router.navigate(['/listarProduto']); // rota padrão
+            this.router.navigate(['/produtos']); // rota padrão
         }
       })
     }
@@ -88,19 +88,19 @@ export class CadastrarProdutoComponent implements OnInit {
         const produtoId = response.id;
         const descricaoProduto = this.formulario.value.descricao;
 
-        alert('Produto cadastrado com sucesso.')
         switch(destino) {
-          case 'listarProduto':
-            this.router.navigate(['/listarProduto']);
+          case 'produtos':
+            alert('Produto cadastrado com sucesso.')
+            this.router.navigate(['/produtos']);
             break;
-          case 'cadastrarEditarImagens':
-            this.router.navigate(['/cadastrarEditarImagens']);
-            break;
+          // case 'cadastrarEditarFotos':
+          //   this.router.navigate(['/cadastrarEditarFotos', produtoId], { queryParams: { descricao: descricaoProduto } });
+          //   break;
           case 'cadastrarEditarCores':
             this.router.navigate(['/cadastrarEditarCores', produtoId], { queryParams: { descricao: descricaoProduto } });
             break;
           default:
-            this.router.navigate(['/listarProduto']); // rota padrão
+            this.router.navigate(['/produtos']); // rota padrão
         }
       }, error => {
         alert('Não foi possivel cadastrar. Verifique se esse produto já não foi cadastrado.')
@@ -111,7 +111,7 @@ export class CadastrarProdutoComponent implements OnInit {
   }
 
   cancelar() {
-    this.router.navigate(['/listarProduto'])
+    this.router.navigate(['/produtos'])
   }
 
   habilitarBotao(): string {

@@ -12,9 +12,7 @@ export class CadastrarCoresProdutoComponent implements OnInit {
 
   id?: number
   formulario!: FormGroup;
-  classes: string[] = [];
-  ano: number = new Date().getFullYear()
-  titulo: string = 'Adicione uma novo cor possivel para o produto:'
+  titulo: string = 'Adicione uma novo cor possivel para ' 
   produtoId: number = 0;
   descricao: string = '';
 
@@ -32,6 +30,7 @@ export class CadastrarCoresProdutoComponent implements OnInit {
       this.descricao = params['descricao'];
     });
 
+    console.log('iddd',this.produtoId)
     this.formulario = this.formBuilder.group({
       id: [],
       produto: [this.produtoId, Validators.required],
@@ -60,13 +59,13 @@ export class CadastrarCoresProdutoComponent implements OnInit {
     // }
   }
 
-  editarProduto(destino: string) {
+  editarCor(destino: string) {
     if(this.formulario.valid){
       this.service.editar(this.formulario.value).subscribe(() => {
         alert('Cor editada com sucesso.')
         switch(destino) {
-          case 'listarProduto':
-            this.router.navigate(['/listarProduto']);
+          case 'produtos':
+            this.router.navigate(['/produtos']);
             break;
           case 'cadastrarEditarImagens':
             this.router.navigate(['/cadastrarEditarImagens']);
@@ -75,39 +74,50 @@ export class CadastrarCoresProdutoComponent implements OnInit {
             this.router.navigate(['/cadastrarEditarCores']);
             break;
           default:
-            this.router.navigate(['/listarProduto']); // rota padrão
+            this.router.navigate(['/produtos']); // rota padrão
         }
       })
     }
   }
 
-  criarProduto(destino: string) {
+  criarCor(destino: string) {
     if(this.formulario.valid){
       this.service.criar(this.formulario.value).subscribe(() => {
         alert('Cor cadastrada com sucesso.')
         switch(destino) {
-          case 'listarProduto':
-            this.router.navigate(['/listarProduto']);
+          case 'produtos':
+            this.router.navigate(['/produtos']);
             break;
-          case 'adicionarImagens':
-            this.router.navigate(['/adicionarImagens']);
+          case 'cadastrarEditarFotos':
+            this.router.navigate(['/cadastrarEditarFotos', this.produtoId], { queryParams: { descricao: this.descricao }});
             break;
-          case 'adicionarCores':
-            this.router.navigate(['/adicionarCores']);
+          case 'cadastrarEditarCores':
+            this.router.navigate(['/cadastrarEditarCores', this.produtoId], { queryParams: { descricao: this.descricao }}).then(() => {
+              this.recarregarComponente();
+            });
             break;
           default:
-            this.router.navigate(['/listarProduto']); // rota padrão
+            this.router.navigate(['/produtos']); // rota padrão
         }
       }, error => {
-        alert('Não foi possivel cadastrar. Verifique se esse corProduto já não foi cadastrado.')
+        console.log(error)
+        alert('Não foi possivel cadastrar. Verifique se essa cor já não foi cadastrado para esse produto.')
       });
     } else {
       alert('Formulário Inválido')
     }
   }
 
+  recarregarComponente(){
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(['/cadastrarEditarCores', this.produtoId], { 
+      queryParams: { descricao: this.descricao } 
+    });
+  }
+
   cancelar() {
-    this.router.navigate(['/listarProduto'])
+    this.router.navigate(['/produtos'])
   }
 
   habilitarBotao(): string {

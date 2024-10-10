@@ -21,6 +21,8 @@ import { ProdutoComponent } from './paginas/produto/produto.component';
 import { PaginaInicialAdmComponent } from './paginas/administrador/pagina-inicial-adm/pagina-inicial-adm.component';
 import { CadastrarProdutoComponent } from './paginas/administrador/cadastrar-produto/cadastrar-produto.component';
 import { CadastrarCoresProdutoComponent } from './paginas/administrador/cadastrar-cores-produto/cadastrar-cores-produto.component';
+import { ProdutosComponent } from './paginas/administrador/produtos/produtos.component';
+import { CadastrarFotosProdutoComponent } from './paginas/administrador/cadastrar-fotos-produto/cadastrar-fotos-produto.component';
 
 const routes: Routes = [
   {
@@ -106,31 +108,49 @@ const routes: Routes = [
     path: 'administrador',
     component: PaginaInicialAdmComponent,
     canActivate: [AuthGuard],
-    data: { expectedRole: 'admin' } // Apenas administradores têm acesso
+    data: { expectedRole: 'admin' } 
+  },
+  {
+    path: 'produtos',
+    component: ProdutosComponent,
+    canActivate: [AuthGuard],
+    data: { expectedRole: 'admin' } 
   },
   {
     path: 'cadastrarEditarProduto',
     component: CadastrarProdutoComponent,
-    canActivate: [AuthGuard]
-    // data: { expectedRole: 'admin' }
+    canActivate: [AuthGuard],
+    data: { expectedRole: 'admin' }
   },
   {
     path: 'cadastrarEditarProduto/:id',
     component: CadastrarProdutoComponent,
-    canActivate: [AuthGuard]
-    // data: { expectedRole: 'admin' }
+    canActivate: [AuthGuard],
+    data: { expectedRole: 'admin' }
   },
   {
     path: 'cadastrarEditarCores',
     component: CadastrarCoresProdutoComponent,
-    canActivate: [AuthGuard]
-    // data: { expectedRole: 'admin' }
+    canActivate: [AuthGuard],
+    data: { expectedRole: 'admin' }
   },
   {
     path: 'cadastrarEditarCores/:id',
     component: CadastrarCoresProdutoComponent,
-    canActivate: [AuthGuard]
-    // data: { expectedRole: 'admin' }
+    canActivate: [AuthGuard],
+    data: { expectedRole: 'admin' }
+  },
+  {
+    path: 'cadastrarEditarFotos',
+    component: CadastrarFotosProdutoComponent,
+    canActivate: [AuthGuard],
+    data: { expectedRole: 'admin' }
+  },
+  {
+    path: 'cadastrarEditarFotos/:id',
+    component: CadastrarFotosProdutoComponent,
+    canActivate: [AuthGuard],
+    data: { expectedRole: 'admin' }
   }
 
 

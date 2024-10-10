@@ -20,20 +20,25 @@ export class ProdutosService {
     this.produtosFiltradosSubject.next(listaProdutos);
   }
 
-  listar(): Observable<Produto[]> {
+  listar(filtroProduto: string): Observable<Produto[]> {
+    let params = new HttpParams()
+
+    if(filtroProduto.trim().length > 0){
+      params = params.set("descricao",filtroProduto)
+    }
 
     const url = `${this.API}/`
-    return this.http.get<Produto[]>(url, {})
+    return this.http.get<Produto[]>(url, {params})
   }
 
-  // listarTodos(pagina: number, itensPorPagina: number): Observable<any> {
-  //   let params = new HttpParams()
-  //     .set("_page", pagina)
-  //     .set("_limit", itensPorPagina)
+  listarTodos(pagina: number, itensPorPagina: number): Observable<any> {
+    let params = new HttpParams()
+      .set("_page", pagina)
+      .set("_limit", itensPorPagina)
 
-  //   const url = `${this.API}/`
-  //   return this.http.get<any>(url, {params})
-  // }
+    const url = `${this.API}/`
+    return this.http.get<any>(url, {params})
+  }
 
   listarPesquisa(filtroProduto: string, pagina: number, itensPorPagina: number): Observable<Produto[]> {
 

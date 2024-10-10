@@ -36,9 +36,9 @@ export class FotosProdutoService {
     return this.http.post<Imagem>(url, Imagem)
   }
 
-  editar(id: number, Imagem: FormData): Observable<Imagem> {
-    const url = `${this.API}/${id}/`
-    return this.http.put<Imagem>(url, Imagem )
+  editar(imagem: Imagem): Observable<Imagem> {
+    const url = `${this.API}/${imagem.id}/`
+    return this.http.put<Imagem>(url, imagem )
   }
 
   excluir(id: number): Observable<Imagem> {
