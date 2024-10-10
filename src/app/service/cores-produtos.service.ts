@@ -54,9 +54,9 @@ export class CoresProdutosService {
     return this.http.post<Cor>(url, Cor)
   }
 
-  editar(produto: Cor): Observable<Cor> {
-    const url = `${this.API}/${produto.id}/`
-    return this.http.put<Cor>(url, produto)
+  editar(cor: Cor): Observable<Cor> {
+    const url = `${this.API}/${cor.id}/`
+    return this.http.put<Cor>(url, cor)
   }
 
   excluir(id: number): Observable<Cor> {

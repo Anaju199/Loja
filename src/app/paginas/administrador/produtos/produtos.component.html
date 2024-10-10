@@ -1,1 +1,71 @@
-<p>produtos works!</p>
+<div class="container row mx-auto">
+    <div class="container row mx-auto">
+      <div class="col-md-9 align-self-center">
+        <p class="titulo">
+          Produtos
+        </p>
+      </div>
+      <div class="col-md-3 align-self-center">
+        <i class="fa-regular fa-plus"></i><a href="/cadastrarEditarProduto" class="add"> Adicionar Produto</a>
+      </div>
+    </div>
+  
+    <div class="col-md-12 align-self-center">
+        <div class="d-flex" role="search">
+          <input
+            type="search"
+            class="form-control me-2"
+            placeholder="Digite o produto que procura"
+            autofocus
+            [(ngModel)]="filtroProduto"
+            (keyup)="pesquisarProduto()"
+          >
+        </div>
+      </div>
+    <div *ngIf="listaProduto.length > 0, else semProduto">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Descrição</th>
+            <th>Valor</th>
+            <th>Cores</th>
+            <!-- <th>Foto</th> -->
+            <th>Excluir</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let produto of listaProduto; let i = index">
+            <tr [class.odd]="i % 2 === 0" [class.even]="i % 2 !== 0">
+              <td><a class="listaAdm" href="/cadastrarEditarProduto/{{ produto.id }}">{{ produto.descricao }}</a></td>
+              <td><a class="listaAdm" href="/cadastrarEditarProduto/{{ produto.id }}">{{ produto.valor }}</a></td>
+              <td><a class="listaAdm" href="/cadastrarEditarProduto/{{ produto.id }}">{{ produto.cores }}</a></td>
+              <!-- <ng-container *ngIf="produto. === null; else foto">
+                <td><a class="listaAdm" href="/cadastrarEditarProduto/{{ produto.id }}">Não</a></td>
+              </ng-container>
+              <ng-template #foto>
+                <td><a class="listaAdm" href="/cadastrarEditarProduto/{{ produto.id }}">Sim</a></td>
+              </ng-template> -->
+              <td><button class="botaoExcluir" (click)="excluir(produto.id)"><i class="fa-regular fa-trash-can"></i></button></td>
+             </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-flex flex-column align-items-center">
+      <div class="d-flex flex-wrap gap-3" *ngIf="totalPaginas > 1">
+        <button (click)="paginaAnterior()" [ngClass]="habilitarBotao('anterior')" [disabled]="habilitarBotao('anterior') === 'botao_pag_desabilitado'">Anterior</button>
+        <button (click)="proximaPagina()" [ngClass]="habilitarBotao('proxima')" [disabled]="habilitarBotao('proxima') === 'botao_pag_desabilitado'">Próxima</button>
+      </div>
+      <br/>
+      <div class="d-flex flex-wrap gap-3">
+        <button (click)="voltar()" class="botao">Voltar para página do administrador</button>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #semProduto>
+    <div class="ff-inter centralizar">
+      <p>Não há nenhum produto cadastrado</p>
+    </div>
+  </ng-template>
+  

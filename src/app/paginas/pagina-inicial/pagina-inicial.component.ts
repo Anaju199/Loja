@@ -17,7 +17,7 @@ export class PaginaInicialComponent implements OnInit {
   listaProdutos: Produto[] = []
 
   ngOnInit(): void {
-    this.service.listar().subscribe((listaProdutos) => {
+    this.service.listar('').subscribe((listaProdutos) => {
       this.listaProdutos = listaProdutos
     })
   }
