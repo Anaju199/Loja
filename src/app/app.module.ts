@@ -33,6 +33,10 @@ import { CadastrarDetalhesProdutoComponent } from './paginas/administrador/cadas
 import { PaginaInicialAdmComponent } from './paginas/administrador/pagina-inicial-adm/pagina-inicial-adm.component';
 import { CadastrarCoresProdutoComponent } from './paginas/administrador/cadastrar-cores-produto/cadastrar-cores-produto.component';
 import { ProdutosComponent } from './paginas/administrador/produtos/produtos.component';
+import { CadastrarTamanhosProdutoComponent } from './paginas/administrador/cadastrar-tamanhos-produto/cadastrar-tamanhos-produto.component';
+import { CadastrarDisponibilidadeProdutoComponent } from './paginas/administrador/cadastrar-disponibilidade-produto/cadastrar-disponibilidade-produto.component';
+import { CadastrarCategoriaProdutoComponent } from './paginas/administrador/cadastrar-categoria-produto/cadastrar-categoria-produto.component';
+import { CadastrarCategoriaComponent } from './paginas/administrador/cadastrar-categoria/cadastrar-categoria.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +67,11 @@ import { ProdutosComponent } from './paginas/administrador/produtos/produtos.com
     CadastrarFotosProdutoComponent,
     CadastrarDetalhesProdutoComponent,
     PaginaInicialAdmComponent,
-    ProdutosComponent
+    ProdutosComponent,
+    CadastrarTamanhosProdutoComponent,
+    CadastrarDisponibilidadeProdutoComponent,
+    CadastrarCategoriaProdutoComponent,
+    CadastrarCategoriaComponent
   ],
   imports: [
     BrowserModule,

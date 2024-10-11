@@ -23,6 +23,10 @@ import { CadastrarProdutoComponent } from './paginas/administrador/cadastrar-pro
 import { CadastrarCoresProdutoComponent } from './paginas/administrador/cadastrar-cores-produto/cadastrar-cores-produto.component';
 import { ProdutosComponent } from './paginas/administrador/produtos/produtos.component';
 import { CadastrarFotosProdutoComponent } from './paginas/administrador/cadastrar-fotos-produto/cadastrar-fotos-produto.component';
+import { CadastrarTamanhosProdutoComponent } from './paginas/administrador/cadastrar-tamanhos-produto/cadastrar-tamanhos-produto.component';
+import { CadastrarDisponibilidadeProdutoComponent } from './paginas/administrador/cadastrar-disponibilidade-produto/cadastrar-disponibilidade-produto.component';
+import { CadastrarCategoriaProdutoComponent } from './paginas/administrador/cadastrar-categoria-produto/cadastrar-categoria-produto.component';
+import { CadastrarCategoriaComponent } from './paginas/administrador/cadastrar-categoria/cadastrar-categoria.component';
 
 const routes: Routes = [
   {
@@ -108,13 +112,13 @@ const routes: Routes = [
     path: 'administrador',
     component: PaginaInicialAdmComponent,
     canActivate: [AuthGuard],
-    data: { expectedRole: 'admin' } 
+    data: { expectedRole: 'admin' }
   },
   {
     path: 'produtos',
     component: ProdutosComponent,
     canActivate: [AuthGuard],
-    data: { expectedRole: 'admin' } 
+    data: { expectedRole: 'admin' }
   },
   {
     path: 'cadastrarEditarProduto',
@@ -128,27 +132,75 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { expectedRole: 'admin' }
   },
-  {
-    path: 'cadastrarEditarCores',
-    component: CadastrarCoresProdutoComponent,
-    canActivate: [AuthGuard],
-    data: { expectedRole: 'admin' }
-  },
+  // {
+  //   path: 'cadastrarEditarCores',
+  //   component: CadastrarCoresProdutoComponent,
+  //   canActivate: [AuthGuard],
+  //   data: { expectedRole: 'admin' }
+  // },
   {
     path: 'cadastrarEditarCores/:id',
     component: CadastrarCoresProdutoComponent,
     canActivate: [AuthGuard],
     data: { expectedRole: 'admin' }
   },
+  // {
+  //   path: 'cadastrarEditarFotos',
+  //   component: CadastrarFotosProdutoComponent,
+  //   canActivate: [AuthGuard],
+  //   data: { expectedRole: 'admin' }
+  // },
   {
-    path: 'cadastrarEditarFotos',
+    path: 'cadastrarEditarFotos/:id',
     component: CadastrarFotosProdutoComponent,
     canActivate: [AuthGuard],
     data: { expectedRole: 'admin' }
   },
+  // {
+  //   path: 'cadastrarEditarTamanho',
+  //   component: CadastrarTamanhoProdutoComponent,
+  //   canActivate: [AuthGuard],
+  //   data: { expectedRole: 'admin' }
+  // },
   {
-    path: 'cadastrarEditarFotos/:id',
-    component: CadastrarFotosProdutoComponent,
+    path: 'cadastrarEditarTamanho/:id',
+    component: CadastrarTamanhosProdutoComponent,
+    canActivate: [AuthGuard],
+    data: { expectedRole: 'admin' }
+  },
+  // {
+  //   path: 'cadastrarEditarDisponibilidade',
+  //   component: CadastrarDisponibilidadeProdutoComponent,
+  //   canActivate: [AuthGuard],
+  //   data: { expectedRole: 'admin' }
+  // },
+  {
+    path: 'cadastrarEditarDisponibilidade/:id',
+    component: CadastrarDisponibilidadeProdutoComponent,
+    canActivate: [AuthGuard],
+    data: { expectedRole: 'admin' }
+  },
+  // {
+  //   path: 'cadastrarEditarCategoriaProduto',
+  //   component: CadastrarCategoriaProdutoComponent,
+  //   canActivate: [AuthGuard],
+  //   data: { expectedRole: 'admin' }
+  // },
+  {
+    path: 'cadastrarEditarCategoriaProduto/:id',
+    component: CadastrarCategoriaProdutoComponent,
+    canActivate: [AuthGuard],
+    data: { expectedRole: 'admin' }
+  },
+  {
+    path: 'cadastrarEditarCategorias',
+    component: CadastrarCategoriaComponent,
+    canActivate: [AuthGuard],
+    data: { expectedRole: 'admin' }
+  },
+  {
+    path: 'cadastrarEditarCategorias/:id',
+    component: CadastrarCategoriaComponent,
     canActivate: [AuthGuard],
     data: { expectedRole: 'admin' }
   }

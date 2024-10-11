@@ -32,6 +32,9 @@ export class ProdutosComponent implements OnInit {
     })
   }
 
+  temImagens(produto: Produto): boolean {
+    return produto.cores.some(cor => cor.imagens && cor.imagens.length > 0);
+  }
 
   proximaPagina(): void {
     if (this.paginaAtual < this.totalPaginas) {

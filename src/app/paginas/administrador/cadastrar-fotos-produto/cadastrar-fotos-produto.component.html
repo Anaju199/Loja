@@ -15,23 +15,22 @@
       <div class="mensagem__erro"
        *ngIf="formulario.get('foto')?.errors && formulario.get('foto')?.touched">
         Foto é Obrigatória!
-      </div>  
-
-      
-    <label for="cor">Cores</label>
-    <div *ngIf="cores">
-      <div>
-        <select class="select" id="cor" aria-label="Selecione a cor" formControlName="cor">
-          <option selected value="">Escolha uma cor</option>
-          <option *ngFor="let cor of cores" [value]="cor.id">{{ cor.cor }}</option>
-        </select>
       </div>
-    </div>
-    <div class="mensagem__erro"
-     *ngIf="formulario.get('cor')?.errors && formulario.get('cor')?.touched">
-      Cor é Obrigatória!
-    </div>
 
+
+      <label for="cor">Cores</label>
+      <div *ngIf="cores">
+        <div>
+          <select class="select" id="cor" aria-label="Selecione a cor" formControlName="cor">
+            <option selected value="">Escolha uma cor</option>
+            <option *ngFor="let cor of cores" [value]="cor.id">{{ cor.cor }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="mensagem__erro"
+      *ngIf="formulario.get('cor')?.errors && formulario.get('cor')?.touched">
+        Cor é Obrigatória!
+      </div>
 
       <div class="col-md-6">
         <input id="inicial" type="checkbox" formControlName="inicial" [checked]="false" selected />
@@ -40,28 +39,36 @@
 
       <div class="d-flex flex-column align-items-center gap-2">
         <div class="d-flex flex-wrap gap-2">
-            <button
-                [disabled]="!formulario.valid"
-                (click)="id ? editarFoto('produtos') : criarFoto('produtos')"
-                [ngClass]="habilitarBotao()"
-                id="btnSalvar">
-                Salvar
-            </button>
-            <button
-                [disabled]="!formulario.valid"
-                (click)="id ? editarFoto('cadastrarEditarFotos') : criarFoto('cadastrarEditarFotos')"
-                [ngClass]="habilitarBotao()">
-                Adicionar outra foto do produto
-            </button>
+          <button
+              [disabled]="!formulario.valid"
+              (click)="id ? editarFoto('produtos') : criarFoto('produtos')"
+              [ngClass]="habilitarBotao()"
+              id="btnSalvar">
+              Salvar
+          </button>
+          <button
+              [disabled]="!formulario.valid"
+              (click)="id ? editarFoto('cadastrarEditarTamanho') : criarFoto('cadastrarEditarTamanho')"
+              [ngClass]="habilitarBotao()">
+              Adicionar tamanhos possiveis
+          </button>
         </div>
         <div class="d-flex flex-wrap gap-2">
-            <button
-                [disabled]="!formulario.valid"
-                (click)="id ? editarFoto('cadastrarEditarCores') : criarFoto('cadastrarEditarCores')"
-                [ngClass]="habilitarBotao()">
-                Adicionar outra cor
-            </button>
-            <button (click)="cancelar()" class="botao_forms">Cancelar</button>
+          <button
+              [disabled]="!formulario.valid"
+              (click)="id ? editarFoto('cadastrarEditarFotos') : criarFoto('cadastrarEditarFotos')"
+              [ngClass]="habilitarBotao()">
+              Adicionar outra foto
+          </button>
+          <button
+              [disabled]="!formulario.valid"
+              (click)="id ? editarFoto('cadastrarEditarCores') : criarFoto('cadastrarEditarCores')"
+              [ngClass]="habilitarBotao()">
+              Adicionar outra cor
+          </button>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+          <button (click)="cancelar()" class="botao_forms">Cancelar</button>
         </div>
       </div>
     </form>

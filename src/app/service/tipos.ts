@@ -8,13 +8,19 @@ export interface Cor{
 
 export interface Imagem {
   id: number,
-  imagem: string,
+  foto: string,
   Cor: Cor[],
   inicial : boolean
 }
 
 export interface Categoria {
   id: number,
+  categoria: string
+}
+
+export interface CategoriaProduto {
+  id: number,
+  produto: Produto,
   categoria: string
 }
 
@@ -31,4 +37,12 @@ export interface Produto {
   categorias: Categoria[],
   tamanhos: Tamanho[],
   palavras_chave: string
+}
+
+export interface Disponibilidade {
+  id: number,
+  produto: Produto,
+  cor: Cor,
+  Tamanho: Tamanho,
+  quantidade_disponivel: number
 }
