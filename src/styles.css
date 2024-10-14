@@ -90,6 +90,38 @@ h6 {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+
+.botao_pag {
+  color: #ffffff;
+  background-color: #000000;
+  margin: 0 auto;
+  border-color: #000000;
+  transition: 0.5s ease;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.botao_pag_desabilitado {
+  color: #000a02;
+  background-color: #969796;
+  margin: 0 auto;
+  border-color: #969796;
+  transition: 0.5s ease;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+
+.botaoExcluir {
+  color: #000a02;
+  background-color: transparent;
+  margin: 0 auto;
+  border-color: #fbfcfb;
+  border: none;
+  margin-left: 10%;
+  transition: 0.5s ease;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+
 .botao:hover, .botao_forms:hover {
   border: 2px solid #525856;
   color: #818382;

@@ -1,0 +1,70 @@
+<section class="container_cadastros fomulario ff-inter">
+  <header class="header">
+    <h2>{{ titulo }}{{ descricao }}</h2>
+  </header>
+  <form [formGroup]="formulario">
+
+    <label for="categoria">Categorias</label>
+      <div *ngIf="categorias">
+        <div>
+          <select class="select" id="categoria" aria-label="Selecione a categoria" formControlName="categoria">
+            <option selected value="">Escolha uma categoria</option>
+            <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.categoria }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="mensagem__erro"
+      *ngIf="formulario.get('categoria')?.errors && formulario.get('categoria')?.touched">
+        Categoria é Obrigatória!
+      </div>
+
+      <div class="d-flex flex-column align-items-center gap-2">
+        <div class="d-flex flex-wrap gap-2">
+            <button
+                [disabled]="!formulario.valid"
+                (click)="id ? editarCategoria('listarProduto') : criarCategoria('listarProduto')"
+                [ngClass]="habilitarBotao()"
+                id="btnSalvar">
+                Salvar
+            </button>
+            <button
+              [disabled]="!formulario.valid"
+              (click)="id ? editarCategoria('cadastrarEditarCategoriaProduto') : criarCategoria('cadastrarEditarCategoriaProduto')"
+              [ngClass]="habilitarBotao()">
+              Adicionar outra categoria
+          </button>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+          <button
+              [disabled]="!formulario.valid"
+              (click)="id ? editarCategoria('cadastrarEditarDisponibilidade') : criarCategoria('cadastrarEditarDisponibilidade')"
+              [ngClass]="habilitarBotao()">
+              Adicionar outra disponibilidade
+          </button>
+          <button
+              [disabled]="!formulario.valid"
+              (click)="id ? editarCategoria('cadastrarEditarTamanho') : criarCategoria('cadastrarEditarTamanho')"
+              [ngClass]="habilitarBotao()">
+              Adicionar outro tamanho
+          </button>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+          <button
+            [disabled]="!formulario.valid"
+            (click)="id ? editarCategoria('cadastrarEditarFotos') : criarCategoria('cadastrarEditarFotos')"
+            [ngClass]="habilitarBotao()">
+            Adicionar outra foto
+          </button>
+          <button
+            [disabled]="!formulario.valid"
+            (click)="id ? editarCategoria('cadastrarEditarTamanhos') : criarCategoria('cadastrarEditarTamanhos')"
+            [ngClass]="habilitarBotao()">
+            Adicionar outra categoria
+          </button>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            <button (click)="cancelar()" class="botao_forms">Cancelar</button>
+        </div>
+      </div>
+  </form>
+</section>

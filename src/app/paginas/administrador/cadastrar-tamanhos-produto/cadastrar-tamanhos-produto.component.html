@@ -1,0 +1,61 @@
+<section class="container_cadastros fomulario ff-inter">
+  <header class="header">
+    <h2>{{ titulo }}{{ descricao }}</h2>
+  </header>
+  <form [formGroup]="formulario">
+
+    <label for="tamanho">Tamanho</label>
+    <input
+      type="textarea"
+      class="input"
+      id="tamanho"
+      formControlName="tamanho"
+      placeholder="Digite o tamanho possivel para o produto"
+    >
+    <div class="mensagem__erro"
+     *ngIf="formulario.get('tamanho')?.errors && formulario.get('tamanho')?.touched">
+      Tamanho é Obrigatória!
+    </div>
+
+    <div class="d-flex flex-column align-items-center gap-2">
+      <div class="d-flex flex-wrap gap-2">
+          <button
+              [disabled]="!formulario.valid"
+              (click)="id ? editarTamanho('listarProduto') : criarTamanho('listarProduto')"
+              [ngClass]="habilitarBotao()"
+              id="btnSalvar">
+              Salvar
+          </button>
+          <button
+              [disabled]="!formulario.valid"
+              (click)="id ? editarTamanho('cadastrarEditarDisponibilidade') : criarTamanho('cadastrarEditarDisponibilidade')"
+              [ngClass]="habilitarBotao()">
+              Adicionar disponibilidade
+          </button>
+      </div>
+      <div class="d-flex flex-wrap gap-2">
+        <button
+              [disabled]="!formulario.valid"
+              (click)="id ? editarTamanho('cadastrarEditarTamanho') : criarTamanho('cadastrarEditarTamanho')"
+              [ngClass]="habilitarBotao()">
+              Adicionar outro tamanho
+          </button>
+          <button
+              [disabled]="!formulario.valid"
+              (click)="id ? editarTamanho('cadastrarEditarFotos') : criarTamanho('cadastrarEditarFotos')"
+              [ngClass]="habilitarBotao()">
+              Adicionar outra foto
+          </button>
+      </div>
+      <div class="d-flex flex-wrap gap-2">
+          <button
+              [disabled]="!formulario.valid"
+              (click)="id ? editarTamanho('cadastrarEditarTamanhos') : criarTamanho('cadastrarEditarTamanhos')"
+              [ngClass]="habilitarBotao()">
+              Adicionar outra cor
+          </button>
+          <button (click)="cancelar()" class="botao_forms">Cancelar</button>
+      </div>
+    </div>
+  </form>
+</section>

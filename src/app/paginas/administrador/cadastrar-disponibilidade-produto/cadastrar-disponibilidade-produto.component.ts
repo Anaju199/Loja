@@ -2,26 +2,29 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoresProdutosService } from 'src/app/service/cores-produtos.service';
-import { FotosProdutoService } from 'src/app/service/fotos-produtos.service';
-import { Cor } from 'src/app/service/tipos';
+import { DisponibilidadeProdutoService } from 'src/app/service/disponibilidade-produto.service';
+import { TamanhosProdutoService } from 'src/app/service/tamanhos-produto.service';
+import { Cor, Tamanho } from 'src/app/service/tipos';
 
 @Component({
-  selector: 'app-cadastrar-fotos-produto',
-  templateUrl: './cadastrar-fotos-produto.component.html',
-  styleUrls: ['./cadastrar-fotos-produto.component.css']
+  selector: 'app-cadastrar-disponibilidade-produto',
+  templateUrl: './cadastrar-disponibilidade-produto.component.html',
+  styleUrls: ['./cadastrar-disponibilidade-produto.component.css']
 })
-export class CadastrarFotosProdutoComponent implements OnInit {
+export class CadastrarDisponibilidadeProdutoComponent implements OnInit {
 
   id?: number
   formulario!: FormGroup;
   cores: Cor[] = [];
-  titulo: string = 'Adicione uma nova foto para '
+  tamanhos: Tamanho[] = [];
+  titulo: string = 'Adicione um novo tamanho possivel para '
   produtoId: number = 0;
   descricao: string = '';
 
   constructor(
-    private service: FotosProdutoService,
+    private service: DisponibilidadeProdutoService,
     private corService: CoresProdutosService,
+    private tamanhoService: TamanhosProdutoService,
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder
@@ -39,26 +42,27 @@ export class CadastrarFotosProdutoComponent implements OnInit {
       id: [],
       produto: [this.produtoId, Validators.required],
       cor: ['', Validators.required],
-      foto: [null, Validators.required],
+      tamanho: ['', Validators.required],
+      quantidade_disponivel: ['', Validators.required],
       inicial: [false]
     });
 
     // const id = this.route.snapshot.paramMap.get('id')
 
     // if(id){
-    //   this.titulo = 'Editar cor do produto:'
+    //   this.titulo = 'Editar tamanho do produto:'
 
-    //   this.service.buscarPorId(parseInt(id!)).subscribe((corProduto) => {
-    //     this.id  = corProduto.id
+    //   this.service.buscarPorId(parseInt(id!)).subscribe((tamanhoProduto) => {
+    //     this.id  = tamanhoProduto.id
     //     this.formulario = this.formBuilder.group({
-    //       id: [corProduto.id],
-    //       classe: [corProduto.produto,Validators.compose([
+    //       id: [tamanhoProduto.id],
+    //       classe: [tamanhoProduto.produto,Validators.compose([
     //         Validators.required
     //       ])],
-    //       professores: [corProduto.cor,Validators.compose([
+    //       professores: [tamanhoProduto.tamanho,Validators.compose([
     //         Validators.required
     //       ])],
-    //       palavras_chave: [corProduto.inicial]
+    //       palavras_chave: [tamanhoProduto.inicial]
     //     })
     //   })
     // }
@@ -72,12 +76,20 @@ export class CadastrarFotosProdutoComponent implements OnInit {
       }
     );
 
+    this.tamanhoService.listar(this.produtoId).subscribe(
+      tamanhos => {
+        this.tamanhos = tamanhos;
+      },
+      error => {
+        console.error('Erro ao recuperar tamanhos:', error);
+      }
+    );
   }
 
-  editarFoto(destino: string) {
+  editarDisponibilidade(destino: string) {
     if(this.formulario.valid){
       this.service.editar(this.formulario.value).subscribe(() => {
-        alert('Foto editada com sucesso.')
+        alert('Disponibilidade editada com sucesso.')
         switch(destino) {
           case 'produtos':
             this.router.navigate(['/produtos']);
@@ -85,8 +97,8 @@ export class CadastrarFotosProdutoComponent implements OnInit {
           case 'cadastrarEditarImagens':
             this.router.navigate(['/cadastrarEditarImagens']);
             break;
-          case 'cadastrarEditarCores':
-            this.router.navigate(['/cadastrarEditarCores']);
+          case 'cadastrarEditarDisponibilidade':
+            this.router.navigate(['/cadastrarEditarDisponibilidade']);
             break;
           default:
             this.router.navigate(['/produtos']); // rota padrão
@@ -95,41 +107,37 @@ export class CadastrarFotosProdutoComponent implements OnInit {
     }
   }
 
-  criarFoto(destino: string) {
+  criarDisponibilidade(destino: string) {
     if(this.formulario.valid){
-      const formData = new FormData();
-      formData.append('cor', this.formulario.get('cor')!.value);
-      formData.append('produto', this.formulario.get('produto')!.value);
-
-      console.log(this.formulario.get('foto')!.value)
-      const foto = this.formulario.get('foto')!.value;
-      if (foto instanceof File) {
-        formData.append('foto', foto);
-      }
-
-      this.service.criar(formData).subscribe(() => {
-        alert('Foto cadastrada com sucesso.')
+      this.service.criar(this.formulario.value).subscribe(() => {
+        alert('Disponibilidade cadastrada com sucesso.')
         switch(destino) {
           case 'produtos':
             this.router.navigate(['/produtos']);
             break;
           case 'cadastrarEditarFotos':
-            this.router.navigate(['/cadastrarEditarFotos', this.produtoId], { queryParams: { descricao: this.descricao }}).then(() => {
+            this.router.navigate(['/cadastrarEditarFotos', this.produtoId], { queryParams: { descricao: this.descricao }});
+            break;
+          case 'cadastrarEditarDisponibilidade':
+            this.router.navigate(['/cadastrarEditarDisponibilidade', this.produtoId], { queryParams: { descricao: this.descricao }}).then(() => {
               this.recarregarComponente();
             });
             break;
-          case 'cadastrarEditarCores':
-            this.router.navigate(['/cadastrarEditarCores', this.produtoId], { queryParams: { descricao: this.descricao }});
-            break;
           case 'cadastrarEditarTamanho':
             this.router.navigate(['/cadastrarEditarTamanho', this.produtoId], { queryParams: { descricao: this.descricao }});
+            break;
+          case 'cadastrarEditarCategoriaProduto':
+            this.router.navigate(['/cadastrarEditarCategoriaProduto', this.produtoId], { queryParams: { descricao: this.descricao }});
+            break;
+          case 'cadastrarEditarCores':
+            this.router.navigate(['/cadastrarEditarCores', this.produtoId], { queryParams: { descricao: this.descricao }});
             break;
           default:
             this.router.navigate(['/produtos']); // rota padrão
         }
       }, error => {
         console.log(error)
-        alert('Não foi possivel cadastrar. Verifique se essa foto já não foi cadastrado para esse produto.')
+        alert('Não foi possivel cadastrar. Verifique se essa Disponibilidade já não foi cadastrado para esse produto.')
       });
     } else {
       alert('Formulário Inválido')
@@ -139,7 +147,7 @@ export class CadastrarFotosProdutoComponent implements OnInit {
   recarregarComponente(){
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate(['/cadastrarEditarFotos', this.produtoId], {
+    this.router.navigate(['/cadastrarEditarDisponibilidade', this.produtoId], {
       queryParams: { descricao: this.descricao }
     });
   }
@@ -156,9 +164,4 @@ export class CadastrarFotosProdutoComponent implements OnInit {
     }
   }
 
-  processarArquivo(event: any) {
-    const file: File = event.files[0];
-    this.formulario.patchValue({ foto: file });
-    this.formulario.get('foto')!.updateValueAndValidity();
-  }
 }

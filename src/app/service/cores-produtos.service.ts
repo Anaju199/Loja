@@ -20,10 +20,13 @@ export class CoresProdutosService {
     this.produtosFiltradosSubject.next(listaProdutos);
   }
 
-  listar(): Observable<Cor[]> {
+  listar(produto_id: number): Observable<Cor[]> {
+
+    let params = new HttpParams()
+    .set("produto_id", produto_id)
 
     const url = `${this.API}/`
-    return this.http.get<Cor[]>(url, {})
+    return this.http.get<Cor[]>(url, {params})
   }
 
   // listarTodos(pagina: number, itensPorPagina: number): Observable<any> {
