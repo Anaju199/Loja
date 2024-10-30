@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoresProdutosService } from 'src/app/service/cores-produtos.service';
+import { ProdutosService } from 'src/app/service/produtos.service';
+import { Cor } from 'src/app/service/tipos';
 
 @Component({
   selector: 'app-cadastrar-cores-produto',
@@ -13,11 +15,14 @@ export class CadastrarCoresProdutoComponent implements OnInit {
   id?: number
   formulario!: FormGroup;
   titulo: string = 'Adicione uma novo cor possivel para ' 
+  btnFotosProd: string = 'Adicionar fotos do produto'
   produtoId: number = 0;
   descricao: string = '';
+  cores: Cor[] = []
 
   constructor(
     private service: CoresProdutosService,
+    private produtoService: ProdutosService,
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder
@@ -30,34 +35,46 @@ export class CadastrarCoresProdutoComponent implements OnInit {
       this.descricao = params['descricao'];
     });
 
-    console.log('iddd',this.produtoId)
     this.formulario = this.formBuilder.group({
       id: [],
+      cores: [''],
       produto: [this.produtoId, Validators.required],
       cor: ['', Validators.required],
       inicial: [false]
     });
 
-    // const id = this.route.snapshot.paramMap.get('id')
+    this.produtoService.buscarPorId(this.produtoId).subscribe((produto) => {
+      this.cores = produto.cores
+    })
 
-    // if(id){
-    //   this.titulo = 'Editar cor do produto:'
-
-    //   this.service.buscarPorId(parseInt(id!)).subscribe((corProduto) => {
-    //     this.id  = corProduto.id
-    //     this.formulario = this.formBuilder.group({
-    //       id: [corProduto.id],
-    //       classe: [corProduto.produto,Validators.compose([
-    //         Validators.required
-    //       ])],
-    //       professores: [corProduto.cor,Validators.compose([
-    //         Validators.required
-    //       ])],
-    //       palavras_chave: [corProduto.inicial]
-    //     })
-    //   })
-    // }
   }
+
+  onCorSelecionada(event: Event) {
+    const target = event.target as HTMLSelectElement; // Casting para HTMLSelectElement
+    const corId = target.value; // Acessa o valor do select
+  
+    if (corId) {
+      this.btnFotosProd = 'Editar fotos do produto'
+      this.service.buscarPorId(parseInt(corId)).subscribe((corProduto) => {
+        this.id = corProduto.id;
+        this.formulario.patchValue({
+          id: corProduto.id,
+          cor: corProduto.cor,
+          inicial: corProduto.inicial
+        });
+      });
+    } else {
+      // Reseta o formulário se nenhuma cor for selecionada
+      this.btnFotosProd = 'Adicionar fotos do produto'
+      this.formulario.reset({
+        cores: '',
+        produto: this.produtoId,
+        cor: '',
+        inicial: false
+      });
+      this.id = undefined;
+    }
+  }  
 
   editarCor(destino: string) {
     if(this.formulario.valid){
@@ -67,11 +84,22 @@ export class CadastrarCoresProdutoComponent implements OnInit {
           case 'produtos':
             this.router.navigate(['/produtos']);
             break;
-          case 'cadastrarEditarImagens':
-            this.router.navigate(['/cadastrarEditarImagens']);
+          case 'cadastrarEditarFotos':
+            this.router.navigate(['/cadastrarEditarFotos', this.produtoId], { queryParams: { descricao: this.descricao }});
             break;
           case 'cadastrarEditarCores':
-            this.router.navigate(['/cadastrarEditarCores']);
+            this.router.navigate(['/cadastrarEditarCores', this.produtoId], { queryParams: { descricao: this.descricao }}).then(() => {
+              this.recarregarComponente();
+            });
+            break;
+          case 'cadastrarEditarTamanhos':
+            this.router.navigate(['/cadastrarEditarTamanhos', this.produtoId], { queryParams: { descricao: this.descricao } });
+            break;
+          case 'cadastrarEditarDisponibilidade':
+            this.router.navigate(['/cadastrarEditarDisponibilidade', this.produtoId], { queryParams: { descricao: this.descricao } });
+            break;
+          case 'cadastrarEditarCategorias':
+            this.router.navigate(['/cadastrarEditarCategorias', this.produtoId], { queryParams: { descricao: this.descricao } });
             break;
           default:
             this.router.navigate(['/produtos']); // rota padrão
@@ -128,4 +156,12 @@ export class CadastrarCoresProdutoComponent implements OnInit {
     }
   }
 
+  excluir(id: number) {
+    if (confirm('Tem certeza que deseja excluir?')){
+      this.service.excluir(id).subscribe(() => {
+        alert('Cor excluida com sucesso.')
+        this.recarregarComponente()
+      })
+    }
+  }
 }

@@ -3,6 +3,16 @@
     <h2>{{ titulo }}{{ descricao }}</h2>
   </header>
   <form [formGroup]="formulario">
+    
+    <div *ngIf="tamanhos">
+      <label for="tamanhos">Selecione o tamanho que deseja editar</label>
+        <div>
+          <select class="select" id="tamanhos" aria-label="Selecione o tamanho" formControlName="tamanhos" (change)="onTamanhoSelecionado($event)">
+            <option selected value="">Escolha um tamanho</option>
+            <option *ngFor="let tamanho of tamanhos" [value]="tamanho.id">{{ tamanho.tamanho }}</option>
+          </select>
+        </div>
+    </div>
 
     <label for="tamanho">Tamanho</label>
     <input
@@ -26,12 +36,7 @@
               id="btnSalvar">
               Salvar
           </button>
-          <button
-              [disabled]="!formulario.valid"
-              (click)="id ? editarTamanho('cadastrarEditarDisponibilidade') : criarTamanho('cadastrarEditarDisponibilidade')"
-              [ngClass]="habilitarBotao()">
-              Adicionar disponibilidade
-          </button>
+          <button (click)="cancelar()" class="botao_forms">Cancelar</button>
       </div>
       <div class="d-flex flex-wrap gap-2">
         <button
@@ -50,11 +55,33 @@
       <div class="d-flex flex-wrap gap-2">
           <button
               [disabled]="!formulario.valid"
-              (click)="id ? editarTamanho('cadastrarEditarTamanhos') : criarTamanho('cadastrarEditarTamanhos')"
+              (click)="id ? editarTamanho('cadastrarEditarCores') : criarTamanho('cadastrarEditarCores')"
               [ngClass]="habilitarBotao()">
               Adicionar outra cor
           </button>
-          <button (click)="cancelar()" class="botao_forms">Cancelar</button>
+          <button
+              [disabled]="!formulario.valid"
+              (click)="id ? editarTamanho('cadastrarEditarDisponibilidade') : criarTamanho('cadastrarEditarDisponibilidade')"
+              [ngClass]="habilitarBotao()">
+              Adicionar disponibilidade
+          </button>
+      </div>
+      <div *ngIf="id">
+        <div class="d-flex flex-wrap gap-2">    
+          <button 
+              [disabled]="!formulario.valid"
+              (click)="editarTamanho('cadastrarEditarCategorias')" 
+              [ngClass]="habilitarBotao()">
+              Editar tamanhos
+          </button>
+          <button
+            [disabled]="!formulario.valid"
+            (click)="excluir(id)"
+            class="botao__apagar"
+            id="btnExcluir">
+            Deletar tamanho selecionado?
+          </button>
+        </div>
       </div>
     </div>
   </form>

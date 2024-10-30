@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProdutosService } from 'src/app/service/produtos.service';
+import { Cor, Tamanho } from 'src/app/service/tipos';
 
 @Component({
   selector: 'app-cadastrar-produto',
@@ -15,6 +16,12 @@ export class CadastrarProdutoComponent implements OnInit {
   classes: string[] = [];
   ano: number = new Date().getFullYear()
   titulo: string = 'Adicione um novo produto:'
+  btnCores: string = 'Adicionar opções de cores'
+  cores: Cor[] = [];
+  tamanhos: Tamanho[] = [];
+
+  exibirCores: boolean = false;
+  exibirTamanhos: boolean = false;
 
   constructor(
     private service: ProdutosService,
@@ -36,21 +43,33 @@ export class CadastrarProdutoComponent implements OnInit {
 
     if(id){
       this.titulo = 'Editar informações do produto:'
+      this.btnCores = 'Editar cores'
 
       this.service.buscarPorId(parseInt(id!)).subscribe((produto) => {
         this.id  = produto.id
         this.formulario = this.formBuilder.group({
           id: [produto.id],
-          classe: [produto.descricao,Validators.compose([
+          descricao: [produto.descricao,Validators.compose([
             Validators.required
           ])],
-          professores: [produto.valor,Validators.compose([
+          valor: [produto.valor,Validators.compose([
             Validators.required
           ])],
           palavras_chave: [produto.palavras_chave]
         })
+
+        this.cores = produto.cores
+        this.tamanhos = produto.tamanhos
       })
 
+    }
+  }
+
+  toggleExibir(section: string) {
+    if (section === 'cores') {
+      this.exibirCores = !this.exibirCores;
+    } else if (section === 'tamanhos') {
+      this.exibirTamanhos = !this.exibirTamanhos;
     }
   }
 
@@ -59,11 +78,6 @@ export class CadastrarProdutoComponent implements OnInit {
       this.service.editar(this.formulario.value).subscribe((response: any) => {
         const produtoId = response.id;
         const descricaoProduto = this.formulario.value.descricao;
-
-        console.log('id', produtoId)
-        console.log('desc', descricaoProduto)
-        console.log('desti',destino)
-        alert('Produto editado com sucesso.')
         switch(destino) {
           case 'produtos':
             this.router.navigate(['/produtos']);
@@ -72,8 +86,16 @@ export class CadastrarProdutoComponent implements OnInit {
             this.router.navigate(['/cadastrarEditarFotos']);
             break;
           case 'cadastrarEditarCores':
-            console.log('cor')
             this.router.navigate(['/cadastrarEditarCores', produtoId], { queryParams: { descricao: descricaoProduto } });
+            break;
+          case 'cadastrarEditarTamanho':
+            this.router.navigate(['/cadastrarEditarTamanho', produtoId], { queryParams: { descricao: descricaoProduto } });
+            break;
+          case 'cadastrarEditarDisponibilidade':
+            this.router.navigate(['/cadastrarEditarDisponibilidade', produtoId], { queryParams: { descricao: descricaoProduto } });
+            break;
+          case 'cadastrarEditarCategorias':
+            this.router.navigate(['/cadastrarEditarCategorias', produtoId], { queryParams: { descricao: descricaoProduto } });
             break;
           default:
             this.router.navigate(['/produtos']); // rota padrão
@@ -93,9 +115,6 @@ export class CadastrarProdutoComponent implements OnInit {
             alert('Produto cadastrado com sucesso.')
             this.router.navigate(['/produtos']);
             break;
-          // case 'cadastrarEditarFotos':
-          //   this.router.navigate(['/cadastrarEditarFotos', produtoId], { queryParams: { descricao: descricaoProduto } });
-          //   break;
           case 'cadastrarEditarCores':
             this.router.navigate(['/cadastrarEditarCores', produtoId], { queryParams: { descricao: descricaoProduto } });
             break;
