@@ -47,23 +47,43 @@
                 id="btnSalvar">
                 Salvar
             </button>
-            <button 
-                [disabled]="!formulario.valid"
-                (click)="id ? editarProduto('cadastrarEditarCores') : criarProduto('cadastrarEditarCores')" 
-                [ngClass]="habilitarBotao()">
-                Adicionar opções de cores
-            </button>
-            <!-- <button 
-                [disabled]="!formulario.valid"
-                (click)="id ? editarProduto('cadastrarEditarFotos') : criarProduto('cadastrarEditarFotos')" 
-                [ngClass]="habilitarBotao()">
-                Adicionar Fotos do produto
-            </button> -->
-        </div>
-        <div class="d-flex flex-wrap gap-2">    
             <button (click)="cancelar()" class="botao_forms">Cancelar</button>
+        </div>
+        <div>
+          <div class="d-flex flex-wrap gap-2">    
+              <button 
+                  [disabled]="!formulario.valid"
+                  (click)="id ? editarProduto('cadastrarEditarCores') : criarProduto('cadastrarEditarCores')" 
+                  [ngClass]="habilitarBotao()">
+                  {{ btnCores }}
+              </button>
+              <div *ngIf="id">
+                <button 
+                    [disabled]="!formulario.valid"
+                    (click)="editarProduto('cadastrarEditarTamanho')" 
+                    [ngClass]="habilitarBotao()">
+                    Editar tamanhos
+                </button>
+              </div>
+          </div>
+        </div>
+        <div *ngIf="id">
+          <div class="d-flex flex-wrap gap-2">    
+              <button 
+                  [disabled]="!formulario.valid"
+                  (click)="editarProduto('cadastrarEditarDisponibilidade')" 
+                  [ngClass]="habilitarBotao()">
+                  Editar disponibilidade
+              </button>
+              <button 
+                  [disabled]="!formulario.valid"
+                  (click)="editarProduto('cadastrarEditarCategorias')" 
+                  [ngClass]="habilitarBotao()">
+                  Editar categorias
+              </button>
+          </div>
         </div>
       </div>
     </form>
-  </section>
+</section>
   

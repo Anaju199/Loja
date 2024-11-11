@@ -31,7 +31,7 @@
             <th>Descrição</th>
             <th>Valor</th>
             <th>Cores</th>
-            <!-- <th>Foto</th> -->
+            <th>Foto</th>
             <th>Excluir</th>
           </tr>
         </thead>
@@ -41,7 +41,7 @@
               <td><a class="listaAdm" href="/cadastrarEditarProduto/{{ produto.id }}">{{ produto.descricao }}</a></td>
               <td><a class="listaAdm" href="/cadastrarEditarProduto/{{ produto.id }}">{{ produto.valor }}</a></td>
               <td>
-                <a class="listaAdm" href="/cadastrarEditarProduto/{{ produto.id }}">
+                <a class="listaAdm" href="/cadastrarEditarCor/{{ produto.id }}">
                   <ng-container *ngFor="let cor of produto.cores; let j = index">
                     {{ cor.cor }}<span *ngIf="j < produto.cores.length - 1">, </span>
                   </ng-container>

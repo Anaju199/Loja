@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoresProdutosService } from 'src/app/service/cores-produtos.service';
 import { FotosProdutoService } from 'src/app/service/fotos-produtos.service';
-import { Cor } from 'src/app/service/tipos';
+import { Cor, Imagem } from 'src/app/service/tipos';
 
 @Component({
   selector: 'app-cadastrar-fotos-produto',
@@ -18,6 +18,7 @@ export class CadastrarFotosProdutoComponent implements OnInit {
   titulo: string = 'Adicione uma nova foto para '
   produtoId: number = 0;
   descricao: string = '';
+  fotos: Imagem[] = []
 
   constructor(
     private service: FotosProdutoService,
@@ -43,26 +44,6 @@ export class CadastrarFotosProdutoComponent implements OnInit {
       inicial: [false]
     });
 
-    // const id = this.route.snapshot.paramMap.get('id')
-
-    // if(id){
-    //   this.titulo = 'Editar cor do produto:'
-
-    //   this.service.buscarPorId(parseInt(id!)).subscribe((corProduto) => {
-    //     this.id  = corProduto.id
-    //     this.formulario = this.formBuilder.group({
-    //       id: [corProduto.id],
-    //       classe: [corProduto.produto,Validators.compose([
-    //         Validators.required
-    //       ])],
-    //       professores: [corProduto.cor,Validators.compose([
-    //         Validators.required
-    //       ])],
-    //       palavras_chave: [corProduto.inicial]
-    //     })
-    //   })
-    // }
-
     this.corService.listar(this.produtoId).subscribe(
       cores => {
         this.cores = cores;
@@ -73,6 +54,34 @@ export class CadastrarFotosProdutoComponent implements OnInit {
     );
 
   }
+
+
+  onFotoSelecionada(event: Event) {
+    const target = event.target as HTMLSelectElement; // Casting para HTMLSelectElement
+    const fotoId = target.value; // Acessa o valor do select
+  
+    if (fotoId) {
+      // this.btnFotosProd = 'Editar fotos do produto'
+      this.service.buscarPorId(parseInt(fotoId)).subscribe((fotoProduto) => {
+        this.id = fotoProduto.id;
+        this.formulario.patchValue({
+          id: fotoProduto.id,
+          foto: fotoProduto.foto,
+          inicial: fotoProduto.inicial
+        });
+      });
+    } else {
+      // Reseta o formulário se nenhuma foto for selecionada
+      // this.btnFotosProd = 'Adicionar fotos do produto'
+      this.formulario.reset({
+        fotos: '',
+        produto: this.produtoId,
+        foto: '',
+        inicial: false
+      });
+      this.id = undefined;
+    }
+  }  
 
   editarFoto(destino: string) {
     if(this.formulario.valid){

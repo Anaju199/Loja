@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ProdutosService } from 'src/app/service/produtos.service';
 import { TamanhosProdutoService } from 'src/app/service/tamanhos-produto.service';
+import { Tamanho } from 'src/app/service/tipos';
 
 @Component({
   selector: 'app-cadastrar-tamanhos-produto',
@@ -15,9 +17,11 @@ export class CadastrarTamanhosProdutoComponent implements OnInit {
   titulo: string = 'Adicione um novo tamanho possivel para '
   produtoId: number = 0;
   descricao: string = '';
+  tamanhos: Tamanho[] = []
 
   constructor(
     private service: TamanhosProdutoService,
+    private produtoService: ProdutosService,
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder
@@ -30,35 +34,46 @@ export class CadastrarTamanhosProdutoComponent implements OnInit {
       this.descricao = params['descricao'];
     });
 
-    console.log('iddd',this.produtoId)
     this.formulario = this.formBuilder.group({
+      tamanhos: [''],
       id: [],
       produto: [this.produtoId, Validators.required],
       tamanho: ['', Validators.required]
     });
 
-    // const id = this.route.snapshot.paramMap.get('id')
+    this.produtoService.buscarPorId(this.produtoId).subscribe((produto) => {
+      this.tamanhos = produto.tamanhos
+    })
+  }
 
-    // if(id){
-    //   this.titulo = 'Editar tamanho do produto:'
-
-    //   this.service.buscarPorId(parseInt(id!)).subscribe((tamanhoProduto) => {
-    //     this.id  = tamanhoProduto.id
-    //     this.formulario = this.formBuilder.group({
-    //       id: [tamanhoProduto.id],
-    //       classe: [tamanhoProduto.produto,Validators.compose([
-    //         Validators.required
-    //       ])],
-    //       professores: [tamanhoProduto.tamanho,Validators.compose([
-    //         Validators.required
-    //       ])],
-    //       palavras_chave: [tamanhoProduto.inicial]
-    //     })
-    //   })
-    // }
+  onTamanhoSelecionado(event: Event) {
+    const target = event.target as HTMLSelectElement; // Casting para HTMLSelectElement
+    const tamanhoId = target.value; // Acessa o valor do select
+  
+    if (tamanhoId) {
+      // this.btnFotosProd = 'Editar fotos do produto'
+      this.service.buscarPorId(parseInt(tamanhoId)).subscribe((tamanhoProduto) => {
+        this.id = tamanhoProduto.id;
+        this.formulario.patchValue({
+          id: tamanhoProduto.id,
+          tamanho: tamanhoProduto.tamanho
+        });
+      });
+    } else {
+      // Reseta o formulário se nenhuma tamanho for selecionada
+      // this.btnFotosProd = 'Adicionar fotos do produto'
+      this.formulario.reset({
+        tamanhos: '',
+        produto: this.produtoId,
+        tamanho: '',
+        inicial: false
+      });
+      this.id = undefined;
+    }
   }
 
   editarTamanho(destino: string) {
+    console.log('edit')
     if(this.formulario.valid){
       this.service.editar(this.formulario.value).subscribe(() => {
         alert('Tamanho editado com sucesso.')
@@ -70,7 +85,15 @@ export class CadastrarTamanhosProdutoComponent implements OnInit {
             this.router.navigate(['/cadastrarEditarImagens']);
             break;
           case 'cadastrarEditarTamanho':
-            this.router.navigate(['/cadastrarEditarTamanho']);
+            this.router.navigate(['/cadastrarEditarTamanho', this.produtoId], { queryParams: { descricao: this.descricao }}).then(() => {
+              this.recarregarComponente();
+            });
+            break;
+          case 'cadastrarEditarCores':
+            this.router.navigate(['/cadastrarEditarCores', this.produtoId], { queryParams: { descricao: this.descricao }});
+            break;
+          case 'cadastrarEditarDisponibilidade':
+            this.router.navigate(['/cadastrarEditarDisponibilidade', this.produtoId], { queryParams: { descricao: this.descricao }});
             break;
           default:
             this.router.navigate(['/produtos']); // rota padrão
@@ -80,6 +103,7 @@ export class CadastrarTamanhosProdutoComponent implements OnInit {
   }
 
   criarTamanho(destino: string) {
+    console.log('cria')
     if(this.formulario.valid){
       this.service.criar(this.formulario.value).subscribe(() => {
         alert('Tamanho cadastrado com sucesso.')
@@ -133,4 +157,12 @@ export class CadastrarTamanhosProdutoComponent implements OnInit {
     }
   }
 
+  excluir(id: number) {
+    if (confirm('Tem certeza que deseja excluir?')){
+      this.service.excluir(id).subscribe(() => {
+        alert('Cor excluida com sucesso.')
+        this.recarregarComponente()
+      })
+    }
+  }
 }

@@ -4,6 +4,16 @@
     </header>
     <form [formGroup]="formulario">
 
+      <div *ngIf="fotos">
+        <label for="fotos">Selecione a foto que deseja editar</label>
+          <div>
+            <select class="select" id="fotos" aria-label="Selecione a foto" formControlName="fotos" (change)="onFotoSelecionada($event)">
+              <option selected value="">Escolha uma foto</option>
+              <option *ngFor="let foto of fotos" [value]="foto.id">{{ foto.foto }}</option>
+            </select>
+          </div>
+      </div>
+
       <label for="foto">Foto</label>
       <input #imageInput
         type="file"
@@ -48,7 +58,7 @@
           </button>
           <button
               [disabled]="!formulario.valid"
-              (click)="id ? editarFoto('cadastrarEditarTamanho') : criarFoto('cadastrarEditarTamanho')"
+              (click)="id ? editarFoto('cadastrarTamanho') : criarFoto('cadastrarTamanho')"
               [ngClass]="habilitarBotao()">
               Adicionar tamanhos possiveis
           </button>
@@ -56,13 +66,13 @@
         <div class="d-flex flex-wrap gap-2">
           <button
               [disabled]="!formulario.valid"
-              (click)="id ? editarFoto('cadastrarEditarFotos') : criarFoto('cadastrarEditarFotos')"
+              (click)="id ? editarFoto('cadastrarFotos') : criarFoto('cadastrarFotos')"
               [ngClass]="habilitarBotao()">
               Adicionar outra foto
           </button>
           <button
               [disabled]="!formulario.valid"
-              (click)="id ? editarFoto('cadastrarEditarCores') : criarFoto('cadastrarEditarCores')"
+              (click)="id ? editarFoto('cadastrarCores') : criarFoto('cadastrarCores')"
               [ngClass]="habilitarBotao()">
               Adicionar outra cor
           </button>

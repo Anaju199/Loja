@@ -1,0 +1,31 @@
+
+.tag{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    width: 120px;
+    text-align: center;
+    border: 1px solid #aaaaaa;
+    border-radius: 0%;
+    font-size: 13px;
+    color: black;
+  }
+  
+  .tag:hover{
+    border: 1px solid #000000;
+    border-radius: 0%;
+  }
+  
+.btn {
+    border: none;
+    outline: none;
+    padding: 5px 16px;
+    border: 1px solid #aaaaaa;
+    cursor: pointer;
+    font-size: 15px;
+  }
+  
+  /* Style the active class, and buttons on mouse-over */
+  .active, .btn:hover {
+    border: 1px solid #000000;
+    color: black;
+  }
+  

@@ -3,8 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoresProdutosService } from 'src/app/service/cores-produtos.service';
 import { DisponibilidadeProdutoService } from 'src/app/service/disponibilidade-produto.service';
+import { ProdutosService } from 'src/app/service/produtos.service';
 import { TamanhosProdutoService } from 'src/app/service/tamanhos-produto.service';
-import { Cor, Tamanho } from 'src/app/service/tipos';
+import { Cor, Disponibilidade, Tamanho } from 'src/app/service/tipos';
 
 @Component({
   selector: 'app-cadastrar-disponibilidade-produto',
@@ -17,14 +18,16 @@ export class CadastrarDisponibilidadeProdutoComponent implements OnInit {
   formulario!: FormGroup;
   cores: Cor[] = [];
   tamanhos: Tamanho[] = [];
-  titulo: string = 'Adicione um novo tamanho possivel para '
+  titulo: string = 'Adicione as diponibilidades para '
   produtoId: number = 0;
   descricao: string = '';
+  disponibilidades: Disponibilidade[] = []
 
   constructor(
     private service: DisponibilidadeProdutoService,
     private corService: CoresProdutosService,
     private tamanhoService: TamanhosProdutoService,
+    // private produtoService: ProdutosService,
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder
@@ -37,7 +40,6 @@ export class CadastrarDisponibilidadeProdutoComponent implements OnInit {
       this.descricao = params['descricao'];
     });
 
-    console.log('iddd',this.produtoId)
     this.formulario = this.formBuilder.group({
       id: [],
       produto: [this.produtoId, Validators.required],
@@ -47,25 +49,9 @@ export class CadastrarDisponibilidadeProdutoComponent implements OnInit {
       inicial: [false]
     });
 
-    // const id = this.route.snapshot.paramMap.get('id')
-
-    // if(id){
-    //   this.titulo = 'Editar tamanho do produto:'
-
-    //   this.service.buscarPorId(parseInt(id!)).subscribe((tamanhoProduto) => {
-    //     this.id  = tamanhoProduto.id
-    //     this.formulario = this.formBuilder.group({
-    //       id: [tamanhoProduto.id],
-    //       classe: [tamanhoProduto.produto,Validators.compose([
-    //         Validators.required
-    //       ])],
-    //       professores: [tamanhoProduto.tamanho,Validators.compose([
-    //         Validators.required
-    //       ])],
-    //       palavras_chave: [tamanhoProduto.inicial]
-    //     })
-    //   })
-    // }
+    // this.produtoService.buscarPorId(this.produtoId).subscribe((produto) => {
+    //   this.disponibilidades = produto.disponibilidades
+    // })
 
     this.corService.listar(this.produtoId).subscribe(
       cores => {
