@@ -28,16 +28,6 @@
   border-radius: 0%;
 }
 
-/* .btn{
-  border: 1px solid #000000;
-  border-radius: 0%;
-}
-
-.btn:active{
-  border: 1px solid #000000;
-  color: black;
-} */
-
 .btn {
   border: none;
   outline: none;
@@ -51,4 +41,37 @@
 .active, .btn:hover {
   border: 1px solid #000000;
   color: black;
+}
+
+.btn_carrinho {
+  border: none;
+  outline: none;
+  padding: 5px 16px;
+  border: 1px solid #aaaaaa;
+  cursor: pointer;
+  font-size: 15px;
+  color: #c2c2c2;
+  background-color: #000;
+}
+
+.icon_core {
+  font-size: 33px;
+  transition: color 0.3s; /* Transição suave na mudança de cor */
+}
+
+.icon_core:hover {
+  color: rgb(255, 0, 0); /* Cor ao passar o mouse */
+}
+
+.favActive {
+  color: rgb(255, 0, 0); /* Cor quando marcado como favorito */
+}
+
+.contador {
+  text-align: center;
+  border: #868686;
+}
+
+.quantSelect {
+  max-width: 100px;
 }

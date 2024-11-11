@@ -1,3 +1,5 @@
+import { Usuario } from "../paginas/pagamentos/tipos"
+
 export interface Cor{
   id: number,
   produto: Produto,
@@ -36,7 +38,8 @@ export interface Produto {
   cores: Cor[],
   categorias: Categoria[],
   tamanhos: Tamanho[],
-  palavras_chave: string
+  palavras_chave: string,
+  is_favorito: boolean
 }
 
 export interface Disponibilidade {
@@ -45,4 +48,17 @@ export interface Disponibilidade {
   cor: Cor,
   Tamanho: Tamanho,
   quantidade_disponivel: number
+}
+
+export interface Favorito {
+  id: number,
+  cliente: Usuario,
+  produto: Produto,
+}
+
+export interface Carrinho {
+  id: number,
+  cliente: Usuario,
+  produto: Produto,
+  quantidade: number
 }

@@ -6,7 +6,7 @@
           <div *ngIf="corSelecionada.imagens.length > 1">
             <div *ngFor="let imagem of corSelecionada.imagens;">
               <div style="max-width: 5rem; max-height: 5rem;">
-                <img src="{{ link + imagem.imagem }}" class="img-fluid imagem-mini " alt="..." (click)="selecionarImagem(imagem)" style="cursor: pointer;">
+                <img src="{{ link + imagem.imagem }}" class="img-fluid imagem-mini" alt="..." (click)="selecionarImagem(imagem)" style="cursor: pointer;">
               </div>
             </div>
           </div>
@@ -22,47 +22,59 @@
       <div class="card-body">
         <h5 class="card-title">{{ Produto.descricao }}</h5>
         <p class="card-text">{{ Produto.valor }}</p>
+
         <div id="divTag" class="d-flex flex-column align-items-left">
           <div class="d-flex flex-wrap gap-3 ">
             <div *ngFor="let corProduto of Produto.cores">
-              <p [id]="corProduto.id" class="tag " [ngClass]="{ 'active': corSelecionada && corSelecionada.id === corProduto.id }" (click)="selecionarCor(corProduto)" style="cursor: pointer;">{{ corProduto.cor }}</p>
+              <p [id]="corProduto.id"
+                 class="tag"
+                 [ngClass]="{ 'active': corSelecionada?.id === corProduto.id }"
+                 (click)="selecionarCor(corProduto)"
+                 style="cursor: pointer;">
+                {{ corProduto.cor }}
+              </p>
             </div>
           </div>
         </div>
+
         <div id="divBtn" class="d-flex flex-column align-items-left">
           <div class="d-flex flex-wrap gap-3 ">
             <div *ngFor="let tamanho of Produto.tamanhos">
-              <button [id]="tamanho.id" class="btn" [ngClass]="{ 'active': tamanhoSelecionado && tamanhoSelecionado.id === tamanho.id }" (click)="selecionarTamanho(tamanho)">
+              <button [id]="tamanho.id"
+                      class="btn"
+                      [ngClass]="{ 'active': tamanhoSelecionado?.id === tamanho.id }"
+                      (click)="selecionarTamanho(tamanho)">
                 {{ tamanho.tamanho }}
               </button>
             </div>
+          </div>
+        </div>
+        <br />
+        <div class="d-flex flex-wrap">
+          <select class="form-select quantSelect" id="cont" aria-label="Quant" >
+            <option value="" selected>Quant:</option>
+            <option *ngFor="let quant of quants" [value]="quant">{{ quant }}</option>
+          </select>
+        </div>
+        <br />
+        <br />
+        <br />
+        <div id="divBtnFav" class="d-flex flex-column align-items-left">
+          <div class="d-flex flex-wrap gap-3 ">
+            <button class="btn_carrinho" (click)="adicionarCarrinho()">
+              Adicionar ao carrinho
+              <i class="fa-solid fa-cart-shopping"></i>
+            </button>
+            <button class="btn_carrinho" (click)="comprar()">
+              Comprar agora
+              <i class="fa-solid fa-cart-shopping"></i>
+            </button>
+            <i class="fa-solid fa-heart icon_core"
+               [ngClass]="{ 'favActive': isFavorite }"
+               (click)="adicionarFavorito()"></i>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
-<script>
-  // Add active class to the current button (highlight it)
-  var header = document.getElementById("divBtn");
-  var btns = header.getElementsByClassName("btn");
-  for (var i = 0; i < btns.length; i++) {
-    btns[i].addEventListener("click", function() {
-    var current = document.getElementsByClassName("active");
-    current[0].className = current[0].className.replace(" active", "");
-    this.className += " active";
-    });
-  }
-
-  var header = document.getElementById("divTag");
-  var btns = header.getElementsByClassName("tag");
-  for (var i = 0; i < btns.length; i++) {
-    btns[i].addEventListener("click", function() {
-    var current = document.getElementsByClassName("active");
-    current[0].className = current[0].className.replace(" active", "");
-    this.className += " active";
-    });
-  }
-  </script>
