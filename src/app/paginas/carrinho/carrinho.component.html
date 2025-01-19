@@ -1,0 +1,89 @@
+<p class="titulo">Meu Carrinho ({{ textoSelecionados }})</p>
+<div class="container row mx-auto ">
+    <div class="row">
+        <div class="col-md-10">
+            <input 
+                type="checkbox" 
+                id="selectAll" 
+                [(ngModel)]="selectAllChecked" 
+                (change)="toggleSelectAll()" 
+            />
+            <label for="selectAll" class="nome_produto">Selecionar todos</label>
+        </div>
+        <hr>
+    </div>
+    <div *ngIf="listaProdutosCarrinho.length > 0, else semProduto">
+      <div *ngFor="let produto of listaProdutosCarrinho">
+        <div class="row">
+            <div class="col-md-1" style="margin-top: 30px;">
+                <input 
+                    type="checkbox" 
+                    [(ngModel)]="produto.selecionado" 
+                    (change)="updateSelectAllStatus()" 
+                />
+            </div>
+            <div class="col-md-1">
+                <!-- <div *ngIf="imagensIniciais[i],  else semFotosProduto" style="width: 4rem; height: 4rem;">
+                    <img [src]="link + imagensIniciais[i].foto" alt="Imagem Inicial" class="card-img-top" style="width: 4rem; height: 4rem;">
+                </div> -->
+                <div *ngIf="produto.foto,  else semFotosProduto" style="width: 4rem; height: 4rem;">
+                    <img [src]="link + produto.foto" alt="Imagem Inicial" class="card-img-top" style="width: 4rem; height: 4rem;">
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div>
+                    <a class="nome_produto" href="/produto/{{ produto.id }}">{{ produto.descricao }}</a>
+                    <div class="row align-items-center">
+                        <div class="col-md-2" style="margin-top: 18px;">
+                            <p>R${{ produto.valor | number:'1.2-2' }}</p>
+                        </div>
+                        <div class="col-md-2" style="margin-top: 18px;">
+                            <p>Cor: {{ produto.cor_selecionada.cor }}</p>
+                        </div>
+                        <div class="col-md-2" style="margin-top: 18px;">
+                            <p>Tamanho: {{ produto.tamanho_selecionado.tamanho }}</p>
+                        </div>
+                        <div class="col-md-4">
+                                 <select 
+                                    class="form-select quantSelect" 
+                                    [(ngModel)]="produto.quantidade"
+                                    (change)="atualizarQuantidade(produto, $event)"
+                                    aria-label="Quant"
+                                  >
+                                <option [value]="produto.quantidade" selected>Quant: {{ produto.quantidade }}</option>
+                                <option *ngFor="let quant of quants" [value]="quant">Quant: {{ quant }}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="botaoExcluir" (click)="excluir(produto.id)"><i class="fa-regular fa-trash-can"></i></button>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>Total: R${{ getTotalSelecionado() | number:'1.2-2' }}</p>
+        </div>
+    </div>
+    <div class="d-flex flex-column align-items-center">
+        <div class="d-flex flex-wrap gap-3">
+          <button (click)="comprar()" class="botao">Fechar Pedido</button>
+        </div>
+    </div>
+</div>
+  
+<ng-template #semProduto>
+    <div class="ff-inter meio centro">
+      <p>Não há produtos no carrinho</p>
+    </div>
+</ng-template>
+
+<ng-template #semFotosProduto>
+    <div class="ff-inter centro">
+        <p style="font-size: small;">Não há fotos desse produto.</p>
+    </div>
+</ng-template>
+  

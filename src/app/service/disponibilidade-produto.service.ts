@@ -8,8 +8,8 @@ import { Disponibilidade } from './tipos';
   providedIn: 'root'
 })
 export class DisponibilidadeProdutoService {
-  private readonly API =  environment.apiUrl + '/disponibilidade'
-  private readonly API_LISTA =  environment.apiUrl + '/lista_disponibilidade/'
+  private readonly API =  environment.apiUrl + 'disponibilidade'
+  private readonly API_LISTA =  environment.apiUrl + 'lista_disponibilidade/'
 
   constructor(private http: HttpClient) { }
 
@@ -42,7 +42,7 @@ export class DisponibilidadeProdutoService {
   }
 
   excluir(id: number): Observable<Disponibilidade> {
-    const url = `${this.API}/${id}`
+    const url = `${this.API}/${id}/`
     return this.http.delete<Disponibilidade>(url)
   }
 

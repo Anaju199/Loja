@@ -8,8 +8,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class FotosProdutoService {
-  private readonly API =  environment.apiUrl + '/imagem'
-  private readonly API_LISTA =  environment.apiUrl + '/lista_imagem/'
+  private readonly API =  environment.apiUrl + 'imagem'
+  private readonly API_LISTA =  environment.apiUrl + 'lista_imagem/'
 
   constructor(private http: HttpClient) { }
 
@@ -36,13 +36,13 @@ export class FotosProdutoService {
     return this.http.post<Imagem>(url, Imagem)
   }
 
-  editar(imagem: Imagem): Observable<Imagem> {
-    const url = `${this.API}/${imagem.id}/`
+  editar(id: number, imagem: FormData): Observable<Imagem> {
+    const url = `${this.API}/${id}/`
     return this.http.put<Imagem>(url, imagem )
   }
 
   excluir(id: number): Observable<Imagem> {
-    const url = `${this.API}/${id}`
+    const url = `${this.API}/${id}/`
     return this.http.delete<Imagem>(url)
   }
 

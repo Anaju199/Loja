@@ -2,30 +2,43 @@
   <div class="row g-0">
     <div class="col-md-6 imagens">
       <div class="row mx-auto">
-        <div class="col-md-2">
-          <div *ngIf="corSelecionada.imagens.length > 1">
-            <div *ngFor="let imagem of corSelecionada.imagens;">
-              <div style="max-width: 5rem; max-height: 5rem;">
-                <img src="{{ link + imagem.imagem }}" class="img-fluid imagem-mini" alt="..." (click)="selecionarImagem(imagem)" style="cursor: pointer;">
+        <ng-container *ngIf="corSelecionada?.imagens?.length > 0; else semImagens">
+          <div class="col-md-2">
+            <div *ngIf="corSelecionada.imagens.length > 1">
+              <div *ngFor="let imagem of corSelecionada.imagens;">
+                <div style="max-width: 5rem; max-height: 5rem;">
+                  <img src="{{ link + imagem.foto }}" class="img-fluid imagem-mini" alt="..." (click)="selecionarImagem(imagem)" style="cursor: pointer;">
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-10">
-          <div class="card" style="width: 15rem; height: 22rem; border: none;">
-            <img src="{{link + imagemSelecionada.imagem }}" class="img-fluid rounded-start" alt="...">
+          <div class="col-md-10">
+            <div class="card" style="width: 15rem; height: 22rem; border: none;">
+              <ng-container *ngIf="imagemSelecionada.foto; else semImagensCor">
+                <img src="{{link + imagemSelecionada.foto }}" class="img-fluid rounded-start" alt="...">
+              </ng-container>
+              <ng-template #semImagensCor>
+                <div class="ff-inter centralizar">
+                  <br/>
+                  <br/>
+                  <br/>
+                  <p>Não há imagens dessa cor deste produto</p>
+                </div>
+              </ng-template>
+            </div>
           </div>
-        </div>
+        </ng-container>
       </div>
     </div>
     <div class="col-md-6">
-      <div class="card-body">
-        <h5 class="card-title">{{ Produto.descricao }}</h5>
-        <p class="card-text">{{ Produto.valor }}</p>
-
+      <div class="card-body" *ngIf="produto?.descricao">
+        <h5 class="card-title">{{ produto.descricao }}</h5>
+        <p>{{ produto.valor }} R$</p>
+        
         <div id="divTag" class="d-flex flex-column align-items-left">
-          <div class="d-flex flex-wrap gap-3 ">
-            <div *ngFor="let corProduto of Produto.cores">
+          <p class="card-text">Cores</p>
+          <div class="d-flex flex-wrap gap-3">
+            <div *ngFor="let corProduto of produto.cores">
               <p [id]="corProduto.id"
                  class="tag"
                  [ngClass]="{ 'active': corSelecionada?.id === corProduto.id }"
@@ -38,8 +51,9 @@
         </div>
 
         <div id="divBtn" class="d-flex flex-column align-items-left">
+          <p class="card-text">Tamanhos</p>
           <div class="d-flex flex-wrap gap-3 ">
-            <div *ngFor="let tamanho of Produto.tamanhos">
+            <div *ngFor="let tamanho of produto.tamanhos">
               <button [id]="tamanho.id"
                       class="btn"
                       [ngClass]="{ 'active': tamanhoSelecionado?.id === tamanho.id }"
@@ -51,10 +65,10 @@
         </div>
         <br />
         <div class="d-flex flex-wrap">
-          <select class="form-select quantSelect" id="cont" aria-label="Quant" >
-            <option value="" selected>Quant:</option>
-            <option *ngFor="let quant of quants" [value]="quant">{{ quant }}</option>
-          </select>
+          <select class="form-select quantSelect" id="cont" aria-label="Quant" [(ngModel)]="quantidade">
+            <option value="0" selected>Quant:</option>
+            <option *ngFor="let quant of quants" [value]="quant">Quant: {{ quant }}</option>
+        </select>        
         </div>
         <br />
         <br />
@@ -70,7 +84,7 @@
               <i class="fa-solid fa-cart-shopping"></i>
             </button>
             <i class="fa-solid fa-heart icon_core"
-               [ngClass]="{ 'favActive': isFavorite }"
+               [ngClass]="{ 'favActive': isFavorito }"
                (click)="adicionarFavorito()"></i>
           </div>
         </div>
@@ -78,3 +92,12 @@
     </div>
   </div>
 </div>
+
+<ng-template #semImagens>
+  <div class="ff-inter centralizar">
+    <br/>
+    <br/>
+    <br/>
+    <p>Não há imagens deste produto</p>
+  </div>
+</ng-template>

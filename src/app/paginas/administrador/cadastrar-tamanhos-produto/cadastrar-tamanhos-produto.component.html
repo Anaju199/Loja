@@ -1,8 +1,27 @@
-<section class="container_cadastros fomulario ff-inter">
-  <header class="header">
-    <h2>{{ titulo }}{{ descricao }}</h2>
-  </header>
-  <form [formGroup]="formulario">
+<div class="row mx-auto">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <header class="header">
+      <h2>{{ titulo }}{{ descricao }}</h2>
+    </header>
+  </div>
+  <div class="col-md-2 align-self-center">
+    <i class="fa-regular fa-pen-to-square"></i><a href="/produtos" class="add"> Listar Produtos</a>
+  </div>
+</div>
+<section class="container_cadastros_produtos fomulario ff-inter">
+  <div class="form-container">
+    <nav class="menu-lateral">
+      <button class="menu-tittle-forms">Dados</button>
+      <button (click)="caminho('cadastrarEditarProduto')" class="menu-button">Produto</button>
+      <button (click)="caminho('cadastrarEditarCores')" class="menu-button">Cores</button>
+      <button (click)="caminho('cadastrarEditarFotos')" class="menu-button">Fotos</button>
+      <button class="menu-button" style="pointer-events: none; background-color: rgb(144, 144, 144);">Tamanhos</button>
+      <button (click)="caminho('cadastrarEditarDisponibilidade')" class="menu-button">Disponibilidade</button>
+      <button (click)="caminho('cadastrarEditarCategoriaProduto')" class="menu-button">Categorias</button>
+    </nav>
+  
+   <form [formGroup]="formulario">
     
     <div *ngIf="tamanhos">
       <label for="tamanhos">Selecione o tamanho que deseja editar</label>
@@ -31,58 +50,22 @@
       <div class="d-flex flex-wrap gap-2">
           <button
               [disabled]="!formulario.valid"
-              (click)="id ? editarTamanho('listarProduto') : criarTamanho('listarProduto')"
+              (click)="id ? editarTamanho('cadastrarEditarTamanho') : criarTamanho('cadastrarEditarTamanho')"
               [ngClass]="habilitarBotao()"
               id="btnSalvar">
               Salvar
           </button>
-          <button (click)="cancelar()" class="botao_forms">Cancelar</button>
-      </div>
-      <div class="d-flex flex-wrap gap-2">
-        <button
+          <div *ngIf="id">
+            <button
               [disabled]="!formulario.valid"
-              (click)="id ? editarTamanho('cadastrarEditarTamanho') : criarTamanho('cadastrarEditarTamanho')"
-              [ngClass]="habilitarBotao()">
-              Adicionar outro tamanho
-          </button>
-          <button
-              [disabled]="!formulario.valid"
-              (click)="id ? editarTamanho('cadastrarEditarFotos') : criarTamanho('cadastrarEditarFotos')"
-              [ngClass]="habilitarBotao()">
-              Adicionar outra foto
-          </button>
-      </div>
-      <div class="d-flex flex-wrap gap-2">
-          <button
-              [disabled]="!formulario.valid"
-              (click)="id ? editarTamanho('cadastrarEditarCores') : criarTamanho('cadastrarEditarCores')"
-              [ngClass]="habilitarBotao()">
-              Adicionar outra cor
-          </button>
-          <button
-              [disabled]="!formulario.valid"
-              (click)="id ? editarTamanho('cadastrarEditarDisponibilidade') : criarTamanho('cadastrarEditarDisponibilidade')"
-              [ngClass]="habilitarBotao()">
-              Adicionar disponibilidade
-          </button>
-      </div>
-      <div *ngIf="id">
-        <div class="d-flex flex-wrap gap-2">    
-          <button 
-              [disabled]="!formulario.valid"
-              (click)="editarTamanho('cadastrarEditarCategorias')" 
-              [ngClass]="habilitarBotao()">
-              Editar tamanhos
-          </button>
-          <button
-            [disabled]="!formulario.valid"
-            (click)="excluir(id)"
-            class="botao__apagar"
-            id="btnExcluir">
-            Deletar tamanho selecionado?
-          </button>
-        </div>
+              (click)="excluir(id)"
+              class="botao__apagar"
+              id="btnExcluir">
+              Deletar tamanho selecionado?
+            </button>
+          </div>
       </div>
     </div>
-  </form>
+   </form>
+  </div>
 </section>

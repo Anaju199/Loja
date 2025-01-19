@@ -8,8 +8,8 @@ import { Cor } from './tipos';
   providedIn: 'root'
 })
 export class CoresProdutosService {
-  private readonly API = environment.apiUrl + '/cor'
-  private readonly API_LISTA = environment.apiUrl + '/lista_cores'
+  private readonly API = environment.apiUrl + 'cor'
+  private readonly API_LISTA = environment.apiUrl + 'lista_cores'
   private produtosFiltradosSubject = new BehaviorSubject<Cor[]>([]);
 
   constructor(private http: HttpClient) { }

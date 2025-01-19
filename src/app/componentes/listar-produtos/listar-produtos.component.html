@@ -6,7 +6,7 @@
 
         <div class="rounded mx-auto d-block" style="width: 15rem; height: 15rem;">
           <div *ngIf="imagensIniciais[i],  else semFotosProduto">
-            <img [src]="link + imagensIniciais[i].imagem" alt="Imagem Inicial" class="card-img-top" style="height: 15rem;">
+            <img [src]="link + imagensIniciais[i].foto" alt="Imagem Inicial" class="card-img-top" style="height: 15rem;">
           </div>
 
           <!-- <div *ngIf="Produto.imagens.length > 0, else semFotosProduto">
@@ -14,7 +14,7 @@
             <div class="carousel-inner">
               <div class="carousel-item" *ngFor="let fotoProduto of Produto.imagens; let i = index" [class.active]="i === 0">
                 <div class="rounded mx-auto d-block" style="width: 15rem; height: 15rem;">
-                  <img src="{{ fotoProduto.cor.imagem }}" class="card-img-top" alt="...">
+                  <img src="{{ fotoProduto.cor.foto }}" class="card-img-top" alt="...">
                 </div>
               </div>
             </div>
@@ -36,15 +36,23 @@
         <div class="card-body">
           <div style="height: 3rem;">
             <a class="nome_produto" href="/produto/{{ Produto.id }}">{{ Produto.descricao }}</a>
-            <p class="preco">R${{ Produto.valor }}</p>
+            <div class="row">
+              <div class="col-md-10">
+                <a class="nome_produto" href="/produto/{{ Produto.id }}"><p class="preco">R${{ Produto.valor }}</p></a>
+              </div>
+              <div class="col-md-2">
+                <a class="nome_produto" href="/produto/{{ Produto.id }}"><i class="fa-solid fa-heart icon_core"
+                [ngClass]="{ 'favActive': isFavorito }"></i></a>
+              </div>
+            </div>
           </div>
         </div>
     </div>
   </div>
 
   <ng-template #semProduto>
-    <div class="ff-inter meio">
-      <p>Não há produtos cadastrados.</p>
+    <div class="ff-inter meio centro">
+      <p>{{ isFavorito ? 'Não há produtos favoritos.' : 'Não há produtos cadastrados.' }}</p>
     </div>
   </ng-template>
 </div>

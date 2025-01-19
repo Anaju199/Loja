@@ -8,8 +8,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class TamanhosProdutoService {
-  private readonly API =  environment.apiUrl + '/tamanho'
-  private readonly API_LISTA =  environment.apiUrl + '/lista_tamanho/'
+  private readonly API =  environment.apiUrl + 'tamanho'
+  private readonly API_LISTA =  environment.apiUrl + 'lista_tamanho/'
 
   constructor(private http: HttpClient) { }
 
@@ -42,7 +42,7 @@ export class TamanhosProdutoService {
   }
 
   excluir(id: number): Observable<Tamanho> {
-    const url = `${this.API}/${id}`
+    const url = `${this.API}/${id}/`
     return this.http.delete<Tamanho>(url)
   }
 

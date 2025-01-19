@@ -4,11 +4,13 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://anajulia.pythonanywhere.com',
-  // apiUrl: 'http://127.0.0.1:8000',
+  // apiUrl: 'https://anajulia.pythonanywhere.com',
+  apiUrl: 'http://127.0.0.1:8000/hom_',
+  urlImagem: 'https://anajulia.pythonanywhere.com',
   apiUrlPagSeguro: 'https://sandbox.api.pagseguro.com',
   apiUrlMercadoPago: 'https://api.mercadopago.com',
-  linkSite: 'http://localhost:4200'
+  linkSite: 'http://ajdevelopments.com.br',
+  login: 'login_loja'
 };
 
 /*

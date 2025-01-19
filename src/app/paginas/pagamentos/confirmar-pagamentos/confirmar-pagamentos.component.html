@@ -1,75 +1,75 @@
 <div *ngFor="let usuario of usuarios" >
   <input type="radio" name="usuario" [value]="salvaUsuario(usuario)" style="display: 'none'">
 </div>
-<div class="container row mx-auto">
-  <h2 *ngIf="selectedIds.length === 0">Confirmar pedido - Nenhum item</h2>
-  <div *ngIf="selectedIds.length === 1">
-    <h2>Confirmar pedido - 1 item</h2>
-    <!-- <li *ngFor="let id of selectedIds">Pagamento ID: {{ id }}</li> -->
-  </div>
-  <div *ngIf="selectedIds.length > 1">
-    <h2>Confirmar pedido - {{selectedIds.length}} itens</h2>
-  </div>
-
-  <div *ngIf="principal, else listaDeEnderecos">
-  <!-- <div> -->
-    <div class="borda_rodape row mx-auto">
-      <div class="col-md-3">
-        <h6>1 - Endereço de entrega</h6>
-      </div>
-      <div class="col-md-6">
-        <div *ngIf="enderecos">
-          <div *ngFor="let endereco of enderecos">
-            <input type="radio" name="endereco" [value]="salvaEndereco(endereco)" style="display: 'none'">
-            {{ endereco.rua }}, {{ endereco.numero }}, {{ endereco.complemento }} <br/>
-            {{ endereco.bairro }}, {{ endereco.cidade }}, {{ endereco.estado }}
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 centro">
-        <button type="button" (click)="listaPrincipal()" class="botao_alterar">Alterar</button>
-      </div>
+<div *ngIf="pedido">
+  <div class="container row mx-auto">
+    <h2 *ngIf="pedido.quant_itens === 0">Confirmar pedido - Nenhum item</h2>
+    <div *ngIf="pedido.quant_itens === 1">
+      <h2>Confirmar pedido - 1 item</h2>
+      <!-- <li *ngFor="let id of selectedIds">Pagamento ID: {{ id }}</li> -->
     </div>
-  </div>
-
-  <div>
-    <div class="borda_rodape row mx-auto">
-      <div class="col-md-3">
-        <h6>2 - Método de pagamento</h6>
-      </div>
-      <div class="col-md-6" *ngIf="enderecos">
-        <div *ngFor="let endereco of enderecos">
-          MasterCard (Crédito) termina em  9708
-        </div>
-      </div>
-      <div class="col-md-3 centro">
-        <button type="button" (click)="listaPrincipal()" class="botao_alterar">Alterar</button>
-      </div>
+    <div *ngIf="pedido.quant_itens > 1">
+      <h2>Confirmar pedido - {{pedido.quant_itens}} itens</h2>
     </div>
-  </div>
 
-
-  <div>
-    <div class="borda_rodape row mx-auto">
-      <div class="col-md-3">
-        <h6>3 - Revisar itens e envio</h6>
-      </div>
-      <div class="col-md-6">
-        <div *ngIf="selectedIds">
-          <div *ngFor="let id of selectedIds">
-            <div *ngIf="getPedidoById(id) as pedido">
-              <input type="radio" name="pedido" [value]="salvaItem(pedido)" style="display: 'none'">
-              {{ pedido.item }} - {{ pedido.valor_pgt }}
+    <div *ngIf="principal, else listaDeEnderecos">
+    <!-- <div> -->
+      <div class="borda_rodape row mx-auto">
+        <div class="col-md-3">
+          <h6>1 - Endereço de entrega</h6>
+        </div>
+        <div class="col-md-6">
+          <div *ngIf="enderecos.length > 0, else semEndereco">
+            <div *ngFor="let endereco of enderecos">
+              <input type="radio" name="endereco" [value]="salvaEndereco(endereco)" style="display: 'none'">
+              {{ endereco.rua }}, {{ endereco.numero }}, {{ endereco.complemento }} <br/>
+              {{ endereco.bairro }}, {{ endereco.cidade }}, {{ endereco.estado }}
             </div>
           </div>
         </div>
+        <div class="col-md-3 centro">
+          <button type="button" (click)="listaPrincipal()" class="botao_alterar">Alterar</button>
+        </div>
       </div>
-      <div class="col-md-3 centro">
-        <button type="button" (click)="cancelar()" class="botao_alterar">Alterar</button>
+    </div>
+
+    <div>
+      <div class="borda_rodape row mx-auto">
+        <div class="col-md-3">
+          <h6>2 - Método de pagamento</h6>
+        </div>
+        <div class="col-md-6" *ngIf="enderecos">
+          <div *ngFor="let endereco of enderecos">
+            MasterCard (Crédito) termina em  9708
+          </div>
+        </div>
+        <div class="col-md-3 centro">
+          <button type="button" (click)="pagamentos()" class="botao_alterar">Alterar</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div>
+      <div class="borda_rodape row mx-auto">
+        <div class="col-md-3">
+          <h6>3 - Revisar itens e envio</h6>
+        </div>
+        <div class="col-md-6">
+          <div *ngIf="pedido">
+            <div *ngFor="let pedido of pedido.itens_pedido">
+              <input type="radio" name="pedido" [value]="salvaItem(pedido)" style="display: 'none'">
+              {{ pedido.descricao }} - R${{ pedido.valor | number:'1.2-2' }} cada - Quant: {{ pedido.quantidade }}
+            </div>
+          </div>
+          <strong>Total do pedido: R${{ pedido.valor | number:'1.2-2' }} </strong>
+        </div>
+        <div class="col-md-3 centro">
+          <button type="button" (click)="cancelar()" class="botao_alterar">Alterar</button>
+        </div>
       </div>
     </div>
   </div>
-
 </div>
 <div class="d-flex flex-column align-items-center">
   <div class="d-flex flex-wrap gap-3">
@@ -99,5 +99,12 @@
     <div class="col-md-3 centro">
       <button type="button" (click)="listaPrincipal()" class="botao_alterar">Enviar para esse endereço</button>
     </div>
+  </div>
+</ng-template>
+
+<ng-template #semEndereco>
+  <div class="centro row mx-auto">
+    <h5>Não há endereço cadastrado</h5>
+    <i class="fa-regular fa-plus"><a href="/endereco" class="add"> Adicionar novo endereço</a></i>
   </div>
 </ng-template>

@@ -19,6 +19,7 @@ interface AuthResponse {
 export class AutenticacaoService {
 
   private apiUrl: string = environment.apiUrl;
+  private login: string = environment.login;
 
   constructor(
     private http: HttpClient,
@@ -27,7 +28,7 @@ export class AutenticacaoService {
 
   autenticar(cpf: string, senha: string): Observable<HttpResponse<AuthResponse>> {
     return this.http.post<AuthResponse>(
-      `${this.apiUrl}/login_loja/`,
+      `${this.apiUrl}${this.login}/`,
       { cpf, senha },
       { observe: 'response'}
     ).pipe(

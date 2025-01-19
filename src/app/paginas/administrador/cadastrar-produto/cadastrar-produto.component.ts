@@ -73,51 +73,73 @@ export class CadastrarProdutoComponent implements OnInit {
     }
   }
 
+  caminho(destino: string) {
+    const produtoId = this.id;
+    const descricao = this.formulario.value.descricao;
+    switch(destino) {
+      case 'produtos':
+        this.router.navigate(['/produtos']);
+        break;
+      case 'cadastrarEditarFotos':
+        this.router.navigate(['/cadastrarEditarFotos', produtoId], { queryParams: { descricao: descricao } });
+        break;
+      case 'cadastrarEditarProduto':
+        this.router.navigate(['/cadastrarEditarProduto', produtoId], { queryParams: { descricao: descricao } });
+        break;
+      case 'cadastrarEditarCores':
+        this.router.navigate(['/cadastrarEditarCores', produtoId], { queryParams: { descricao: descricao } });
+        break;
+      case 'cadastrarEditarTamanho':
+        this.router.navigate(['/cadastrarEditarTamanho', produtoId], { queryParams: { descricao: descricao } });
+        break;
+      case 'cadastrarEditarDisponibilidade':
+        this.router.navigate(['/cadastrarEditarDisponibilidade', produtoId], { queryParams: { descricao: descricao } });
+        break;
+      case 'cadastrarEditarCategoriaProduto':
+        this.router.navigate(['/cadastrarEditarCategoriaProduto', produtoId], { queryParams: { descricao: descricao } });
+        break;
+      default:
+        this.router.navigate(['/produtos']); // rota padrão
+    }
+  }
+
   editarProduto(destino: string) {
     if(this.formulario.valid){
       this.service.editar(this.formulario.value).subscribe((response: any) => {
-        const produtoId = response.id;
-        const descricaoProduto = this.formulario.value.descricao;
+        const produtoId = this.id;
+        const descricao = this.formulario.value.descricao;
         switch(destino) {
-          case 'produtos':
-            this.router.navigate(['/produtos']);
-            break;
-          case 'cadastrarEditarFotos':
-            this.router.navigate(['/cadastrarEditarFotos']);
-            break;
-          case 'cadastrarEditarCores':
-            this.router.navigate(['/cadastrarEditarCores', produtoId], { queryParams: { descricao: descricaoProduto } });
-            break;
-          case 'cadastrarEditarTamanho':
-            this.router.navigate(['/cadastrarEditarTamanho', produtoId], { queryParams: { descricao: descricaoProduto } });
-            break;
-          case 'cadastrarEditarDisponibilidade':
-            this.router.navigate(['/cadastrarEditarDisponibilidade', produtoId], { queryParams: { descricao: descricaoProduto } });
-            break;
-          case 'cadastrarEditarCategorias':
-            this.router.navigate(['/cadastrarEditarCategorias', produtoId], { queryParams: { descricao: descricaoProduto } });
+          case 'cadastrarEditarProduto':
+              this.router.navigate(['/cadastrarEditarProduto', produtoId], { queryParams: { descricao: descricao }}).then(() => {
+                this.recarregarComponente();
+              });
             break;
           default:
             this.router.navigate(['/produtos']); // rota padrão
         }
-      })
+      }, error => {
+        alert('Erro ao editar.')
+        console.log('erro: ', error)
+      });
     }
   }
 
   criarProduto(destino: string) {
     if(this.formulario.valid){
       this.service.criar(this.formulario.value).subscribe((response: any) => {
-        const produtoId = response.id;
-        const descricaoProduto = this.formulario.value.descricao;
+        const produtoId = this.id;
+        const descricao = this.formulario.value.descricao;
 
         switch(destino) {
           case 'produtos':
             alert('Produto cadastrado com sucesso.')
             this.router.navigate(['/produtos']);
             break;
-          case 'cadastrarEditarCores':
-            this.router.navigate(['/cadastrarEditarCores', produtoId], { queryParams: { descricao: descricaoProduto } });
-            break;
+          case 'cadastrarEditarProduto':
+              this.router.navigate(['/cadastrarEditarProduto', produtoId], { queryParams: { descricao: descricao }}).then(() => {
+                this.recarregarComponente();
+              });
+              break;
           default:
             this.router.navigate(['/produtos']); // rota padrão
         }
@@ -129,7 +151,7 @@ export class CadastrarProdutoComponent implements OnInit {
     }
   }
 
-  cancelar() {
+  listarProdutos() {
     this.router.navigate(['/produtos'])
   }
 
@@ -139,6 +161,17 @@ export class CadastrarProdutoComponent implements OnInit {
     } else {
       return 'botao__desabilitado'
     }
+  }
+
+  recarregarComponente(){
+    const produtoId = this.id;
+    const descricao = this.formulario.value.descricao;
+
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(['/cadastrarEditarProduto', produtoId], {
+      queryParams: { descricao: descricao }
+    });
   }
 
 }

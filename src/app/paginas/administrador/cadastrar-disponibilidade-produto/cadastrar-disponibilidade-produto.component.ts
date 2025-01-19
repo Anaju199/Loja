@@ -72,6 +72,34 @@ export class CadastrarDisponibilidadeProdutoComponent implements OnInit {
     );
   }
 
+  caminho(destino: string) {
+    switch(destino) {
+      case 'produtos':
+        this.router.navigate(['/produtos']);
+        break;
+      case 'cadastrarEditarFotos':
+        this.router.navigate(['/cadastrarEditarFotos', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      case 'cadastrarEditarProduto':
+        this.router.navigate(['/cadastrarEditarProduto', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      case 'cadastrarEditarCores':
+        this.router.navigate(['/cadastrarEditarCores', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      case 'cadastrarEditarTamanho':
+        this.router.navigate(['/cadastrarEditarTamanho', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      case 'cadastrarEditarDisponibilidade':
+        this.router.navigate(['/cadastrarEditarDisponibilidade', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      case 'cadastrarEditarCategoriaProduto':
+        this.router.navigate(['/cadastrarEditarCategoriaProduto', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      default:
+        this.router.navigate(['/produtos']); // rota padrão
+    }
+  }
+
   editarDisponibilidade(destino: string) {
     if(this.formulario.valid){
       this.service.editar(this.formulario.value).subscribe(() => {
@@ -147,6 +175,15 @@ export class CadastrarDisponibilidadeProdutoComponent implements OnInit {
       return 'botao_forms'
     } else {
       return 'botao__desabilitado'
+    }
+  }
+
+  excluir(id: number) {
+    if (confirm('Tem certeza que deseja excluir?')){
+      this.service.excluir(id).subscribe(() => {
+        alert('Disponibilidade excluida com sucesso.')
+        this.recarregarComponente()
+      })
     }
   }
 

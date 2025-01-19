@@ -37,6 +37,9 @@ import { CadastrarTamanhosProdutoComponent } from './paginas/administrador/cadas
 import { CadastrarDisponibilidadeProdutoComponent } from './paginas/administrador/cadastrar-disponibilidade-produto/cadastrar-disponibilidade-produto.component';
 import { CadastrarCategoriaProdutoComponent } from './paginas/administrador/cadastrar-categoria-produto/cadastrar-categoria-produto.component';
 import { CadastrarCategoriaComponent } from './paginas/administrador/cadastrar-categoria/cadastrar-categoria.component';
+import { CarrinhoComponent } from './paginas/carrinho/carrinho.component';
+import { FavoritosComponent } from './paginas/favoritos/favoritos.component';
+import { ConfirmarPedidoComponent } from './paginas/pagamentos/confirmar-pedido/confirmar-pedido.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +74,10 @@ import { CadastrarCategoriaComponent } from './paginas/administrador/cadastrar-c
     CadastrarTamanhosProdutoComponent,
     CadastrarDisponibilidadeProdutoComponent,
     CadastrarCategoriaProdutoComponent,
-    CadastrarCategoriaComponent
+    CadastrarCategoriaComponent,
+    CarrinhoComponent,
+    FavoritosComponent,
+    ConfirmarPedidoComponent
   ],
   imports: [
     BrowserModule,

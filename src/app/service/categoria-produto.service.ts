@@ -9,8 +9,8 @@ import { CategoriaProduto } from './tipos';
   providedIn: 'root'
 })
 export class CategoriaProdutoService {
-  private readonly API =  environment.apiUrl + '/categoria_produto'
-  private readonly API_LISTA =  environment.apiUrl + '/lista_categoria_produto/'
+  private readonly API =  environment.apiUrl + 'categoria_produto'
+  private readonly API_LISTA =  environment.apiUrl + 'lista_categoria_produto/'
 
   constructor(private http: HttpClient) { }
 
@@ -43,7 +43,7 @@ export class CategoriaProdutoService {
   }
 
   excluir(id: number): Observable<CategoriaProduto> {
-    const url = `${this.API}/${id}`
+    const url = `${this.API}/${id}/`
     return this.http.delete<CategoriaProduto>(url)
   }
 

@@ -8,9 +8,8 @@ import { Endereco } from '../tipos';
   providedIn: 'root'
 })
 export class EnderecoService {
-  private readonly API = environment.apiUrl + '/aj_usuarios_enderecos'
-  private readonly API_LISTA = environment.apiUrl + '/aj_lista_enderecos/'
-  private readonly API_LISTA_PRINCIPAL = environment.apiUrl + '/aj_lista_endereco_principal/'
+  private readonly API = environment.apiUrl + 'loja_usuarios_enderecos'
+  private readonly API_LISTA = environment.apiUrl + 'loja_lista_enderecos/'
 
   constructor(private http: HttpClient) { }
 
@@ -32,7 +31,9 @@ export class EnderecoService {
           params = params.set("usuario", usuario);
     }
 
-    return this.http.get<Endereco[]>(this.API_LISTA_PRINCIPAL, { params });
+    params = params.set("principal", true);
+
+    return this.http.get<Endereco[]>(this.API_LISTA, { params });
   }
 
   listarTodos(): Observable<Endereco[]> {
@@ -58,7 +59,7 @@ export class EnderecoService {
     return this.http.post<Endereco>(url, endereco);
   }
 
-  editar(id: number, endereco: FormData): Observable<Endereco> {
+  editar(endereco: FormData, id?: number): Observable<Endereco> {
     const url = `${this.API}/${id}/`
     return this.http.put<Endereco>(url, endereco)
   }

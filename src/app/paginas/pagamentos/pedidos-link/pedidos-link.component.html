@@ -20,8 +20,8 @@
       <tbody>
         <ng-container *ngFor="let pedido of listaPedido; let i = index">
           <tr [class.odd]="i % 2 === 0" [class.even]="i % 2 !== 0">
-            <td><a class="listaAdm" [href]="pedido.link_pgt ? pedido.link_pgt : '#'" (click)="temPagamento($event, pedido.link_pgt)" target="_blank">{{ pedido.item }}</a></td>
-            <td><a class="listaAdm">{{ pedido.valor_pgt }}</a></td>
+            <td><a class="listaAdm" [href]="pedido.link_pgt ? pedido.link_pgt : '#'" (click)="temPagamento($event, pedido.link_pgt)" target="_blank">{{ pedido.quant_itens}}</a></td>
+            <td><a class="listaAdm">{{ pedido.valor }}</a></td>
             <ng-container *ngIf="pedido.numero_pgt === '0'; else pagamentos">
               <td><a class="listaAdm" style="margin-left: 7%;">Único</a></td>
             </ng-container>

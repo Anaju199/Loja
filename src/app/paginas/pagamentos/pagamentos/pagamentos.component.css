@@ -7,3 +7,7 @@
   height: 1400px;
 }
 
+
+.formulario__dupla {
+  display: flex;
+}

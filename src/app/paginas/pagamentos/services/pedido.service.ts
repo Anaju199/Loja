@@ -2,15 +2,17 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Pedido, Usuario } from '../tipos';
+import { itemPedido, Pedido, Usuario } from '../tipos';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PedidoService {
-  private readonly API = environment.apiUrl + '/aj_pedidos'
-  private readonly API_LISTA = environment.apiUrl + '/aj_lista_pedidos/'
-  private readonly API_LISTA_USUARIO = environment.apiUrl + '/aj_lista_usuarios/'
+  private readonly API = environment.apiUrl + 'pedido'
+  private readonly API_ITEM = environment.apiUrl + 'itemPedido'
+  private readonly API_ITEM_PEDIDO = environment.apiUrl + 'lista_itens_pedido'
+  private readonly API_LISTA = environment.apiUrl + 'lista_pedidos/'
+  private readonly API_LISTA_USUARIO = environment.apiUrl + 'lista_usuarios/'
 
   constructor(private http: HttpClient) { }
 
@@ -18,7 +20,7 @@ export class PedidoService {
     let params = new HttpParams();
 
     if (usuario) {
-          params = params.set("usuario", usuario);
+          params = params.set("cliente", usuario);
     }
 
     return this.http.get<Pedido[]>(this.API_LISTA, { params });
@@ -42,22 +44,31 @@ export class PedidoService {
   }
 
 
-  criar(lideranca: FormData): Observable<Pedido> {
+  criar(pedido: any): Observable<Pedido> {
     const url = `${this.API}/`
-    return this.http.post<Pedido>(url, lideranca);
+    return this.http.post<Pedido>(url, pedido);
+  }
+  
+  criarItemPedido(itemPedido: any): Observable<Pedido> {
+    const url = `${this.API_ITEM}/`
+    return this.http.post<Pedido>(url, itemPedido);
   }
 
   setPedido(pedido: string) {
     localStorage.setItem('pedido', pedido);
+  }
+  
+  removePedido() {
+    localStorage.removeItem('pedido')
   }
 
   retornarPedido(): string | null {
     return localStorage.getItem('pedido');
   }
 
-  editar(id: number, lideranca: FormData): Observable<Pedido> {
+  editar(id: number, pedido: any): Observable<Pedido> {
     const url = `${this.API}/${id}/`
-    return this.http.put<Pedido>(url, lideranca)
+    return this.http.put<Pedido>(url, pedido)
   }
 
   excluir(id: number): Observable<Pedido> {
@@ -68,5 +79,16 @@ export class PedidoService {
   buscarPorId(id: number): Observable<Pedido> {
     const url = `${this.API}/${id}/`
     return this.http.get<Pedido>(url)
+  }
+  
+  buscarItemPorIdPedido(id: number): Observable<itemPedido[]> {
+    let params = new HttpParams();
+
+    if (id) {
+          params = params.set("pedido", id);
+    }
+
+    const url = `${this.API_ITEM_PEDIDO}/`
+    return this.http.get<itemPedido[]>(url, {params})
   }
 }

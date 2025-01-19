@@ -18,13 +18,15 @@ export class CabecalhoComponent implements OnInit {
   totalPaginas: number = 1;
   itensPorPagina: number = 10;
 
+  user$ = this.userService.retornarUser();
+  nome = this.userService.retornarNome();
+  id = this.userService.retornarId();
+
   constructor(
     private service: ProdutosService,
     private userService: UserService,
     private router: Router
   ) { }
-
-  user$ = this.userService.retornarUser();
 
   logout() {
     this.userService.logout();

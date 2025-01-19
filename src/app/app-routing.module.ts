@@ -27,6 +27,8 @@ import { CadastrarTamanhosProdutoComponent } from './paginas/administrador/cadas
 import { CadastrarDisponibilidadeProdutoComponent } from './paginas/administrador/cadastrar-disponibilidade-produto/cadastrar-disponibilidade-produto.component';
 import { CadastrarCategoriaProdutoComponent } from './paginas/administrador/cadastrar-categoria-produto/cadastrar-categoria-produto.component';
 import { CadastrarCategoriaComponent } from './paginas/administrador/cadastrar-categoria/cadastrar-categoria.component';
+import { CarrinhoComponent } from './paginas/carrinho/carrinho.component';
+import { FavoritosComponent } from './paginas/favoritos/favoritos.component';
 
 const routes: Routes = [
   {
@@ -94,7 +96,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'confirmarPagamentos',
+    path: 'confirmarPagamentos/:id',
     component: ConfirmarPagamentosComponent,
     canActivate: [AuthGuard]
   },
@@ -103,9 +105,30 @@ const routes: Routes = [
     component: EnderecoComponent,
     canActivate: [AuthGuard]
   },
+  
+  {
+    path: 'editarCliente/:id',
+    component: CadastroComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'alterarSenha/:id',
+    component: CadastroComponent,
+    canActivate: [AuthGuard]
+  },
   {
     path: 'notificacoes',
     component: NotificacoesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'carrinho',
+    component: CarrinhoComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'favoritos',
+    component: FavoritosComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -132,60 +155,30 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { expectedRole: 'admin' }
   },
-  // {
-  //   path: 'cadastrarEditarCores',
-  //   component: CadastrarCoresProdutoComponent,
-  //   canActivate: [AuthGuard],
-  //   data: { expectedRole: 'admin' }
-  // },
   {
     path: 'cadastrarEditarCores/:id',
     component: CadastrarCoresProdutoComponent,
     canActivate: [AuthGuard],
     data: { expectedRole: 'admin' }
   },
-  // {
-  //   path: 'cadastrarEditarFotos',
-  //   component: CadastrarFotosProdutoComponent,
-  //   canActivate: [AuthGuard],
-  //   data: { expectedRole: 'admin' }
-  // },
   {
     path: 'cadastrarEditarFotos/:id',
     component: CadastrarFotosProdutoComponent,
     canActivate: [AuthGuard],
     data: { expectedRole: 'admin' }
   },
-  // {
-  //   path: 'cadastrarEditarTamanho',
-  //   component: CadastrarTamanhoProdutoComponent,
-  //   canActivate: [AuthGuard],
-  //   data: { expectedRole: 'admin' }
-  // },
   {
     path: 'cadastrarEditarTamanho/:id',
     component: CadastrarTamanhosProdutoComponent,
     canActivate: [AuthGuard],
     data: { expectedRole: 'admin' }
   },
-  // {
-  //   path: 'cadastrarEditarDisponibilidade',
-  //   component: CadastrarDisponibilidadeProdutoComponent,
-  //   canActivate: [AuthGuard],
-  //   data: { expectedRole: 'admin' }
-  // },
   {
     path: 'cadastrarEditarDisponibilidade/:id',
     component: CadastrarDisponibilidadeProdutoComponent,
     canActivate: [AuthGuard],
     data: { expectedRole: 'admin' }
   },
-  // {
-  //   path: 'cadastrarEditarCategoriaProduto',
-  //   component: CadastrarCategoriaProdutoComponent,
-  //   canActivate: [AuthGuard],
-  //   data: { expectedRole: 'admin' }
-  // },
   {
     path: 'cadastrarEditarCategoriaProduto/:id',
     component: CadastrarCategoriaProdutoComponent,

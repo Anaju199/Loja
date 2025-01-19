@@ -27,8 +27,9 @@
             </a>
             <ul class="dropdown-menu">
               <ng-container *ngIf="user$ | async as Usuario, else login;">
-                <li><a class="dropdown-item" href="/perfil">Meu perfil</a></li>
-                <li><a class="dropdown-item" href="/pedidos">Meus pedidos</a></li>
+                <li><a class="dropdown-item" href="/editarCliente/{{ id }}">Meu perfil</a></li>
+                <li><a class="dropdown-item text-start" [routerLink]="['/alterarSenha', id]" [queryParams]="{ alterarSenha: true }">Alterar Senha</a></li>
+                <li><a class="dropdown-item" href="/pedidos/">Meus pedidos</a></li>
                 <li><button class="dropdown-item ult" (click)="logout()">Sair</button></li>
               </ng-container>
               <ng-template #login class="d-flex">
@@ -37,50 +38,52 @@
             </ul>
           </li>
           <li class="nav-item dropdown">
-            <a class="icon" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fa-solid fa-cart-shopping"></i>
-            </a>
-            <ul class="dropdown-menu">
-              <ng-container *ngIf="user$ | async as Usuario, else loginCarrinho;">
-                <li><a class="dropdown-item" href="#">Meu perfil</a></li>
-                <li><a class="dropdown-item" href="/pedidos">Meus pedidos</a></li>
-                <li><button class="dropdown-item ult" (click)="logout()">Sair</button></li>
-              </ng-container>
-              <ng-template #loginCarrinho class="d-flex">
+            <ng-container *ngIf="user$ | async as Usuario; else loginCarrinho">
+              <a class="icon" href="/carrinho" role="button">
+                <i class="fa-solid fa-cart-shopping"></i>
+              </a>
+            </ng-container>
+            <ng-template #loginCarrinho>
+              <a class="icon" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-cart-shopping"></i>
+              </a>
+              <ul class="dropdown-menu">
                 <li>
                   <div style="width: 300px;">
-                    <p class="dropdown-item carrinho" href="/login">O carrinho de compras está vazio.
-                    <br>
-                    <br>
-                    Se você tinha itens em seu carrinho de compras, nós os salvamos para você.
-                   <a class="link" href="login">LOGUE-SE</a>
-                  na sua conta para poder vê-los.</p>
+                    <p class="dropdown-item carrinho">O carrinho de compras está vazio.
+                      <br>
+                      <br>
+                      Se você tinha itens em seu carrinho de compras, nós os salvamos para você.
+                      <a class="link" href="/login">LOGUE-SE</a>
+                      na sua conta para poder vê-los.
+                    </p>
                   </div>
                 </li>
-              </ng-template>
-            </ul>
-          </li>
+              </ul>
+            </ng-template>
+          </li>          
           <li class="nav-item dropdown">
-            <a class="icon" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fa-solid fa-heart"></i>
-            </a>
-            <ul class="dropdown-menu">
-              <ng-container *ngIf="user$ | async as Usuario, else loginFavoritos;">
-                <li><a class="dropdown-item" href="#">Meu perfil</a></li>
-                <li><a class="dropdown-item" href="/pedidos">Meus pedidos</a></li>
-                <li><button class="dropdown-item ult" (click)="logout()">Sair</button></li>
-              </ng-container>
-              <ng-template #loginFavoritos class="d-flex">
+            <ng-container *ngIf="user$ | async as Usuario; else loginFavoritos">
+              <a class="icon" href="/favoritos" role="button">
+                <i class="fa-solid fa-heart"></i>
+              </a>
+            </ng-container>
+            <ng-template #loginFavoritos>
+              <a class="icon" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-heart"></i>
+              </a>
+              <ul class="dropdown-menu">
                 <li>
                   <div style="width: 200px; height: 50px;">
-                    <p class="dropdown-item carrinho" href="/login">
-                   <a class="link" href="login">LOGUE-SE</a>
-                    para ver seus itens favoritos</p>
+                    <p class="dropdown-item carrinho">
+                      <a class="link" href="/login">LOGUE-SE</a>
+                      para ver seus itens favoritos
+                    </p>
                   </div>
                 </li>
-              </ng-template>
-            </ul>
-          </li>
+              </ul>
+            </ng-template>
+          </li>          
           <div class="admin">
             <ng-container *ngIf="isAdmin">
               <button class="btn btn-outline-dark" routerLink="/administrador">Admin</button>

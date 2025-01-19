@@ -60,5 +60,12 @@ export interface Carrinho {
   id: number,
   cliente: Usuario,
   produto: Produto,
-  quantidade: number
+  produto_id: number,
+  descricao: string,
+  valor: number,
+  cor_selecionada: Cor,
+  tamanho_selecionado: Tamanho,
+  quantidade: number,
+  selecionado: boolean,
+  foto: string | null
 }

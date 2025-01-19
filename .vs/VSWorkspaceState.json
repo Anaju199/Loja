@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\paginas",
+    "\\src\\app\\paginas\\administrador"
   ],
   "PreviewInSolutionExplorer": false
 }

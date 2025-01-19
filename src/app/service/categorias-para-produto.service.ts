@@ -9,8 +9,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class CategoriasParaProdutoService {
-  private readonly API =  environment.apiUrl + '/categoria'
-  private readonly API_LISTA =  environment.apiUrl + '/lista_categoria/'
+  private readonly API =  environment.apiUrl + 'categoria'
+  private readonly API_LISTA =  environment.apiUrl + 'lista_categoria/'
 
   constructor(private http: HttpClient) { }
 
@@ -43,7 +43,7 @@ export class CategoriasParaProdutoService {
   }
 
   excluir(id: number): Observable<Categoria> {
-    const url = `${this.API}/${id}`
+    const url = `${this.API}/${id}/`
     return this.http.delete<Categoria>(url)
   }
 

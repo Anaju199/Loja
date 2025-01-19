@@ -1,10 +1,43 @@
-<section class="container_cadastros fomulario ff-inter">
+<div class="row mx-auto">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
     <header class="header">
       <h2>{{ titulo }}{{ descricao }}</h2>
     </header>
+  </div>
+  <div class="col-md-2 align-self-center">
+    <i class="fa-regular fa-pen-to-square"></i><a href="/produtos" class="add"> Listar Produtos</a>
+  </div>
+</div>
+<section class="container_cadastros_produtos fomulario ff-inter">
+  <div class="form-container">
+    <nav class="menu-lateral">
+      <button class="menu-tittle-forms">Dados</button>
+      <button (click)="caminho('cadastrarEditarProduto')" class="menu-button">Produto</button>
+      <button (click)="caminho('cadastrarEditarCores')" class="menu-button">Cores</button>
+      <button class="menu-button" style="pointer-events: none; background-color: rgb(144, 144, 144);">Fotos</button>
+      <button (click)="caminho('cadastrarEditarTamanho')" class="menu-button">Tamanhos</button>
+      <button (click)="caminho('cadastrarEditarDisponibilidade')" class="menu-button">Disponibilidade</button>
+      <button (click)="caminho('cadastrarEditarCategoriaProduto')" class="menu-button">Categorias</button>
+    </nav>
+
     <form [formGroup]="formulario">
 
-      <div *ngIf="fotos">
+      <label for="cor">Cores</label>
+      <div *ngIf="cores">
+        <div>
+          <select class="select" id="cor" aria-label="Selecione a cor" formControlName="cor" (change)="onCorSelecionada($event)">
+            <option selected value="">Escolha uma cor</option>
+            <option *ngFor="let cor of cores" [value]="cor.id">{{ cor.cor }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="mensagem__erro"
+      *ngIf="formulario.get('cor')?.errors && formulario.get('cor')?.touched">
+        Cor é Obrigatória!
+      </div>
+
+      <div *ngIf="fotos.length > 0">
         <label for="fotos">Selecione a foto que deseja editar</label>
           <div>
             <select class="select" id="fotos" aria-label="Selecione a foto" formControlName="fotos" (change)="onFotoSelecionada($event)">
@@ -27,21 +60,6 @@
         Foto é Obrigatória!
       </div>
 
-
-      <label for="cor">Cores</label>
-      <div *ngIf="cores">
-        <div>
-          <select class="select" id="cor" aria-label="Selecione a cor" formControlName="cor">
-            <option selected value="">Escolha uma cor</option>
-            <option *ngFor="let cor of cores" [value]="cor.id">{{ cor.cor }}</option>
-          </select>
-        </div>
-      </div>
-      <div class="mensagem__erro"
-      *ngIf="formulario.get('cor')?.errors && formulario.get('cor')?.touched">
-        Cor é Obrigatória!
-      </div>
-
       <div class="col-md-6">
         <input id="inicial" type="checkbox" formControlName="inicial" [checked]="false" selected />
         <label class="campo__check" for="inicial">Foto inicial de exibição</label>
@@ -51,35 +69,22 @@
         <div class="d-flex flex-wrap gap-2">
           <button
               [disabled]="!formulario.valid"
-              (click)="id ? editarFoto('produtos') : criarFoto('produtos')"
+              (click)="id ? editarFoto('cadastrarEditarFotos') : criarFoto('cadastrarEditarFotos')"
               [ngClass]="habilitarBotao()"
               id="btnSalvar">
               Salvar
           </button>
-          <button
+          <div *ngIf="id">
+            <button
               [disabled]="!formulario.valid"
-              (click)="id ? editarFoto('cadastrarTamanho') : criarFoto('cadastrarTamanho')"
-              [ngClass]="habilitarBotao()">
-              Adicionar tamanhos possiveis
-          </button>
-        </div>
-        <div class="d-flex flex-wrap gap-2">
-          <button
-              [disabled]="!formulario.valid"
-              (click)="id ? editarFoto('cadastrarFotos') : criarFoto('cadastrarFotos')"
-              [ngClass]="habilitarBotao()">
-              Adicionar outra foto
-          </button>
-          <button
-              [disabled]="!formulario.valid"
-              (click)="id ? editarFoto('cadastrarCores') : criarFoto('cadastrarCores')"
-              [ngClass]="habilitarBotao()">
-              Adicionar outra cor
-          </button>
-        </div>
-        <div class="d-flex flex-wrap gap-2">
-          <button (click)="cancelar()" class="botao_forms">Cancelar</button>
+              (click)="excluir(id)"
+              class="botao__apagar"
+              id="btnExcluir">
+              Deletar foto selecionada?
+            </button>
+          </div>
         </div>
       </div>
     </form>
+   </div>
   </section>

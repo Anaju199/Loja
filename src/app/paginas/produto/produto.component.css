@@ -63,15 +63,6 @@
   color: rgb(255, 0, 0); /* Cor ao passar o mouse */
 }
 
-.favActive {
-  color: rgb(255, 0, 0); /* Cor quando marcado como favorito */
-}
-
-.contador {
-  text-align: center;
-  border: #868686;
-}
-
-.quantSelect {
-  max-width: 100px;
+.card-text {
+  margin: 0;
 }

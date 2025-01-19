@@ -68,7 +68,7 @@ export class ProdutosComponent implements OnInit {
   excluir(id: number) {
     if (confirm('Tem certeza que deseja excluir?')){
       this.service.excluir(id).subscribe(() => {
-        alert('Missionário excluido com sucesso.')
+        alert('Produto excluido com sucesso.')
         this.recarregarComponente()
       })
     }

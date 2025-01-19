@@ -35,13 +35,13 @@ export class CadastrarFotosProdutoComponent implements OnInit {
       this.descricao = params['descricao'];
     });
 
-    console.log('iddd',this.produtoId)
     this.formulario = this.formBuilder.group({
       id: [],
+      fotos: '',
       produto: [this.produtoId, Validators.required],
       cor: ['', Validators.required],
       foto: [null, Validators.required],
-      inicial: [false]
+      inicial: [true]
     });
 
     this.corService.listar(this.produtoId).subscribe(
@@ -55,6 +55,55 @@ export class CadastrarFotosProdutoComponent implements OnInit {
 
   }
 
+  caminho(destino: string) {
+    switch(destino) {
+      case 'produtos':
+        this.router.navigate(['/produtos']);
+        break;
+      case 'cadastrarEditarFotos':
+        this.router.navigate(['/cadastrarEditarFotos', this.produtoId], { queryParams: { descricao: this.descricao } }).then(() => {
+          this.recarregarComponente();
+        });
+        break;
+      case 'cadastrarEditarProduto':
+        this.router.navigate(['/cadastrarEditarProduto', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      case 'cadastrarEditarCores':
+        this.router.navigate(['/cadastrarEditarCores', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      case 'cadastrarEditarTamanho':
+        this.router.navigate(['/cadastrarEditarTamanho', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      case 'cadastrarEditarDisponibilidade':
+        this.router.navigate(['/cadastrarEditarDisponibilidade', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      case 'cadastrarEditarCategoriaProduto':
+        this.router.navigate(['/cadastrarEditarCategoriaProduto', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      default:
+        this.router.navigate(['/produtos']); // rota padrão
+    }
+  }
+
+  onCorSelecionada(event: Event) {
+    const target = event.target as HTMLSelectElement; // Casting para HTMLSelectElement
+    const corSelecionada = Number(target.value); // Acessa o valor do select
+  
+    if (corSelecionada) {
+      const corObjeto = this.cores.find(cor => cor.id === corSelecionada);
+      if (corObjeto) {
+        this.fotos = corObjeto.imagens;
+      }
+    } else {
+      this.formulario.reset({
+        fotos: '',
+        produto: this.produtoId,
+        foto: '',
+        inicial: true
+      });
+      this.id = undefined;
+    }
+  }  
 
   onFotoSelecionada(event: Event) {
     const target = event.target as HTMLSelectElement; // Casting para HTMLSelectElement
@@ -77,7 +126,7 @@ export class CadastrarFotosProdutoComponent implements OnInit {
         fotos: '',
         produto: this.produtoId,
         foto: '',
-        inicial: false
+        inicial: true
       });
       this.id = undefined;
     }
@@ -85,11 +134,27 @@ export class CadastrarFotosProdutoComponent implements OnInit {
 
   editarFoto(destino: string) {
     if(this.formulario.valid){
-      this.service.editar(this.formulario.value).subscribe(() => {
+      const formData = new FormData();
+      formData.append('produto', this.formulario.get('produto')!.value);
+      formData.append('inicial', this.formulario.get('inicial')!.value);
+      formData.append('cor', this.formulario.get('cor')!.value);
+
+      const foto = this.formulario.get('foto')!.value;
+      if (foto instanceof File) {
+        formData.append('foto', foto);
+      }
+
+      const id = this.formulario.get('id')!.value;
+      this.service.editar(id, formData).subscribe(() => {
         alert('Foto editada com sucesso.')
         switch(destino) {
           case 'produtos':
             this.router.navigate(['/produtos']);
+            break;
+          case 'cadastrarEditarFotos':
+            this.router.navigate(['/cadastrarEditarFotos', this.produtoId], { queryParams: { descricao: this.descricao }}).then(() => {
+            this.recarregarComponente();
+            });
             break;
           case 'cadastrarEditarImagens':
             this.router.navigate(['/cadastrarEditarImagens']);
@@ -169,5 +234,17 @@ export class CadastrarFotosProdutoComponent implements OnInit {
     const file: File = event.files[0];
     this.formulario.patchValue({ foto: file });
     this.formulario.get('foto')!.updateValueAndValidity();
+  }
+
+  excluir(id: number) {
+    if (confirm('Tem certeza que deseja excluir?')){
+      this.service.excluir(id).subscribe(() => {
+        alert('Foto excluida com sucesso.')
+        this.recarregarComponente()
+      }, error => {
+        console.log(error)
+        alert('Erro ao excluir.')
+      });
+    }
   }
 }

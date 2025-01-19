@@ -72,6 +72,34 @@ export class CadastrarCategoriaProdutoComponent implements OnInit {
     );
   }
 
+  caminho(destino: string) {
+    switch(destino) {
+      case 'produtos':
+        this.router.navigate(['/produtos']);
+        break;
+      case 'cadastrarEditarFotos':
+        this.router.navigate(['/cadastrarEditarFotos', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      case 'cadastrarEditarProduto':
+        this.router.navigate(['/cadastrarEditarProduto', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      case 'cadastrarEditarCores':
+        this.router.navigate(['/cadastrarEditarCores', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      case 'cadastrarEditarTamanho':
+        this.router.navigate(['/cadastrarEditarTamanho', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      case 'cadastrarEditarDisponibilidade':
+        this.router.navigate(['/cadastrarEditarDisponibilidade', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      case 'cadastrarEditarCategoriaProduto':
+        this.router.navigate(['/cadastrarEditarCategoriaProduto', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      default:
+        this.router.navigate(['/produtos']); // rota padrão
+    }
+  }
+
   editarCategoria(destino: string) {
     if(this.formulario.valid){
       this.service.editar(this.formulario.value).subscribe(() => {
@@ -83,8 +111,8 @@ export class CadastrarCategoriaProdutoComponent implements OnInit {
           case 'cadastrarEditarImagens':
             this.router.navigate(['/cadastrarEditarImagens']);
             break;
-          case 'cadastrarEditarCategoria':
-            this.router.navigate(['/cadastrarEditarCategoria']);
+          case 'cadastrarEditarCategoriaProduto':
+            this.router.navigate(['/cadastrarEditarCategoriaProduto']);
             break;
           default:
             this.router.navigate(['/produtos']); // rota padrão
@@ -133,7 +161,7 @@ export class CadastrarCategoriaProdutoComponent implements OnInit {
   recarregarComponente(){
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate(['/cadastrarEditarCategoria', this.produtoId], {
+    this.router.navigate(['/cadastrarEditarCategoriaProduto', this.produtoId], {
       queryParams: { descricao: this.descricao }
     });
   }
@@ -147,6 +175,15 @@ export class CadastrarCategoriaProdutoComponent implements OnInit {
       return 'botao_forms'
     } else {
       return 'botao__desabilitado'
+    }
+  }
+
+  excluir(id: number) {
+    if (confirm('Tem certeza que deseja excluir?')){
+      this.service.excluir(id).subscribe(() => {
+        alert('Categoria excluida com sucesso.')
+        this.recarregarComponente()
+      })
     }
   }
 

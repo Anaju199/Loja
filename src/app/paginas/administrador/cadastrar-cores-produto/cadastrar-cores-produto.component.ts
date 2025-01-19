@@ -15,7 +15,6 @@ export class CadastrarCoresProdutoComponent implements OnInit {
   id?: number
   formulario!: FormGroup;
   titulo: string = 'Adicione uma novo cor possivel para ' 
-  btnFotosProd: string = 'Adicionar fotos do produto'
   produtoId: number = 0;
   descricao: string = '';
   cores: Cor[] = []
@@ -40,7 +39,7 @@ export class CadastrarCoresProdutoComponent implements OnInit {
       cores: [''],
       produto: [this.produtoId, Validators.required],
       cor: ['', Validators.required],
-      inicial: [false]
+      inicial: [true]
     });
 
     this.produtoService.buscarPorId(this.produtoId).subscribe((produto) => {
@@ -54,7 +53,6 @@ export class CadastrarCoresProdutoComponent implements OnInit {
     const corId = target.value; // Acessa o valor do select
   
     if (corId) {
-      this.btnFotosProd = 'Editar fotos do produto'
       this.service.buscarPorId(parseInt(corId)).subscribe((corProduto) => {
         this.id = corProduto.id;
         this.formulario.patchValue({
@@ -65,41 +63,53 @@ export class CadastrarCoresProdutoComponent implements OnInit {
       });
     } else {
       // Reseta o formulário se nenhuma cor for selecionada
-      this.btnFotosProd = 'Adicionar fotos do produto'
       this.formulario.reset({
         cores: '',
         produto: this.produtoId,
         cor: '',
-        inicial: false
+        inicial: true
       });
       this.id = undefined;
     }
   }  
+
+  caminho(destino: string) {
+    switch(destino) {
+      case 'produtos':
+        this.router.navigate(['/produtos']);
+        break;
+      case 'cadastrarEditarFotos':
+        this.router.navigate(['/cadastrarEditarFotos', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      case 'cadastrarEditarProduto':
+        this.router.navigate(['/cadastrarEditarProduto', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      case 'cadastrarEditarCores':
+        this.router.navigate(['/cadastrarEditarCores', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      case 'cadastrarEditarTamanho':
+        this.router.navigate(['/cadastrarEditarTamanho', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      case 'cadastrarEditarDisponibilidade':
+        this.router.navigate(['/cadastrarEditarDisponibilidade', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      case 'cadastrarEditarCategoriaProduto':
+        this.router.navigate(['/cadastrarEditarCategoriaProduto', this.produtoId], { queryParams: { descricao: this.descricao } });
+        break;
+      default:
+        this.router.navigate(['/produtos']); // rota padrão
+    }
+  }
 
   editarCor(destino: string) {
     if(this.formulario.valid){
       this.service.editar(this.formulario.value).subscribe(() => {
         alert('Cor editada com sucesso.')
         switch(destino) {
-          case 'produtos':
-            this.router.navigate(['/produtos']);
-            break;
-          case 'cadastrarEditarFotos':
-            this.router.navigate(['/cadastrarEditarFotos', this.produtoId], { queryParams: { descricao: this.descricao }});
-            break;
           case 'cadastrarEditarCores':
             this.router.navigate(['/cadastrarEditarCores', this.produtoId], { queryParams: { descricao: this.descricao }}).then(() => {
               this.recarregarComponente();
             });
-            break;
-          case 'cadastrarEditarTamanhos':
-            this.router.navigate(['/cadastrarEditarTamanhos', this.produtoId], { queryParams: { descricao: this.descricao } });
-            break;
-          case 'cadastrarEditarDisponibilidade':
-            this.router.navigate(['/cadastrarEditarDisponibilidade', this.produtoId], { queryParams: { descricao: this.descricao } });
-            break;
-          case 'cadastrarEditarCategorias':
-            this.router.navigate(['/cadastrarEditarCategorias', this.produtoId], { queryParams: { descricao: this.descricao } });
             break;
           default:
             this.router.navigate(['/produtos']); // rota padrão
@@ -142,10 +152,6 @@ export class CadastrarCoresProdutoComponent implements OnInit {
     this.router.navigate(['/cadastrarEditarCores', this.produtoId], { 
       queryParams: { descricao: this.descricao } 
     });
-  }
-
-  cancelar() {
-    this.router.navigate(['/produtos'])
   }
 
   habilitarBotao(): string {

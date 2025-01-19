@@ -1,4 +1,4 @@
-import { Usuario } from './../tipos';
+import { itemPedido, Usuario } from './../tipos';
 import { Component, Input, OnInit } from '@angular/core';
 import { Endereco, Pedido } from '../tipos';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -7,7 +7,7 @@ import { EnderecoService } from '../services/endereco.service';
 import { PagamentoService } from '../services/pagamento.service';
 import { UserService } from '../services/user.service';
 import { PedidoService } from '../services/pedido.service';
-import { Address, Customer, Item, payload } from '../tiposPagSeguro';
+import { Address, Customer, Item, payload, Phones } from '../tiposPagSeguro';
 import { environment } from 'src/environments/environment';
 import { CadastroService } from '../services/cadastro.service';
 
@@ -42,23 +42,25 @@ export class ConfirmarPagamentosComponent implements OnInit {
     unit_amount: 0
   }
 
+  phones: Phones = {
+    country: "",
+    area: "",
+    number: "",
+    type: "MOBILE"
+  }
+
   customer: Customer = {
-    "name": "",
-    "email": "",
-    "tax_id": "",
-    phones:
-        {
-            "country": "",
-            "area": "",
-            "number": "",
-            "type": "MOBILE"
-        }
+    name: "",
+    email: "",
+    tax_id: "",
+    phones: [this.phones]
   }
 
   itens: Item[] = []
   usuarios: Usuario[] = []
   enderecos: Endereco[] = [];
-  pedidos: Pedido[] = [];
+  pedido!: Pedido;
+  pedidoId: number = 0;
   listaEnderecos: Endereco[] = [];
   selectedIds: number[] = [];
   principal: boolean = true
@@ -70,13 +72,14 @@ export class ConfirmarPagamentosComponent implements OnInit {
         "name": "Jose da Silva",
         "email": "email@test.com",
         "tax_id": "12345678909",
-        phones:
-            {
-                "country": "55",
-                "area": "11",
-                "number": "999999999",
-                "type": "MOBILE"
-            }
+        "phones": [
+                    {
+                      "country": "55",
+                      "area": "11",
+                      "number": "999999999",
+                      "type": "MOBILE"
+                    }
+                  ]
     },
     items: [
         {
@@ -107,7 +110,30 @@ export class ConfirmarPagamentosComponent implements OnInit {
             "country": "BRA",
             "postal_code": "01452002"
         } },
-    "notification_urls": [this.site + "/notificacoes"]
+    notification_urls: [this.site + "/notificacoes"],
+    charges: [
+      {
+          "reference_id": "referencia da cobranca",
+          "description": "descricao da cobranca",
+          "amount": {
+              "value": 500,
+              "currency": "BRL"
+          },
+          "payment_method": {
+              "type": "CREDIT_CARD",
+              "installments": 1,
+              "capture": true,
+              "card": {
+                  "encrypted":"V++53ir0qvoK/rUSzNjCqP8Hz9ZTa+HohR779n63CV+NvCeYj4J4lQevL4NKN7Di3BxKQGqfQW5cfS7/4rHw4w8URuOV/j/mGau2GXxkKQ6/szJ6BQr//C4e4XgfCHDwcONQhuPDHMdOB1C+4lzyBbsPJUZ/8TUQrxhMMiMFjwGeg62uf7cUqdFjp+Q5dqJXwhLgH3d1EoX+JKStBLqVzF0lW3gHtFOyfvFhuxxBgB0xrzTKfbTqnL5aSYBoGXRFM0gLodMm6knx7bW+syThxyQffnaigCwj2aNohsu+fuXII+3WnlgrHQxaBx3ChRuWKy+loV2L2USiGulp/bPEcg==",
+                  "store": false
+              },
+              "holder": {
+                "name": "Jose da Silva",
+                "tax_id": "65544332211"
+              }
+          }
+      }
+   ]
   }
 
   constructor(
@@ -121,14 +147,15 @@ export class ConfirmarPagamentosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      const ids = params['ids'];
-      if (ids) {
-        this.selectedIds = ids.split(',').map((id: string) => +id);
-      }
-    });
+    // this.route.queryParams.subscribe(params => {
+    //   const ids = params['ids'];
+    //   if (ids) {
+    //     this.selectedIds = ids.split(',').map((id: string) => +id);
+    //   }
+    // });
+    this.pedidoId = this.route.snapshot.params['id'];
 
-    this.pedidoService.setPedido(this.selectedIds.toString())
+    this.pedidoService.setPedido(this.pedidoId.toString())
 
     const id = this.userService.retornarId();
 
@@ -141,12 +168,12 @@ export class ConfirmarPagamentosComponent implements OnInit {
       }
     );
 
-    this.pedidoService.listar().subscribe(
-      pedidos => {
-        this.pedidos = pedidos;
+    this.pedidoService.buscarPorId(this.pedidoId).subscribe(
+      pedido => {
+        this.pedido = pedido;
       },
       error => {
-        console.error('Erro ao recuperar pedidos:', error);
+        console.error('Erro ao recuperar pedido:', error);
       }
     );
 
@@ -167,11 +194,28 @@ export class ConfirmarPagamentosComponent implements OnInit {
     this.payload.billing.address = this.address
     this.payload.shipping.address = this.address
     this.payload.items = this.itens
-    // console.log(this.payload)
+    console.log(this.payload)
 
     this.service.criar(this.payload).subscribe(() => {
       alert('Pagamento realizado com sucesso.');
-      this.router.navigate(['/pedidos']);
+      this.pedidoService.removePedido();
+
+      this.pedido.status = 'Finalizado'
+      console.log('pedido',this.pedido)
+      alert("Statuso do pedido alterado")
+      // this.pedidoService.editar(this.pedidoId, this.pedido).subscribe(
+      //   () => {
+      //     alert("Statuso do pedido alterado")
+      //   },
+      //   error => {
+      //     console.error(error);
+      //     alert("Erro ao adicionar produto ao carrinho")
+      //   }
+      // );
+     
+      setTimeout(() => {
+        this.router.navigate(['/pedidos']);
+      }, 2000);
     }, error => {
       console.log('erro', error)
       alert('Não foi possível realizar o pagamento.');
@@ -222,13 +266,17 @@ export class ConfirmarPagamentosComponent implements OnInit {
     this.router.navigate(['/pedidos'])
   }
 
+  pagamentos() {
+    this.router.navigate(['/pagamentos'])
+  }
+
   recarregarComponente(){
     location.reload();
   }
 
-  getPedidoById(id: number): Pedido | undefined {
-    return this.pedidos.find(pedido => pedido.id === id);
-  }
+  // getPedidoById(id: number): Pedido | undefined {
+  //   return this.pedidos.find(pedido => pedido.id === id);
+  // }
 
   salvaEndereco(endereco: any): void {
     this.selectedEndereco = endereco;
@@ -246,11 +294,12 @@ export class ConfirmarPagamentosComponent implements OnInit {
 
   salvaItem(pedido: any): void {
     this.selectedPedido = pedido;
+    const valor = parseFloat(pedido.valor.replace(',', '.'));
     this.item = {
       reference_id: pedido.id,
-      name: pedido.item,
-      quantity: 1,
-      unit_amount: pedido.valor_pgt
+      name: pedido.descricao,
+      quantity: pedido.quantidade,
+      unit_amount: 10.00
     };
     if (!this.itens.some(item => item.reference_id === this.item.reference_id)) {
       this.itens.push(this.item);
@@ -262,13 +311,15 @@ export class ConfirmarPagamentosComponent implements OnInit {
     this.customer = {
       name: usuario.nome,
       email: usuario.email,
-      tax_id: usuario.cpf,
-      phones: this.customer.phones = {
-                                      country: usuario.celular_pais,
-                                      area: usuario.celular_ddd,
-                                      number: usuario.celular_numero,
-                                      type:"CELULAR",
-                                    }
+      tax_id: '15035113671',//usuario.cpf,
+      phones: this.customer.phones = [
+                                        {
+                                          country: usuario.celular_pais,
+                                          area: usuario.celular_ddd,
+                                          number: usuario.celular_numero,
+                                          type:"MOBILE",
+                                        }
+                                      ]
     };
   }
 

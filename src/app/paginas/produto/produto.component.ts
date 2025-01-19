@@ -7,6 +7,7 @@ import { Imagem, Produto } from 'src/app/service/tipos';
 import { environment } from 'src/environments/environment';
 import { UserService } from '../pagamentos/services/user.service';
 import { ProdutosCarrinhoService } from 'src/app/service/produtos-carrinho.service';
+import { switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-produto',
@@ -15,16 +16,17 @@ import { ProdutosCarrinhoService } from 'src/app/service/produtos-carrinho.servi
 })
 export class ProdutoComponent implements OnInit {
 
-  link: string = environment.apiUrl
-  Produto!: Produto
+  link: string = environment.urlImagem
+  produto!: Produto
   imagemSelecionada: any;
-  corSelecionada: any;
-  tamanhoSelecionado: any;
-  isFavorite: boolean = false;
+  corSelecionada: any = '';
+  tamanhoSelecionado: any = '';
+  isFavorito: boolean = false;
   userId = this.userService.retornarId();
   quantidade: number = 0;
+  favoritoId: number = 0;
   quants: number[] = [];
-  pedidoValido: boolean = true
+  produtoValido: boolean = true
 
   constructor(
     private service: ProdutosService,
@@ -37,11 +39,18 @@ export class ProdutoComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id')
-    this.service.buscarPorId(parseInt(id!)).subscribe((Produto) => {
-      this.Produto = Produto
-      this.isFavorite = Produto.is_favorito
-      this.selecionaImagemInicial();
-    })
+    this.service.buscarPorId(parseInt(id!)).pipe(
+      tap((Produto) => {
+        this.produto = Produto;
+        this.selecionaImagemInicial();
+      }),
+      switchMap((Produto) => 
+        this.favoritoService.buscarPorClientePorProduto(Produto.id, this.userId)
+      )
+    ).subscribe((response) => {
+      this.isFavorito = response.isFavorito;
+      this.favoritoId = response.id; 
+    });    
 
     for (let quant = 1; quant <= 20; quant++) {
       this.quants.push(quant);
@@ -49,13 +58,13 @@ export class ProdutoComponent implements OnInit {
   }
 
   selecionaImagemInicial(): void {
-    if (this.Produto) {
-      this.corSelecionada = this.Produto.cores.find((cor: Cor) => cor.inicial);
-      if (this.corSelecionada) {
-        this.imagemSelecionada = this.corSelecionada.imagens.find((imagem: Imagem) => imagem.inicial);
-      }
+    if (this.produto) {
+      this.corSelecionada = this.produto.cores.find((cor: Cor) => cor.inicial);
+      if (this.corSelecionada?.imagens) {
+        this.imagemSelecionada = this.corSelecionada.imagens.find((foto: Imagem) => foto.inicial) || '';
+        this.ordenarImagens();
+      } 
     }
-    this.ordenarImagens();
   }
 
   selecionarImagem(fotoProduto: Imagem): void {
@@ -66,8 +75,8 @@ export class ProdutoComponent implements OnInit {
   selecionarCor(corProduto: Cor): void {
     this.corSelecionada = corProduto;
     if (this.corSelecionada) {
-      this.imagemSelecionada = this.corSelecionada.imagens.find((imagem: Imagem) => imagem.inicial);
-    }
+      this.imagemSelecionada = this.corSelecionada.imagens.find((foto: Imagem) => foto.inicial) || '';
+    } 
     // this.selecionaImagemInicial();
   }
 
@@ -89,21 +98,34 @@ export class ProdutoComponent implements OnInit {
 
   adicionarFavorito(): void {
     if(this.userId){
-      this.isFavorite = !this.isFavorite;
+      if(!this.isFavorito){
+        this.isFavorito = !this.isFavorito;
+  
+        const favoritoData = {
+          cliente: this.userId,
+          produto: this.produto.id
+        };
+  
+        this.favoritoService.criar(favoritoData).subscribe(
+          (response: { id: number }) => {
+            this.favoritoId = response.id;
+            console.log('Produto adicionado aos favoritos com sucesso. ID:', this.favoritoId);
+          },
+          (error) => {
+            console.error('Erro ao adicionar favorito:', error);
+          }
+        );        
 
-      const favoritoData = {
-        cliente: this.userId,
-        produto: this.Produto.id
-      };
+      } else {
+        this.isFavorito = !this.isFavorito;
 
-      this.favoritoService.criar(favoritoData).subscribe(
-        () => {
-          console.log('Produto adicionado aos favoritos com sucesso.');
-        },
-        error => {
-          console.error('Erro ao adicionar favorito:', error);
+        if(this.favoritoId > 0) {
+          this.favoritoService.excluir(this.favoritoId).subscribe(() => {
+            console.log('Produto removido dos favoritos com sucesso.')
+          })
         }
-      );
+
+      }
     } else {
       this.router.navigate(['/login']);
     }
@@ -111,20 +133,28 @@ export class ProdutoComponent implements OnInit {
 
   adicionarCarrinho(): void {
     if(this.userId){
+      if(!this.corSelecionada) {
+        alert("Selecione a cor")
+        this.produtoValido = false
+        return;
+      }
+      
       if(this.tamanhoSelecionado === '') {
         alert("Selecione o tamanho")
-        this.pedidoValido = false
+        this.produtoValido = false
+        return;
       }
 
       if(this.quantidade === 0) {
         alert("Selecione a quantidade")
-        this.pedidoValido = false
+        this.produtoValido = false
+        return;
       }
 
-      if(this.pedidoValido) {
+      if(this.produtoValido) {
         const carrinhoData = {
           cliente: this.userId,
-          produto: this.Produto.id,
+          produto: this.produto.id,
           cor: this.corSelecionada.id,
           tamanho: this.tamanhoSelecionado.id,
           quantidade: this.quantidade

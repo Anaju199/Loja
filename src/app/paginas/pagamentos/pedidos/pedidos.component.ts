@@ -4,6 +4,7 @@ import { PedidoService } from '../services/pedido.service';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { CadastroService } from '../services/cadastro.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-pedidos',
@@ -12,6 +13,7 @@ import { CadastroService } from '../services/cadastro.service';
 })
 export class PedidosComponent implements OnInit {
 
+  link: string = environment.urlImagem
   listaPedido: Pedido[] = [];
   paginaAtual: number = 1;
   haMaisPesamentos: boolean = true;

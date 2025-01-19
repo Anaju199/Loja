@@ -177,6 +177,7 @@ a.add{
   margin-right: 5%;
   font-size: 2rem;
   color: #000000;
+  text-align: center;  
 }
 
 
@@ -194,6 +195,22 @@ a.add{
 }
 
 
+.container_cadastros_produtos {
+  padding-right: 1rem;
+  padding-left: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-right: auto;
+  margin-left: auto;
+  position:relative;
+  width: 740px;
+  background: #c9c8c8;
+  
+  border: none;
+  border-radius: 20px;
+
+}
+
 .container_cadastros {
   padding-right: 1rem;
   padding-left: 1rem;
@@ -203,24 +220,27 @@ a.add{
   margin-left: auto;
   position:relative;
   width: 540px;
-
-}
-
-
-.fomulario {
-  padding: 2rem 0;
-}
-
-.fomulario form {
   background: #c9c8c8;
-
+  
   border: none;
   border-radius: 20px;
+
+}
+
+/* 
+.fomulario {
+  padding: 2rem 0;
+} */
+
+.fomulario form {
 
   display: flex;
   flex-direction: column;
 
-  padding: 2rem;
+  padding: 1rem;
+
+  border: 1px solid #999999;
+  border-radius: 20px;
 }
 
 .fomulario form label {
@@ -235,6 +255,7 @@ a.add{
   padding: 1rem 2rem;
   border-radius: 10px;
   margin: 0.5rem 0 2rem;
+  width: 470px;
 }
 
 .fomulario form .select {
@@ -315,4 +336,50 @@ a.icon{
   padding-bottom: 1rem;
   padding-top: 1rem;
   border-bottom: 1px solid rgb(131, 131, 131);
+}
+
+.favActive {
+  color: rgb(255, 0, 0); /* Cor quando marcado como favorito */
+}
+
+.nome_produto{
+  text-decoration: none;
+  color: black;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 18px;
+}
+
+.quantSelect {
+  max-width: 120px;
+}
+
+
+
+.form-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.menu-lateral {
+  display: flex;
+  flex-direction: column;
+  max-width: 200px;
+}
+
+.menu-button {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 1px solid #5f5d5d;
+  /* border-bottom-right-radius: 10px; */
+  padding: 3px;
+}
+
+.menu-tittle-forms {
+  background-color: #5f5d5d;
+  text-align: center;
+  pointer-events: none;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }

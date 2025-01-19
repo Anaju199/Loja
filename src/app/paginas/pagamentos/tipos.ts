@@ -7,10 +7,14 @@ export interface Usuario {
   celular_pais: string;
   celular_ddd: string;
   celular_numero: string;
+  senha: string;
+  // cliente: boolean; todos os usuários da loja são clientes
+  administrador: boolean;
 }
 
 export interface Endereco {
   id: number;
+  usuario: Usuario;
   rua: string;
   numero: string;
   complemento: string;
@@ -24,12 +28,29 @@ export interface Endereco {
 
 export interface Pedido {
   id: number;
-  usuario: string;
-  item: string;
-  valor_pgt: string;
+  cliente: string;
+  status: string;
+  data_pedido: string;
+  atualizado_em: string;
+  quant_itens: number;
+  valor: string;
   data_pgt: string;
   numero_pgt: string;
   link_pgt: string
+  itens_pedido: itemPedido[];
+  numero_pedido: number;
+}
+
+export interface itemPedido {
+  id: number;
+  pedido: Pedido;
+  produto_id: string;
+  descricao: string;
+  valor: string;
+  cor: string;
+  tamanho: string;
+  quantidade: string;
+  foto: string
 }
 
 // export interface Pagamento {
@@ -41,3 +62,6 @@ export interface Pedido {
 //   data_pgt: string;
 // }
 
+export interface Cartao {
+  
+}

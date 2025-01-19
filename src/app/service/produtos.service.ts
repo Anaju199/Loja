@@ -8,8 +8,8 @@ import { Produto } from './tipos';
   providedIn: 'root'
 })
 export class ProdutosService {
-  private readonly API = environment.apiUrl + '/produto'
-  private readonly API_LISTA = environment.apiUrl + '/lista_produtos'
+  private readonly API = environment.apiUrl + 'produto'
+  private readonly API_LISTA = environment.apiUrl + 'lista_produtos'
   private produtosFiltradosSubject = new BehaviorSubject<Produto[]>([]);
 
   constructor(private http: HttpClient) { }
