@@ -6,7 +6,9 @@
 
         <div class="rounded mx-auto d-block" style="width: 15rem; height: 15rem;">
           <div *ngIf="imagensIniciais[i],  else semFotosProduto">
-            <img [src]="link + imagensIniciais[i].foto" alt="Imagem Inicial" class="card-img-top" style="height: 15rem;">
+            <a href="/produto/{{ Produto.id }}">
+              <img [src]="link + imagensIniciais[i].foto" alt="Imagem Inicial" class="card-img-top" style="height: 15rem;">
+            </a>
           </div>
 
           <!-- <div *ngIf="Produto.imagens.length > 0, else semFotosProduto">
@@ -33,20 +35,20 @@
           </div> -->
         </div>
       </div>
-        <div class="card-body">
-          <div style="height: 3rem;">
-            <a class="nome_produto" href="/produto/{{ Produto.id }}">{{ Produto.descricao }}</a>
-            <div class="row">
-              <div class="col-md-10">
-                <a class="nome_produto" href="/produto/{{ Produto.id }}"><p class="preco">R${{ Produto.valor }}</p></a>
-              </div>
-              <div class="col-md-2">
-                <a class="nome_produto" href="/produto/{{ Produto.id }}"><i class="fa-solid fa-heart icon_core"
-                [ngClass]="{ 'favActive': isFavorito }"></i></a>
-              </div>
+      <div class="card-body">
+        <div style="height: 3rem;">
+          <a class="nome_produto" href="/produto/{{ Produto.id }}">{{ Produto.descricao }}</a>
+          <div class="row">
+            <div class="col-md-10">
+              <a class="nome_produto" href="/produto/{{ Produto.id }}"><p class="preco">R${{ Produto.valor }}</p></a>
+            </div>
+            <div class="col-md-2">
+              <a class="nome_produto" href="/produto/{{ Produto.id }}"><i class="fa-solid fa-heart icon_core"
+              [ngClass]="{ 'favActive': isFavorito }"></i></a>
             </div>
           </div>
         </div>
+      </div>
     </div>
   </div>
 

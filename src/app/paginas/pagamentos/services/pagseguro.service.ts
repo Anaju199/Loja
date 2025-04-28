@@ -13,7 +13,7 @@ declare const PagSeguro: any;
 })
 export class PagSeguroService {
 
-  private API_URL = 'http://localhost:8000/api/criar_chavePublica/';
+  private API_URL = environment.apiUrl + '/api/criar_chavePublica/';
 
   constructor(
       private http: HttpClient,

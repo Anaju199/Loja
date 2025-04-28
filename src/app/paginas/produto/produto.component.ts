@@ -171,6 +171,7 @@ export class ProdutoComponent implements OnInit {
         );
       }
     } else {
+      alert("Realize o login para adicionar o produto no carrinho")
       this.router.navigate(['/login']);
     }
   }

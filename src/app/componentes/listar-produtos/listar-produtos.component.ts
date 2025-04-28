@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
 import { ProdutosService } from 'src/app/service/produtos.service';
-import { Cor, Imagem, Produto } from 'src/app/service/tipos';
+import { Produto } from 'src/app/service/tipos';
 import { environment } from 'src/environments/environment';
 
 @Component({

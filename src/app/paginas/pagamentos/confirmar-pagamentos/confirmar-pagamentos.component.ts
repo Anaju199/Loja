@@ -89,7 +89,7 @@ export class ConfirmarPagamentosComponent implements OnInit {
             "unit_amount": 500
         }
     ],
-    qr_codes: [{ "amount": { "value": 500 } }],
+    qr_codes: [{ "amount": { "value": 500, "currency": "BRL" } }],
     shipping: { "address": {
             "street": "Avenida Brigadeiro Faria Lima",
             "number": "1384",

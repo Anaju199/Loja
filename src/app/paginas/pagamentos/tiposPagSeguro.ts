@@ -36,6 +36,7 @@ export interface Addresses {
 
 export interface Amount {
   "value": number;
+  "currency": string;
 }
 
 export interface QRCode {
@@ -50,6 +51,7 @@ export interface payload {
   "shipping": Addresses;
   "billing": Addresses;
   "notification_urls": string[];
+  "charges": charges[];
 }
 
 export interface card {

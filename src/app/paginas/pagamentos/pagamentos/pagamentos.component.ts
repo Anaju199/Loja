@@ -137,9 +137,11 @@ export class PagamentosComponent implements OnInit {
     const result = this.pagSeguroService.encryptCard(cardData);
 
     if (result) {
-      console.log('Encrypted Card:', result.encryptedCard);
-      console.log('Has Errors:', result.hasErrors);
-      console.log('Errors:', result.errors);
+      // console.log('Encrypted Card:', result.encryptedCard);
+      // console.log('Has Errors:', result.hasErrors);
+      // console.log('Errors:', result.errors);
+https://developer.pagbank.com.br/reference/criar-pedido
+     this.cadastrar()
     }
   }
 
@@ -166,17 +168,17 @@ export class PagamentosComponent implements OnInit {
       formData.append('secCode', this.formulario.get('secCode')!.value);
       // formData.append('principal', this.formulario.get('principal')!.value);
 
-      this.service.criar(formData).subscribe(() => {
-        alert('Cadastro de endereço realizado com sucesso.');
-        if(this.pedidoId){
-          this.router.navigate(['/confirmarPagamentos', this.pedidoId]);
-        } else {
-          this.router.navigate(['/confirmarPagamentos', this.pedidoId]);
-        }
-      }, error => {
-        console.log('error', error)
-        alert('Não foi possível cadastrar');
-      });
+      // this.service.criar(formData).subscribe(() => {
+      //   alert('Cadastro de endereço realizado com sucesso.');
+      //   if(this.pedidoId){
+      //     this.router.navigate(['/confirmarPagamentos', this.pedidoId]);
+      //   } else {
+      //     this.router.navigate(['/confirmarPagamentos', this.pedidoId]);
+      //   }
+      // }, error => {
+      //   console.log('error', error)
+      //   alert('Não foi possível cadastrar');
+      // });
     } else {
       alert('Formulário Inválido');
     }
